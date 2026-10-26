@@ -1,0 +1,9 @@
+services:
+  mersch_annuaire.lecteur:
+    class: Drupal\mersch_annuaire\LecteurFichier
+  mersch_annuaire.parser:
+    class: Drupal\mersch_annuaire\ListeParser
+    arguments: ['@transliteration']
+  mersch_annuaire.importeur:
+    class: Drupal\mersch_annuaire\Importeur
+    arguments: ['@mersch_annuaire.lecteur', '@mersch_annuaire.parser', '@entity_type.manager', '@database', '@config.factory', '@state', '@current_user', '@datetime.time']

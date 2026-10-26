@@ -1,0 +1,23 @@
+mersch_annuaire.settings:
+  type: config_object
+  label: 'Staff directory settings'
+  mapping:
+    exclusions:
+      type: sequence
+      label: 'Excluded names'
+      sequence:
+        type: string
+        label: 'Name as written in the Excel list'
+    sigles:
+      type: sequence
+      label: 'Department abbreviations'
+      sequence:
+        type: mapping
+        label: 'Abbreviation'
+        mapping:
+          sigle:
+            type: string
+            label: 'Abbreviation'
+          nom:
+            type: label
+            label: 'Full name'

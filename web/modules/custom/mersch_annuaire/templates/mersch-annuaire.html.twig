@@ -1,0 +1,63 @@
+{#
+/**
+ * @file
+ * Annuaire : recherche (US-07) puis un bloc par service, fiches triées par nom (US-06).
+ *
+ * Variables :
+ * - services : liste de { nom, agents }, chaque agent ayant nom, prenom,
+ *   service, batiment, telephone, tel_lien, gsm, gsm_lien, email,
+ *   email_service, remarque et recherche (texte sans accents).
+ * - nombre : nombre total d'agents.
+ */
+#}
+<div class="mersch-annuaire" data-mersch-annuaire>
+  {% if nombre %}
+    <div class="mersch-annuaire__recherche">
+      <label for="mersch-annuaire-recherche">{{ 'Search'|t }}</label>
+      <input type="search" id="mersch-annuaire-recherche" data-mersch-annuaire-recherche
+        placeholder="{{ 'Name, department or number'|t }}" autocomplete="off">
+      <p class="mersch-annuaire__compte" aria-live="polite" data-mersch-annuaire-compte
+        data-total="{{ nombre }}">{{ '@count staff members'|t({'@count': nombre}) }}</p>
+    </div>
+
+    {% for service in services %}
+      <section class="mersch-annuaire__service" data-mersch-annuaire-service>
+        <h2>{{ service.nom }}</h2>
+        <table class="mersch-annuaire__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ 'Name'|t }}</th>
+              <th scope="col">{{ 'Phone'|t }}</th>
+              <th scope="col">{{ 'Mobile'|t }}</th>
+              <th scope="col">{{ 'E-mail'|t }}</th>
+              <th scope="col">{{ 'Building'|t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for agent in service.agents %}
+              <tr data-mersch-annuaire-agent data-recherche="{{ agent.recherche }}">
+                <td>
+                  <strong>{{ agent.nom }}</strong> {{ agent.prenom }}
+                  {% if agent.remarque %}<span class="mersch-annuaire__remarque">{{ agent.remarque }}</span>{% endif %}
+                </td>
+                <td>{% if agent.tel_lien %}<a href="{{ agent.tel_lien }}">{{ agent.telephone }}</a>{% endif %}</td>
+                <td>{% if agent.gsm_lien %}<a href="{{ agent.gsm_lien }}">{{ agent.gsm }}</a>{% endif %}</td>
+                <td>
+                  {% if agent.email %}<a href="mailto:{{ agent.email }}">{{ agent.email }}</a>{% endif %}
+                  {% if agent.email_service and agent.email_service != agent.email %}
+                    <a class="mersch-annuaire__email-service" href="mailto:{{ agent.email_service }}">{{ agent.email_service }}</a>
+                  {% endif %}
+                </td>
+                <td>{{ agent.batiment }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    {% endfor %}
+
+    <p class="mersch-annuaire__vide" data-mersch-annuaire-vide hidden>{{ 'No staff member found.'|t }}</p>
+  {% else %}
+    <p>{{ 'The directory is empty: an administrator must import the Excel staff list.'|t }}</p>
+  {% endif %}
+</div>

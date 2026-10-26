@@ -1,0 +1,10 @@
+annuaire:
+  version: VERSION
+  css:
+    theme:
+      css/annuaire.css: {}
+  js:
+    js/annuaire.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

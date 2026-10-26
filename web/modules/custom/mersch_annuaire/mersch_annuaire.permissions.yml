@@ -1,0 +1,4 @@
+import mersch annuaire:
+  title: 'Import the staff directory'
+  description: 'Upload the Excel staff list and manage the exclusion list.'
+  restrict access: true
