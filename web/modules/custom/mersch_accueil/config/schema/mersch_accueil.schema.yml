@@ -1,0 +1,36 @@
+mersch_accueil.textes:
+  type: mapping
+  label: 'Text in each language'
+  mapping:
+    lb:
+      type: label
+      label: 'Luxembourgish'
+    de:
+      type: label
+      label: 'German'
+    fr:
+      type: label
+      label: 'French'
+
+mersch_accueil.lien_rapide.*:
+  type: config_entity
+  label: 'Quick link'
+  mapping:
+    id:
+      type: machine_name
+      label: 'ID'
+    libelle:
+      type: mersch_accueil.textes
+      label: 'Label'
+    description:
+      type: mersch_accueil.textes
+      label: 'Description'
+    url:
+      type: uri
+      label: 'URL'
+    icone:
+      type: string
+      label: 'Icon'
+    weight:
+      type: weight
+      label: 'Weight'

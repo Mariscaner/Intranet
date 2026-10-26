@@ -1,0 +1,141 @@
+# Traductions de l'interface de l'intranet Mersch (module mersch_accueil et thème mersch).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Human resources"
+msgstr "Ressources humaines"
+
+msgid "Communication"
+msgstr "Communication"
+
+msgid "IT guides"
+msgstr "Guides informatiques"
+
+msgid "Moien!"
+msgstr "Bonjour !"
+
+msgid "The intranet of the Commune of Mersch: your colleagues, your tools and news from the commune."
+msgstr "L'intranet de la Commune de Mersch : vos collègues, vos outils et les nouvelles de la commune."
+
+msgid "Quick links"
+msgstr "Liens rapides"
+
+msgid "(opens in a new tab)"
+msgstr "(s'ouvre dans un nouvel onglet)"
+
+msgid "Staff directory"
+msgstr "Annuaire du personnel"
+
+msgid "Search the staff directory"
+msgstr "Rechercher dans l'annuaire du personnel"
+
+msgid "Search for a name, a department or a number…"
+msgstr "Rechercher un nom, un service ou un numéro…"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Open the full staff directory"
+msgstr "Ouvrir tout l'annuaire du personnel"
+
+msgid "Sections"
+msgstr "Rubriques"
+
+msgid "Organisation chart, official communications and staff news."
+msgstr "Organigramme, communications officielles et nouvelles du personnel."
+
+msgid "The Gemengebuet, the events calendar, the photo albums and internal news."
+msgstr "Le Gemengebuet, l'agenda, les albums photos et les nouvelles internes."
+
+msgid "Solve a problem yourself, or ask IT Hëllef vu Miersch."
+msgstr "Résolvez un problème vous-même, ou demandez à IT Hëllef vu Miersch."
+
+msgid "This section is being prepared."
+msgstr "Cette rubrique est en préparation."
+
+msgid "Log in"
+msgstr "Se connecter"
+
+msgid "Log out"
+msgstr "Se déconnecter"
+
+msgid "Coat of arms of Mersch"
+msgstr "Blason de Mersch"
+
+msgid "Intranet – only reachable on the communal network"
+msgstr "Intranet – accessible uniquement sur le réseau communal"
+
+msgid "Quick link"
+msgstr "Lien rapide"
+
+msgid "Add quick link"
+msgstr "Ajouter un lien rapide"
+
+msgid "Links to the tools shown on the home page."
+msgstr "Liens vers les outils affichés sur la page d'accueil."
+
+msgid "Label (LU)"
+msgstr "Libellé (LU)"
+
+msgid "Label"
+msgstr "Libellé"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Shown"
+msgstr "Affiché"
+
+msgid "Hidden"
+msgstr "Masqué"
+
+msgid "Luxembourgish"
+msgstr "Luxembourgeois"
+
+msgid "German"
+msgstr "Allemand"
+
+msgid "French"
+msgstr "Français"
+
+msgid "Short text under the label. An empty language shows the Luxembourgish text."
+msgstr "Texte court sous le libellé. Une langue vide affiche le texte luxembourgeois."
+
+msgid "Full address starting with https:// or http://, for example https://helpdesk. The link opens in a new tab."
+msgstr "Adresse complète commençant par https:// ou http://, par exemple https://helpdesk. Le lien s'ouvre dans un nouvel onglet."
+
+msgid "Icon"
+msgstr "Icône"
+
+msgid "Calendar"
+msgstr "Calendrier"
+
+msgid "Document"
+msgstr "Document"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Website"
+msgstr "Site web"
+
+msgid "Link"
+msgstr "Lien"
+
+msgid "Show on the home page"
+msgstr "Afficher sur la page d'accueil"
+
+msgid "The URL %url is not valid. Enter a full address starting with https:// or http://."
+msgstr "L'URL %url n'est pas valide. Saisissez une adresse complète commençant par https:// ou http://."
+
+msgid "The quick link %label has been saved."
+msgstr "Le lien rapide %label a été enregistré."

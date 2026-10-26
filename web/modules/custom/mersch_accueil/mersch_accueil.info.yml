@@ -1,0 +1,11 @@
+name: 'Accueil Mersch'
+type: module
+description: 'Page d''accueil de l''intranet : liens rapides administrables, accès aux rubriques et à l''annuaire, langues LU/DE/FR (US-02, US-10, US-11).'
+package: Mersch
+core_version_requirement: ^11
+dependencies:
+  - drupal:block
+  - drupal:language
+  - drupal:locale
+'interface translation project': mersch_accueil
+'interface translation server pattern': modules/custom/mersch_accueil/translations/%language.po

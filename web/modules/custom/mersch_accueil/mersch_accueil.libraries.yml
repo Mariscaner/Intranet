@@ -1,0 +1,5 @@
+accueil:
+  version: VERSION
+  css:
+    component:
+      css/accueil.css: {}

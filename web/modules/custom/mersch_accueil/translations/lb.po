@@ -1,0 +1,141 @@
+# Traductions de l'interface de l'intranet Mersch (module mersch_accueil et thème mersch).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Home"
+msgstr "Startsäit"
+
+msgid "Human resources"
+msgstr "Personalservice"
+
+msgid "Communication"
+msgstr "Kommunikatiounsservice"
+
+msgid "IT guides"
+msgstr "IT-Uleedungen"
+
+msgid "Moien!"
+msgstr "Moien!"
+
+msgid "The intranet of the Commune of Mersch: your colleagues, your tools and news from the commune."
+msgstr "Den Intranet vun der Gemeng Miersch: Är Kolleegen, Är Tools an d'Neiegkeeten aus der Gemeng."
+
+msgid "Quick links"
+msgstr "Séier Linken"
+
+msgid "(opens in a new tab)"
+msgstr "(geet an engem neien Tab op)"
+
+msgid "Staff directory"
+msgstr "Personalverzeechnes"
+
+msgid "Search the staff directory"
+msgstr "Am Personalverzeechnes sichen"
+
+msgid "Search for a name, a department or a number…"
+msgstr "Numm, Service oder Telefonsnummer sichen…"
+
+msgid "Search"
+msgstr "Sichen"
+
+msgid "Open the full staff directory"
+msgstr "Dat ganzt Personalverzeechnes opmaachen"
+
+msgid "Sections"
+msgstr "Rubriken"
+
+msgid "Organisation chart, official communications and staff news."
+msgstr "Organigramm, offiziell Matdeelungen an Neiegkeeten vum Personal."
+
+msgid "The Gemengebuet, the events calendar, the photo albums and internal news."
+msgstr "De Gemengebuet, den Agenda, d'Fotoalben an déi intern Neiegkeeten."
+
+msgid "Solve a problem yourself, or ask IT Hëllef vu Miersch."
+msgstr "Léist e Problem selwer, oder frot d'IT Hëllef vu Miersch."
+
+msgid "This section is being prepared."
+msgstr "Dës Rubrik gëtt preparéiert."
+
+msgid "Log in"
+msgstr "Aloggen"
+
+msgid "Log out"
+msgstr "Ofmellen"
+
+msgid "Coat of arms of Mersch"
+msgstr "Wope vu Miersch"
+
+msgid "Intranet – only reachable on the communal network"
+msgstr "Intranet – nëmmen am Gemengennetz erreechbar"
+
+msgid "Quick link"
+msgstr "Séier Link"
+
+msgid "Add quick link"
+msgstr "Séier Link derbäisetzen"
+
+msgid "Links to the tools shown on the home page."
+msgstr "Linken op d'Tools, déi op der Startsäit ugewise ginn."
+
+msgid "Label (LU)"
+msgstr "Bezeechnung (LU)"
+
+msgid "Label"
+msgstr "Bezeechnung"
+
+msgid "Description"
+msgstr "Beschreiwung"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Shown"
+msgstr "Ugewisen"
+
+msgid "Hidden"
+msgstr "Verstoppt"
+
+msgid "Luxembourgish"
+msgstr "Lëtzebuergesch"
+
+msgid "German"
+msgstr "Däitsch"
+
+msgid "French"
+msgstr "Franséisch"
+
+msgid "Short text under the label. An empty language shows the Luxembourgish text."
+msgstr "Kuerzen Text ënner der Bezeechnung. Eng eidel Sprooch weist de lëtzebuergeschen Text."
+
+msgid "Full address starting with https:// or http://, for example https://helpdesk. The link opens in a new tab."
+msgstr "Komplett Adress mat https:// oder http:// am Ufank, z. B. https://helpdesk. De Link geet an engem neien Tab op."
+
+msgid "Icon"
+msgstr "Ikon"
+
+msgid "Calendar"
+msgstr "Kalenner"
+
+msgid "Document"
+msgstr "Dokument"
+
+msgid "Help"
+msgstr "Hëllef"
+
+msgid "Website"
+msgstr "Websäit"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Show on the home page"
+msgstr "Op der Startsäit weisen"
+
+msgid "The URL %url is not valid. Enter a full address starting with https:// or http://."
+msgstr "D'URL %url ass net valabel. Gitt eng komplett Adress mat https:// oder http:// am Ufank an."
+
+msgid "The quick link %label has been saved."
+msgstr "De Séier Link %label gouf gespäichert."

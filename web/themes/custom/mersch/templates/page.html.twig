@@ -1,7 +1,8 @@
 {#
 /**
  * @file
- * Gabarit de page du thème Mersch : en-tête bleu (logo blanc, langues, connexion),
+ * Gabarit de page du thème Mersch : en-tête bleu (logo blanc, langues LU/DE/FR,
+ * lien de connexion pour rédacteurs et admins),
  * menu commun (US-03), contenu, colonne latérale facultative, pied de page.
  */
 #}
@@ -12,7 +13,13 @@
     </a>
     <div class="mersch-entete__outils">
       {{ page.langues }}
-      {{ page.connexion }}
+      {% if page.connexion %}
+        {{ page.connexion }}
+      {% elseif logged_in %}
+        <a class="mersch-entete__connexion" href="{{ path('user.logout') }}">{{ 'Log out'|t }}</a>
+      {% else %}
+        <a class="mersch-entete__connexion" href="{{ path('user.login') }}">{{ 'Log in'|t }}</a>
+      {% endif %}
     </div>
   </div>
 </header>
@@ -38,6 +45,9 @@
 
 <footer class="mersch-pied" role="contentinfo">
   <div class="mersch-pied__contenu">
+    <img src="{{ base_path ~ directory }}/blason.png" alt="{{ 'Coat of arms of Mersch'|t }}" width="40" height="50">
+    <span class="mersch-pied__mention">ADMINISTRATION COMMUNALE DE MERSCH</span>
+    <span class="mersch-pied__note">{{ 'Intranet – only reachable on the communal network'|t }}</span>
     {{ page.footer }}
   </div>
 </footer>

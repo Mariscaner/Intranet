@@ -1,0 +1,37 @@
+mersch_accueil.accueil:
+  path: '/accueil'
+  defaults:
+    _controller: '\Drupal\mersch_accueil\Controller\AccueilController::accueil'
+    _title: 'Home'
+  requirements:
+    _permission: 'access content'
+
+# Pages d'attente des rubriques : remplacées par les pages RH, Communication
+# et Guides IT quand elles existeront (un alias /rh, /communication ou
+# /guides-it vers un contenu prend le pas sur ces routes).
+mersch_accueil.rh:
+  path: '/rh'
+  defaults:
+    _controller: '\Drupal\mersch_accueil\Controller\AccueilController::rubrique'
+    _title: 'Human resources'
+    rubrique: rh
+  requirements:
+    _permission: 'access content'
+
+mersch_accueil.communication:
+  path: '/communication'
+  defaults:
+    _controller: '\Drupal\mersch_accueil\Controller\AccueilController::rubrique'
+    _title: 'Communication'
+    rubrique: communication
+  requirements:
+    _permission: 'access content'
+
+mersch_accueil.guides_it:
+  path: '/guides-it'
+  defaults:
+    _controller: '\Drupal\mersch_accueil\Controller\AccueilController::rubrique'
+    _title: 'IT guides'
+    rubrique: guides_it
+  requirements:
+    _permission: 'access content'

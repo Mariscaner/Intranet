@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+id: gescom
+libelle:
+  lb: 'GESCOM'
+  de: 'GESCOM'
+  fr: 'GESCOM'
+description:
+  lb: 'GESCOM vum SIGI'
+  de: 'GESCOM des SIGI'
+  fr: 'GESCOM du SIGI'
+url: 'https://gescom.siginet.lu'
+icone: document
+weight: 1

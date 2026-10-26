@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Page d'attente d'une rubrique (RH, Communication, Guides IT).
+ *
+ * Variables :
+ * - rubrique : { cle, titre, texte, url }.
+ */
+#}
+<div class="mersch-rubrique" data-rubrique="{{ rubrique.cle }}">
+  <p class="mersch-accueil__chapo">{{ rubrique.texte }}</p>
+  <p class="mersch-rubrique__attente">{{ 'This section is being prepared.'|t }}</p>
+</div>

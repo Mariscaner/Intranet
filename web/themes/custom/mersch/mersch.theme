@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Fonctions du thème Mersch.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_preprocess_HOOK() for links__language_block.
+ *
+ * Boutons LU, DE, FR en haut à droite (US-02) : codes courts ; la langue
+ * active est signalée par le cœur (classe is-active) ; une autre langue
+ * éventuelle (anglais du site d'installation) est masquée.
+ */
+function mersch_preprocess_links__language_block(array &$variables): void {
+  $boutons = [
+    'lb' => ['LU', 'Lëtzebuergesch'],
+    'de' => ['DE', 'Deutsch'],
+    'fr' => ['FR', 'Français'],
+  ];
+  $links = [];
+  foreach ($boutons as $langcode => [$code, $nom]) {
+    if (!isset($variables['links'][$langcode])) {
+      continue;
+    }
+    $item = $variables['links'][$langcode];
+    if (isset($item['link']['#title'])) {
+      $item['link']['#title'] = $code;
+      $item['link']['#options']['attributes']['title'] = $nom;
+      $item['link']['#options']['attributes']['lang'] = $langcode;
+    }
+    $links[$langcode] = $item;
+  }
+  $variables['links'] = $links;
+  $variables['attributes']['class'][] = 'mersch-langues';
+  $variables['attributes']['aria-label'] = 'Sprooch / Sprache / Langue';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for menu__main.
+ *
+ * Signale la rubrique active (US-03), y compris l'accueil.
+ */
+function mersch_preprocess_menu__main(array &$variables): void {
+  $accueil = \Drupal::service('path.matcher')->isFrontPage();
+  foreach ($variables['items'] as &$item) {
+    $actif = $item['in_active_trail'] || ($accueil && $item['url']->isRouted() && $item['url']->getRouteName() === '<front>');
+    if ($actif) {
+      $item['url']->mergeOptions(['attributes' => ['aria-current' => 'page']]);
+    }
+  }
+  $variables['#cache']['contexts'][] = 'url.path.is_front';
+}

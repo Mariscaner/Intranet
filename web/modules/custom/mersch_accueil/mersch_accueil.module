@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Page d'accueil de l'intranet : liens rapides, rubriques, annuaire.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_accueil_theme(): array {
+  return [
+    'mersch_accueil' => [
+      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => []],
+    ],
+    'mersch_rubrique' => [
+      'variables' => ['rubrique' => []],
+    ],
+    'mersch_lien_rapide_icone' => [
+      'variables' => ['icone' => 'lien'],
+    ],
+  ];
+}
