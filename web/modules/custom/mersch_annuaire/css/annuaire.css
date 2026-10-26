@@ -1,0 +1,92 @@
+/* Annuaire : couleur de domaine Accueil en filet, jamais en texte (contraste). */
+.mersch-annuaire__recherche {
+  margin-bottom: 24px;
+}
+
+.mersch-annuaire__recherche label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.mersch-annuaire__recherche input {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  padding: 8px 12px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 4px;
+  font: inherit;
+}
+
+.mersch-annuaire__compte {
+  color: var(--mersch-texte-2, #4a5480);
+  font-size: 13px;
+}
+
+.mersch-annuaire__service h2 {
+  border-bottom: 3px solid var(--mersch-accueil, #5fbfed);
+  padding-bottom: 4px;
+  font-size: 20px;
+}
+
+.mersch-annuaire__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.mersch-annuaire__table th,
+.mersch-annuaire__table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--mersch-ligne, #d9dce8);
+  text-align: left;
+  vertical-align: top;
+}
+
+.mersch-annuaire__table th {
+  background: var(--mersch-fond-2, #f3f4f8);
+  font-size: 13px;
+}
+
+.mersch-annuaire__table td:first-child {
+  width: 30%;
+}
+
+.mersch-annuaire__table a {
+  white-space: nowrap;
+}
+
+.mersch-annuaire__remarque,
+.mersch-annuaire__email-service {
+  display: block;
+  color: var(--mersch-texte-2, #4a5480);
+  font-size: 13px;
+}
+
+@media (max-width: 720px) {
+  .mersch-annuaire__table thead {
+    display: none;
+  }
+
+  .mersch-annuaire__table tr,
+  .mersch-annuaire__table td {
+    display: block;
+    border: 0;
+    padding: 2px 0;
+  }
+
+  .mersch-annuaire__table tr {
+    border-bottom: 1px solid var(--mersch-ligne, #d9dce8);
+    padding: 8px 0;
+  }
+
+  .mersch-annuaire__table td:first-child {
+    width: auto;
+  }
+}
+
+/* Lignes et services masqués par la recherche, même en affichage mobile. */
+.mersch-annuaire [hidden] {
+  display: none !important;
+}

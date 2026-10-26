@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Annuaire du personnel importé depuis la liste Excel (D-026).
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_annuaire_theme(): array {
+  return [
+    'mersch_annuaire' => [
+      'variables' => ['services' => [], 'nombre' => 0],
+    ],
+  ];
+}

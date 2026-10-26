@@ -1,0 +1,5 @@
+mersch_annuaire.import:
+  title: 'Staff directory'
+  description: 'Import the Excel staff list.'
+  route_name: mersch_annuaire.import
+  parent: system.admin_config_content

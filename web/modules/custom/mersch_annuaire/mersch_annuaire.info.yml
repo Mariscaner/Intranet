@@ -1,0 +1,5 @@
+name: 'Annuaire Mersch'
+type: module
+description: 'Annuaire du personnel importé depuis la liste Excel (D-026).'
+package: Mersch
+core_version_requirement: ^11

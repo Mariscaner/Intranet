@@ -1,0 +1,15 @@
+mersch_annuaire.annuaire:
+  path: '/annuaire'
+  defaults:
+    _controller: '\Drupal\mersch_annuaire\Controller\AnnuaireController::page'
+    _title: 'Staff directory'
+  requirements:
+    _permission: 'access content'
+
+mersch_annuaire.import:
+  path: '/admin/config/mersch/annuaire'
+  defaults:
+    _form: '\Drupal\mersch_annuaire\Form\ImportForm'
+    _title: 'Import the staff directory'
+  requirements:
+    _permission: 'import mersch annuaire'

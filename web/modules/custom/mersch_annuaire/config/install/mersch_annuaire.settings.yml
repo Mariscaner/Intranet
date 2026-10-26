@@ -1,0 +1,3 @@
+# Lignes de la liste Excel à ne pas afficher (colonne Nom/Prénom, une par ligne).
+exclusions:
+  - 'HELPDESK IT'

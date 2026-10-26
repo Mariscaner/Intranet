@@ -1,0 +1,10 @@
+mersch_annuaire.settings:
+  type: config_object
+  label: 'Staff directory settings'
+  mapping:
+    exclusions:
+      type: sequence
+      label: 'Excluded names'
+      sequence:
+        type: string
+        label: 'Name as written in the Excel list'

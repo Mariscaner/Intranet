@@ -16,7 +16,8 @@
         "drupal/core-recommended": "^11",
         "drupal/admin_toolbar": "^3.5",
         "drupal/openid_connect": "^3.0",
-        "drush/drush": "^13"
+        "drush/drush": "^13",
+        "phpoffice/phpspreadsheet": "^5"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -24,7 +25,8 @@
         "allow-plugins": {
             "composer/installers": true,
             "drupal/core-composer-scaffold": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "symfony/runtime": true
         },
         "sort-packages": true
     },
