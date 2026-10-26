@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * Gabarit de page du thème Mersch : en-tête bleu (logo blanc, langues, connexion),
+ * menu commun (US-03), contenu, colonne latérale facultative, pied de page.
+ */
+#}
+<header class="mersch-entete" role="banner">
+  <div class="mersch-entete__contenu">
+    <a class="mersch-entete__logo" href="{{ path('<front>') }}" rel="home">
+      <img src="{{ base_path ~ directory }}/logo-blanc.png" alt="{{ 'Commune de Mersch'|t }}" width="210" height="76">
+    </a>
+    <div class="mersch-entete__outils">
+      {{ page.langues }}
+      {{ page.connexion }}
+    </div>
+  </div>
+</header>
+
+{% if page.navigation %}
+  <nav class="mersch-menu" aria-label="{{ 'Main menu'|t }}">
+    <div class="mersch-menu__contenu">
+      {{ page.navigation }}
+    </div>
+  </nav>
+{% endif %}
+
+<main class="mersch-page{{ page.sidebar ? '' : ' mersch-page--sans-colonne' }}" role="main">
+  <div class="mersch-page__contenu">
+    {{ page.content }}
+  </div>
+  {% if page.sidebar %}
+    <aside class="mersch-page__colonne">
+      {{ page.sidebar }}
+    </aside>
+  {% endif %}
+</main>
+
+<footer class="mersch-pied" role="contentinfo">
+  <div class="mersch-pied__contenu">
+    {{ page.footer }}
+  </div>
+</footer>

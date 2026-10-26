@@ -1,0 +1,15 @@
+name: Mersch
+type: theme
+description: 'Thème de l''intranet de la Commune de Mersch, selon la charte graphique 2023.'
+core_version_requirement: ^11
+base theme: stable9
+logo: logo-blanc.png
+libraries:
+  - mersch/global
+regions:
+  langues: 'Choix de la langue (en haut à droite)'
+  connexion: 'Connexion'
+  navigation: 'Menu principal'
+  content: 'Contenu'
+  sidebar: 'Colonne latérale'
+  footer: 'Pied de page'
