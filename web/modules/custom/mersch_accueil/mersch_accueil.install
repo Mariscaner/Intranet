@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * Installation : langues LU/DE/FR et page d'accueil.
+ */
+
+declare(strict_types=1);
+
+use Drupal\language\Entity\ConfigurableLanguage;
+
+/**
+ * Implements hook_install().
+ */
+function mersch_accueil_install(bool $is_syncing): void {
+  // Sur un import de configuration, langues et page d'accueil arrivent avec
+  // la configuration exportée.
+  if ($is_syncing) {
+    return;
+  }
+
+  // LU, DE et FR ; le luxembourgeois est la langue par défaut (D-005).
+  foreach (['lb', 'de', 'fr'] as $langcode) {
+    if (!ConfigurableLanguage::load($langcode)) {
+      ConfigurableLanguage::createFromLangcode($langcode)->save();
+    }
+  }
+  $config_factory = \Drupal::configFactory();
+  $config_factory->getEditable('system.site')
+    ->set('default_langcode', 'lb')
+    ->set('page.front', '/accueil')
+    ->save();
+
+  // Adresses : / en LU, /de/… et /fr/… pour les traductions (US-02).
+  $negociation = $config_factory->getEditable('language.negotiation');
+  $prefixes = $negociation->get('url.prefixes') ?? [];
+  $prefixes['lb'] = '';
+  $prefixes['de'] = 'de';
+  $prefixes['fr'] = 'fr';
+  foreach ($prefixes as $langcode => $prefixe) {
+    if ($prefixe === '' && $langcode !== 'lb') {
+      $prefixes[$langcode] = $langcode;
+    }
+  }
+  $negociation->set('url.prefixes', $prefixes)->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function mersch_accueil_uninstall(bool $is_syncing): void {
+  $site = \Drupal::configFactory()->getEditable('system.site');
+  if (!$is_syncing && $site->get('page.front') === '/accueil') {
+    $site->set('page.front', '/user/login')->save();
+  }
+}

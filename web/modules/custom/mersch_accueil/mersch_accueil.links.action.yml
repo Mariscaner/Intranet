@@ -1,0 +1,5 @@
+entity.mersch_lien_rapide.add_form:
+  title: 'Add quick link'
+  route_name: entity.mersch_lien_rapide.add_form
+  appears_on:
+    - entity.mersch_lien_rapide.collection

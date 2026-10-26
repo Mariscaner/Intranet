@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+id: helpdesk
+libelle:
+  lb: 'Helpdesk'
+  de: 'Helpdesk'
+  fr: 'Helpdesk'
+description:
+  lb: 'IT Hëllef vu Miersch'
+  de: 'IT Hëllef vu Miersch'
+  fr: 'IT Hëllef vu Miersch'
+url: 'https://helpdesk'
+icone: aide
+weight: 2

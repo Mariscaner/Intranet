@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Page d'accueil, d'après la maquette validée : liens rapides (US-10),
+ * annuaire (US-06, US-07) et rubriques (US-03).
+ *
+ * Variables :
+ * - liens : liste de { libelle, description, url, icone }, déjà triée.
+ * - annuaire : adresse de l'annuaire, ou NULL si le module est absent.
+ * - rubriques : liste de { cle, titre, texte, url }.
+ */
+#}
+<div class="mersch-accueil">
+  <h1>{{ 'Moien!'|t }}</h1>
+  <p class="mersch-accueil__chapo">{{ 'The intranet of the Commune of Mersch: your colleagues, your tools and news from the commune.'|t }}</p>
+
+  {% if liens %}
+    <h2>{{ 'Quick links'|t }}</h2>
+    <ul class="mersch-liens">
+      {% for lien in liens %}
+        <li>
+          <a class="mersch-liens__lien" href="{{ lien.url }}" target="_blank" rel="noopener noreferrer">
+            {% include '@mersch_accueil/mersch-lien-rapide-icone.html.twig' with { icone: lien.icone } only %}
+            <span class="mersch-liens__texte">
+              <b>{{ lien.libelle }} <span aria-hidden="true">↗</span></b>
+              {% if lien.description %}<span class="mersch-liens__description">{{ lien.description }}</span>{% endif %}
+              <span class="mersch-liens__description">{{ lien.url|replace({'https://': '', 'http://': ''}) }}</span>
+            </span>
+            <span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="mersch-accueil__grille">
+    {% if annuaire %}
+      <section class="mersch-bloc mersch-bloc--accueil">
+        <h2>{{ 'Staff directory'|t }}</h2>
+        <form class="mersch-accueil__recherche" action="{{ annuaire }}" method="get" role="search">
+          <label for="mersch-accueil-recherche" class="visually-hidden">{{ 'Search the staff directory'|t }}</label>
+          <input type="search" id="mersch-accueil-recherche" name="q" minlength="2"
+            placeholder="{{ 'Search for a name, a department or a number…'|t }}" autocomplete="off">
+          <button type="submit">{{ 'Search'|t }}</button>
+        </form>
+        <p><a href="{{ annuaire }}">{{ 'Open the full staff directory'|t }}</a></p>
+      </section>
+    {% endif %}
+
+    <section class="mersch-bloc">
+      <h2>{{ 'Sections'|t }}</h2>
+      <ul class="mersch-rubriques">
+        {% for rubrique in rubriques %}
+          <li class="mersch-rubriques__rubrique" data-rubrique="{{ rubrique.cle }}">
+            <a href="{{ rubrique.url }}">{{ rubrique.titre }}</a>
+            <span>{{ rubrique.texte }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+</div>

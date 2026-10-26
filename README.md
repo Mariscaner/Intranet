@@ -23,7 +23,7 @@ Le cahier des charges (01 v3), les rôles (04) et le journal des décisions (05)
 config/sync/              Configuration Drupal exportée (drush cex)
 docs/                     Feuille de route technique
 web/themes/custom/mersch/ Thème de l'intranet
-web/modules/custom/       Modules propres au projet (mersch_annuaire)
+web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire)
 ```
 
 ## Démarrer en local
@@ -36,10 +36,29 @@ ddev composer install
 ddev drush site:install minimal --locale=lb --site-name="Intranet Mersch"
 ddev drush theme:enable mersch
 ddev drush config:set system.theme default mersch -y
+ddev drush pm:install mersch_accueil mersch_annuaire -y
+ddev drush theme:enable claro
+ddev drush config:set system.theme admin claro -y
 ddev launch
 ```
 
 Le premier `composer install` crée `composer.lock` : il faut le committer.
+
+## Page d'accueil
+
+Le module `mersch_accueil` fournit la page d'accueil (`/accueil`, déclarée page d'accueil du site à l'installation), d'après la maquette validée :
+- liens rapides DSKNet, GESCOM, Helpdesk et mersch.lu, ouverts dans un nouvel onglet (US-10) ;
+- recherche dans l'annuaire, qui ouvre `/annuaire?q=…` avec le champ déjà rempli, et lien vers l'annuaire complet (affichés seulement si `mersch_annuaire` est installé) ;
+- accès aux rubriques RH, Communication et Guides IT, aussi présentes dans le menu principal (US-03) ; `/rh`, `/communication` et `/guides-it` affichent une page d'attente tant que les rubriques ne sont pas construites ;
+- boutons LU / DE / FR en haut à droite (US-02) : le module crée les trois langues, met le luxembourgeois par défaut (adresses sans préfixe, `/de/…` et `/fr/…` pour les traductions).
+
+Un admin gère les liens rapides depuis **Administration > Configuration > Quick links** (`/admin/config/mersch/liens-rapides`) : libellé et description en LU, DE et FR (une langue vide reprend le LU), URL en `https://` ou `http://` (une autre adresse est refusée), icône, affichage, ordre par glisser-déposer (US-11). Seuls les admins ont la permission « Administer quick links ».
+
+Les textes de l'interface sont en anglais dans le code et traduits dans `web/modules/custom/mersch_accueil/translations/` (`lb.po`, `de.po`, `fr.po`), importés à l'installation du module. Le LU est à relire par Marc (D-005). Après une modification d'un `.po` : `ddev drush locale:check && ddev drush locale:update`.
+
+Le thème place lui-même ses blocs (langues, menu principal, titre, onglets, messages) depuis `web/themes/custom/mersch/config/optional/`.
+
+Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_accueil` (avec `drupal/core-dev` installé).
 
 ## Annuaire
 

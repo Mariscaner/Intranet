@@ -1,0 +1,4 @@
+administer mersch liens rapides:
+  title: 'Administer quick links'
+  description: 'Add, edit, reorder and delete the quick links on the home page (US-11). Administrators only.'
+  restrict access: true

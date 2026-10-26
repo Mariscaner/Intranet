@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+id: dsknet
+libelle:
+  lb: 'DSKNet'
+  de: 'DSKNet'
+  fr: 'DSKNet'
+description:
+  lb: 'Presenzen a Congéen'
+  de: 'Anwesenheiten und Urlaub'
+  fr: 'Présences et congés'
+url: 'https://apps'
+icone: calendrier
+weight: 0

@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Icône d'un lien rapide (tracés repris de la maquette).
+ *
+ * Variables :
+ * - icone : calendrier, document, aide, web ou lien.
+ */
+#}
+<svg class="mersch-liens__icone" viewBox="0 0 34 34" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {% if icone == 'calendrier' %}
+    <rect x="5" y="8" width="24" height="21" rx="2"/><path d="M5 14h24M11 5v6M23 5v6M10 19h4M16 19h4M22 19h2M10 24h4M16 24h4"/>
+  {% elseif icone == 'document' %}
+    <path d="M9 4h12l6 6v20H9z"/><path d="M21 4v6h6M13 16h10M13 21h10M13 26h6"/>
+  {% elseif icone == 'aide' %}
+    <circle cx="17" cy="17" r="12"/><path d="M13 13.5a4 4 0 1 1 5.5 3.7c-1 .4-1.5 1.2-1.5 2.3v1"/><circle cx="17" cy="25" r=".8"/>
+  {% elseif icone == 'web' %}
+    <circle cx="17" cy="17" r="12"/><path d="M5 17h24M17 5c4 4 4 20 0 24M17 5c-4 4-4 20 0 24"/>
+  {% else %}
+    <path d="M14 20l6-6M15 9l2-2a6 6 0 0 1 8.5 8.5l-2 2M19 25l-2 2a6 6 0 0 1-8.5-8.5l2-2"/>
+  {% endif %}
+</svg>

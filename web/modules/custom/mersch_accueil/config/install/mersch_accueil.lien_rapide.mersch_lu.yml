@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+id: mersch_lu
+libelle:
+  lb: 'mersch.lu'
+  de: 'mersch.lu'
+  fr: 'mersch.lu'
+description:
+  lb: 'Site vun der Gemeng'
+  de: 'Website der Gemeinde'
+  fr: 'Site de la commune'
+url: 'https://www.mersch.lu'
+icone: web
+weight: 3

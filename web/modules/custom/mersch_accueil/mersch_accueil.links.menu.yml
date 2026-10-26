@@ -1,0 +1,40 @@
+# Menu principal commun à toutes les pages (US-03).
+mersch_accueil.menu.accueil:
+  title: 'Home'
+  route_name: '<front>'
+  menu_name: main
+  weight: 0
+  options:
+    attributes:
+      data-rubrique: accueil
+mersch_accueil.menu.rh:
+  title: 'Human resources'
+  route_name: mersch_accueil.rh
+  menu_name: main
+  weight: 10
+  options:
+    attributes:
+      data-rubrique: rh
+mersch_accueil.menu.communication:
+  title: 'Communication'
+  route_name: mersch_accueil.communication
+  menu_name: main
+  weight: 20
+  options:
+    attributes:
+      data-rubrique: communication
+mersch_accueil.menu.guides_it:
+  title: 'IT guides'
+  route_name: mersch_accueil.guides_it
+  menu_name: main
+  weight: 30
+  options:
+    attributes:
+      data-rubrique: guides-it
+
+# Administration
+entity.mersch_lien_rapide.collection:
+  title: 'Quick links'
+  description: 'Links to the tools shown on the home page.'
+  route_name: entity.mersch_lien_rapide.collection
+  parent: system.admin_config_content
