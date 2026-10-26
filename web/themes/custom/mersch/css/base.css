@@ -1,0 +1,97 @@
+/*
+ * Couleurs et typographies de la charte graphique 2023 (p. 11, 12, 14).
+ * Les neutres (--mersch-texte-2, --mersch-ligne, --mersch-fond-2) ne sont pas
+ * dans la charte : ajouts à valider.
+ */
+:root {
+  --mersch-bleu: #26336a;
+  --mersch-blanc: #ffffff;
+  --mersch-accueil: #5fbfed;       /* domaine Enseignement */
+  --mersch-rh: #c1ad76;            /* domaine Citoyen */
+  --mersch-communication: #f08372; /* domaine Urbanisme */
+  --mersch-guides-it: #00aba0;     /* domaine Mobilité & Environnement */
+  --mersch-texte-2: #4a5480;
+  --mersch-ligne: #d9dce8;
+  --mersch-fond-2: #f3f4f8;
+  /* Polices de substitution tant que la licence webfont Larken / Fabrikat n'est pas confirmée */
+  --mersch-police-titre: Georgia, "Times New Roman", serif;
+  --mersch-police-texte: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--mersch-blanc);
+  color: var(--mersch-bleu);
+  font: 15px/1.5 var(--mersch-police-texte);
+}
+
+a {
+  color: var(--mersch-bleu);
+}
+
+/* Les couleurs de domaine ne servent jamais de couleur de texte sur blanc (contraste < 3:1). */
+h1 {
+  font: bold 30px/1.2 var(--mersch-police-titre);
+}
+
+.mersch-entete {
+  background: var(--mersch-bleu);
+  color: var(--mersch-blanc);
+}
+
+.mersch-entete__contenu,
+.mersch-menu__contenu,
+.mersch-page,
+.mersch-pied__contenu {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.mersch-entete__contenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-block: 10px;
+}
+
+.mersch-entete__logo img {
+  display: block;
+  width: 210px;
+  height: auto;
+}
+
+.mersch-entete__outils {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mersch-menu {
+  border-bottom: 1px solid var(--mersch-ligne);
+}
+
+.mersch-page {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px;
+  padding-block: 28px 48px;
+}
+
+.mersch-page--sans-colonne {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.mersch-pied {
+  border-top: 1px solid var(--mersch-ligne);
+  background: var(--mersch-fond-2);
+}
+
+@media (max-width: 860px) {
+  .mersch-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

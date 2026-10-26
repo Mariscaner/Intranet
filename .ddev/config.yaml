@@ -1,0 +1,10 @@
+# Environnement de développement local (DDEV). Production : serveur Linux communal (D-003, D-004).
+name: intranet-mersch
+type: drupal11
+docroot: web
+php_version: "8.3"
+webserver_type: nginx-fpm
+database:
+  type: mariadb
+  version: "10.11"
+composer_version: "2"
