@@ -11,7 +11,7 @@ Le cahier des charges (01 v3), les rôles (04) et le journal des décisions (05)
 | Hébergement | Serveur Linux communal, réseau interne uniquement | D-003 |
 | CMS | Drupal 11 (Composer), MariaDB | D-004 |
 | Langues | LU par défaut, DE et FR (modules de base Language, Content Translation, Locale) | D-005 |
-| Connexion | SSO Entra ID (OpenID Connect) pour rédacteurs et admins ; lecteurs sans connexion | D-006, D-008 |
+| Connexion | Comptes Drupal locaux pour rédacteurs et admins ; lecteurs sans connexion ; SSO Entra ID = évolution | D-006, D-028 |
 | Annuaire | Liste Excel du personnel importée par un admin (module `mersch_annuaire`) | D-026 (remplace D-009) |
 | Charte | Thème `mersch` : couleurs et logo de la charte 2023 | D-002 |
 | Navigateurs | Edge et Chrome à jour | D-013 |
@@ -50,6 +50,7 @@ Un admin le met à jour depuis **Administration > Configuration > Staff director
 Règles de lecture :
 - colonnes attendues : Nom/Prénom, Tél., Gsm, Mail, mail service (colonne sans titre après Mail), Service, Bâtiment, Remarques ;
 - une ligne est ignorée si elle n'a pas de service, si le nom n'est pas au format « NOM Prénom » ou si elle figure dans la liste d'exclusion (« HELPDESK IT » par défaut) ;
+- les sigles en tête du service sont remplacés par leur nom complet (« SR = Service régie », « ST = Service technique », modifiables dans le formulaire, D-029) ;
 - les variantes d'écriture d'un même service (accents, majuscules, espaces) sont regroupées, les services presque identiques sont signalés ;
 - si aucune ligne n'est valide, l'annuaire actuel est conservé.
 

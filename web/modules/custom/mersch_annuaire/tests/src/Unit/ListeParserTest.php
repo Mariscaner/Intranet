@@ -119,6 +119,22 @@ class ListeParserTest extends UnitTestCase {
   }
 
   /**
+   * Sigle de tête remplacé par le nom complet du service.
+   */
+  public function testSigles(): void {
+    $resultat = $this->parser->analyser([
+      self::ENTETE,
+      ['A Un', '', '', '', '', 'ST - Chef', '', ''],
+      ['B Deux', '', '', '', '', 'st', '', ''],
+      ['C Trois', '', '', '', '', 'STEP', '', ''],
+    ], [], ['ST' => 'Service technique']);
+    $this->assertSame(
+      ['Service technique - Chef', 'Service technique', 'STEP'],
+      array_column($resultat['agents'], 'service'),
+    );
+  }
+
+  /**
    * Fichier sans colonnes Nom/Prénom et Service.
    */
   public function testEnteteIntrouvable(): void {

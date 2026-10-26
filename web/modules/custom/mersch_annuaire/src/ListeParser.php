@@ -45,6 +45,8 @@ class ListeParser {
    *   Lignes du fichier, en-tête compris, cellule par cellule.
    * @param string[] $exclusions
    *   Valeurs de la colonne Nom/Prénom à ignorer.
+   * @param array<string, string> $sigles
+   *   Noms complets des sigles de service (« ST » => « Service technique »).
    *
    * @return array{agents: list<array<string, string>>, ignores: list<array{ligne: int, texte: string, motif: string}>, avertissements: list<array<string, mixed>>}
    *   Les fiches retenues (avec leur numéro de ligne dans le fichier), les
@@ -53,7 +55,7 @@ class ListeParser {
    * @throws \InvalidArgumentException
    *   Si la ligne d'en-tête est introuvable.
    */
-  public function analyser(array $lignes, array $exclusions = []): array {
+  public function analyser(array $lignes, array $exclusions = [], array $sigles = []): array {
     $lignes = array_values($lignes);
     [$index_entete, $colonnes] = $this->trouverEntete($lignes);
     $exclus = array_flip(array_map($this->cle(...), $exclusions));
@@ -92,7 +94,7 @@ class ListeParser {
         'ligne' => (string) $numero,
         'nom' => $nom_prenom[0],
         'prenom' => $nom_prenom[1],
-        'service' => $this->nettoyerService($valeurs['service']),
+        'service' => $this->nettoyerService($valeurs['service'], $sigles),
         'batiment' => $valeurs['batiment'],
         'telephone' => $this->formaterTelephone($valeurs['telephone']),
         'gsm' => $this->formaterTelephone($valeurs['gsm']),
@@ -200,11 +202,19 @@ class ListeParser {
   }
 
   /**
-   * Nettoie un service : espaces et séparateur « - » homogènes.
+   * Nettoie un service : espaces et séparateur « - » homogènes, sigle de
+   * tête remplacé par son nom complet (« ST - Chef » devient
+   * « Service technique - Chef »).
    */
-  private function nettoyerService(string $service): string {
-    $service = preg_replace('/\s*-\s*/u', ' - ', $service);
-    return trim($service, ' -');
+  private function nettoyerService(string $service, array $sigles): string {
+    $parties = explode(' - ', trim(preg_replace('/\s*-\s*/u', ' - ', $service), ' -'));
+    foreach ($sigles as $sigle => $nom) {
+      if (mb_strtoupper($parties[0]) === mb_strtoupper($sigle)) {
+        $parties[0] = $nom;
+        break;
+      }
+    }
+    return implode(' - ', $parties);
   }
 
   /**

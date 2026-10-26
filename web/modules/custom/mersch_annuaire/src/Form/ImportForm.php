@@ -91,6 +91,17 @@ class ImportForm extends FormBase {
       '#rows' => 4,
     ];
 
+    $form['sigles'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Department abbreviations'),
+      '#description' => $this->t('Full name shown instead of the abbreviation at the start of the Service column, one per line, e.g. "ST = Service technique".'),
+      '#default_value' => implode("\n", array_map(
+        fn (array $s) => $s['sigle'] . ' = ' . $s['nom'],
+        $this->config('mersch_annuaire.settings')->get('sigles') ?? [],
+      )),
+      '#rows' => 3,
+    ];
+
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['verifier'] = [
       '#type' => 'submit',
@@ -121,7 +132,7 @@ class ImportForm extends FormBase {
       return;
     }
     try {
-      $resultat = $this->importeur->analyser($fichier->getRealPath(), $fichier->getClientOriginalName(), $this->exclusions($form_state));
+      $resultat = $this->importeur->analyser($fichier->getRealPath(), $fichier->getClientOriginalName(), $this->exclusions($form_state), $this->sigles($form_state));
     }
     catch (\InvalidArgumentException $e) {
       $form_state->setErrorByName('fichier', $e->getMessage());
@@ -140,6 +151,11 @@ class ImportForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->configFactory()->getEditable('mersch_annuaire.settings')
       ->set('exclusions', $this->exclusions($form_state))
+      ->set('sigles', array_map(
+        fn (string $sigle, string $nom) => ['sigle' => $sigle, 'nom' => $nom],
+        array_keys($this->sigles($form_state)),
+        $this->sigles($form_state),
+      ))
       ->save();
 
     $resultat = $form_state->get('resultat');
@@ -162,6 +178,23 @@ class ImportForm extends FormBase {
   private function exclusions(FormStateInterface $form_state): array {
     $lignes = preg_split('/\R/', (string) $form_state->getValue('exclusions'));
     return array_values(array_filter(array_map('trim', $lignes)));
+  }
+
+  /**
+   * Sigles saisis au format « SIGLE = Nom complet ».
+   *
+   * @return array<string, string>
+   *   Le nom complet de chaque sigle.
+   */
+  private function sigles(FormStateInterface $form_state): array {
+    $sigles = [];
+    foreach (preg_split('/\R/', (string) $form_state->getValue('sigles')) as $ligne) {
+      [$sigle, $nom] = array_map('trim', explode('=', $ligne, 2)) + [1 => ''];
+      if ($sigle !== '' && $nom !== '') {
+        $sigles[$sigle] = $nom;
+      }
+    }
+    return $sigles;
   }
 
 }

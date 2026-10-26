@@ -1,3 +1,9 @@
 # Lignes de la liste Excel à ne pas afficher (colonne Nom/Prénom, une par ligne).
 exclusions:
   - 'HELPDESK IT'
+# Noms complets des sigles en tête de la colonne Service (D-029).
+sigles:
+  - sigle: SR
+    nom: 'Service régie'
+  - sigle: ST
+    nom: 'Service technique'

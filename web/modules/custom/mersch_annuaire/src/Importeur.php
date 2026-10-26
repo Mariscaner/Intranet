@@ -48,6 +48,8 @@ class Importeur {
    *   Nom d'origine du fichier.
    * @param string[]|null $exclusions
    *   Liste d'exclusion à appliquer ; par défaut celle de la configuration.
+   * @param array<string, string>|null $sigles
+   *   Noms complets des sigles de service ; par défaut ceux de la configuration.
    *
    * @return array
    *   Le résultat de ListeParser::analyser().
@@ -55,9 +57,11 @@ class Importeur {
    * @throws \InvalidArgumentException
    *   Si le fichier est illisible ou sans en-tête reconnu.
    */
-  public function analyser(string $chemin, string $nom, ?array $exclusions = NULL): array {
-    $exclusions ??= $this->configFactory->get('mersch_annuaire.settings')->get('exclusions') ?? [];
-    return $this->parser->analyser($this->lecteur->lire($chemin, $nom), $exclusions);
+  public function analyser(string $chemin, string $nom, ?array $exclusions = NULL, ?array $sigles = NULL): array {
+    $config = $this->configFactory->get('mersch_annuaire.settings');
+    $exclusions ??= $config->get('exclusions') ?? [];
+    $sigles ??= array_column($config->get('sigles') ?? [], 'nom', 'sigle');
+    return $this->parser->analyser($this->lecteur->lire($chemin, $nom), $exclusions, $sigles);
   }
 
   /**
