@@ -124,7 +124,7 @@ class ListeParserTest extends UnitTestCase {
   public function testSigles(): void {
     $resultat = $this->parser->analyser([
       self::ENTETE,
-      ['A Un', '', '', '', '', 'ST - Chef', '', ''],
+      ['A Un', '', '', '', '', 'ST - chef', '', ''],
       ['B Deux', '', '', '', '', 'st', '', ''],
       ['C Trois', '', '', '', '', 'STEP', '', ''],
     ], [], ['ST' => 'Service technique']);

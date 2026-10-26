@@ -202,12 +202,13 @@ class ListeParser {
   }
 
   /**
-   * Nettoie un service : espaces et séparateur « - » homogènes, sigle de
-   * tête remplacé par son nom complet (« ST - Chef » devient
-   * « Service technique - Chef »).
+   * Nettoie un service : espaces et séparateur « - » homogènes, majuscule
+   * en tête de chaque partie, sigle de tête remplacé par son nom complet
+   * (« ST - chef » devient « Service technique - Chef »).
    */
   private function nettoyerService(string $service, array $sigles): string {
     $parties = explode(' - ', trim(preg_replace('/\s*-\s*/u', ' - ', $service), ' -'));
+    $parties = array_map(fn (string $partie) => mb_strtoupper(mb_substr($partie, 0, 1)) . mb_substr($partie, 1), $parties);
     foreach ($sigles as $sigle => $nom) {
       if (mb_strtoupper($parties[0]) === mb_strtoupper($sigle)) {
         $parties[0] = $nom;

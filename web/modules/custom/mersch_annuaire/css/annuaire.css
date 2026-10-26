@@ -33,6 +33,8 @@
 .mersch-annuaire__table {
   width: 100%;
   border-collapse: collapse;
+  /* Mêmes largeurs de colonnes dans tous les services. */
+  table-layout: fixed;
   margin-bottom: 24px;
 }
 
@@ -49,11 +51,25 @@
   font-size: 13px;
 }
 
-.mersch-annuaire__table td:first-child {
+.mersch-annuaire__table th:nth-child(1) {
+  width: 28%;
+}
+
+.mersch-annuaire__table th:nth-child(2),
+.mersch-annuaire__table th:nth-child(3) {
+  width: 13%;
+}
+
+.mersch-annuaire__table th:nth-child(4) {
   width: 30%;
 }
 
-.mersch-annuaire__table a {
+.mersch-annuaire__table td {
+  overflow-wrap: anywhere;
+}
+
+.mersch-annuaire__table td:nth-child(2) a,
+.mersch-annuaire__table td:nth-child(3) a {
   white-space: nowrap;
 }
 
@@ -81,8 +97,8 @@
     padding: 8px 0;
   }
 
-  .mersch-annuaire__table td:first-child {
-    width: auto;
+  .mersch-annuaire__table {
+    table-layout: auto;
   }
 }
 
