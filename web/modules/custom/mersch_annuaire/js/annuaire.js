@@ -37,6 +37,13 @@
             ? Drupal.formatPlural(trouves, '1 staff member found', '@count staff members found')
             : Drupal.t('@count staff members', { '@count': compte.dataset.total });
         });
+
+        // Recherche lancée depuis l'accueil : /annuaire?q=texte.
+        const q = new URLSearchParams(window.location.search).get('q');
+        if (q) {
+          champ.value = q;
+          champ.dispatchEvent(new Event('input'));
+        }
       });
     },
   };
