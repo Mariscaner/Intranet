@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: mersch_portrait
+label: 'Portrait (HR news)'
+effects:
+  7c0f6a3e-2d1b-4d43-9a8e-5f0c3c1e8a11:
+    uuid: 7c0f6a3e-2d1b-4d43-9a8e-5f0c3c1e8a11
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 400
+      height: 400
+      anchor: center-top

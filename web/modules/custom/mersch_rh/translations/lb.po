@@ -1,0 +1,174 @@
+# Traductions de l'interface de la page RH (module mersch_rh).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "New faces"
+msgstr "Nei Gesiichter"
+
+msgid "At the service of the departments and the citizens"
+msgstr "Am Déngscht vun de Servicer an de Bierger"
+
+msgid "Thank you!"
+msgstr "Merci!"
+
+msgid "We wish you a happy retirement"
+msgstr "Mir wënschen eng schéi Pensioun"
+
+msgid "Staff news"
+msgstr "Neiegkeeten aus dem Personal"
+
+msgid "Organisation chart"
+msgstr "Organigramm"
+
+msgid "Updated on @date."
+msgstr "Aktualiséiert den @date."
+
+msgid "Open in full screen"
+msgstr "Am ganze Bildschierm opmaachen"
+
+msgid "Download"
+msgstr "Eroflueden"
+
+msgid "image"
+msgstr "Bild"
+
+msgid "Zoom with the + and − buttons of the viewer. To print, open the chart in full screen, then Ctrl+P and “Fit to page”."
+msgstr "Mat de Knäppercher + a − vum Viewer vergréisseren. Fir ze drécken: d'Organigramm am ganze Bildschierm opmaachen, dann Ctrl+P an „Un d'Säit upassen“."
+
+msgid "HR has not uploaded the organisation chart yet."
+msgstr "De Personalservice huet d'Organigramm nach net eropgelueden."
+
+msgid "Translation not available"
+msgstr "Iwwersetzung net disponibel"
+
+msgid "Edit"
+msgstr "Änneren"
+
+msgid "No news at the moment."
+msgstr "Momentan keng Neiegkeeten."
+
+msgid "HR communications"
+msgstr "Matdeelunge vum Personalservice"
+
+msgid "No communication at the moment."
+msgstr "Momentan keng Matdeelung."
+
+msgid "Replace the organisation chart"
+msgstr "Organigramm ersetzen"
+
+msgid "Add HR news"
+msgstr "Neiegkeet derbäisetzen"
+
+msgid "Add HR communication"
+msgstr "Matdeelung derbäisetzen"
+
+msgid "Current organisation chart"
+msgstr "Aktuellt Organigramm"
+
+msgid "%fichier, uploaded on @date."
+msgstr "%fichier, eropgelueden den @date."
+
+msgid "None yet."
+msgstr "Nach keent."
+
+msgid "New organisation chart"
+msgstr "Neit Organigramm"
+
+msgid "The PDF supplied by HR (or a PNG or JPG image), at most @taille. It replaces the current chart, which is deleted: there is no archive."
+msgstr "De PDF vum Personalservice (oder e PNG- oder JPG-Bild), maximal @taille. Et ersetzt dat aktuellt Organigramm, dat geläscht gëtt: et gëtt keen Archiv."
+
+msgid "Replace"
+msgstr "Ersetzen"
+
+msgid "The organisation chart has been replaced."
+msgstr "D'Organigramm gouf ersat."
+
+msgid "The text has @mots words; the news template recommends 80 to 150 (D-023)."
+msgstr "Den Text huet @mots Wierder; d'Virlag fir Neiegkeeten empfeelt 80 bis 150 (D-023)."
+
+msgid "The text has @mots words; the maximum is 150 (D-023)."
+msgstr "Den Text huet @mots Wierder; maximal sinn 150 erlaabt (D-023)."
+
+msgid "A new face, a retirement or a photo requires the written consent of the person concerned (D-023)."
+msgstr "Fir en neit Gesiicht, eng Pensioun oder eng Foto brauch een d'schrëftlecht Averständnis vun der betraffener Persoun (D-023)."
+
+msgid "Upload the organisation chart"
+msgstr "Organigramm eroplueden"
+
+msgid "HR news"
+msgstr "Neiegkeet vum Personalservice"
+
+msgid "New staff, retirements and other staff news on the HR page (US-13): title, 80 to 150 words, optional photo (D-023)."
+msgstr "Nei Mataarbechter, Pensiounen an aner Neiegkeeten op der Säit vum Personalservice: Titel, 80 bis 150 Wierder, Foto fakultativ (D-023)."
+
+msgid "Naming a person or showing a photo requires their written consent (D-023)."
+msgstr "Eng Persoun nennen oder eng Foto weisen geet nëmme mat hirem schrëftlechen Averständnis (D-023)."
+
+msgid "HR communication"
+msgstr "Matdeelung vum Personalservice"
+
+msgid "Official HR notes and circulars with a PDF attachment (US-14)."
+msgstr "Offiziell Noten a Rondschreiwe vum Personalservice mat engem PDF."
+
+msgid "New face"
+msgstr "Neit Gesiicht"
+
+msgid "Retirement"
+msgstr "Pensioun"
+
+msgid "Other news"
+msgstr "Aner Neiegkeet"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Between 80 and 150 words (D-023)."
+msgstr "Tëscht 80 a 150 Wierder (D-023)."
+
+msgid "Short summary of the document."
+msgstr "Kuerz Zesummefaassung vum Dokument."
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "New faces and retirements are grouped under their own heading on the HR page."
+msgstr "Nei Gesiichter a Pensioune stinn op der Säit vum Personalservice ënner hirer eegener Iwwerschrëft."
+
+msgid "Department"
+msgstr "Service"
+
+msgid "For example: Service de régie / Voirie."
+msgstr "Zum Beispill: Service de régie / Voirie."
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Optional. Only with the written consent of the person shown (D-023)."
+msgstr "Fakultativ. Nëmme mam schrëftlechen Averständnis vun der Persoun op der Foto (D-023)."
+
+msgid "Written consent obtained"
+msgstr "Schrëftlecht Averständnis kritt"
+
+msgid "Required for a new face, a retirement or any news with a photo (D-023)."
+msgstr "Obligatoresch fir en neit Gesiicht, eng Pensioun oder all Neiegkeet mat Foto (D-023)."
+
+msgid "End of publication"
+msgstr "Enn vun der Publikatioun"
+
+msgid "Optional. From the day after this date, the news no longer appears on the HR page."
+msgstr "Fakultativ. Vum Dag no dësem Datum un ass d'Neiegkeet net méi op der Säit vum Personalservice."
+
+msgid "PDF document"
+msgstr "PDF-Dokument"
+
+msgid "The note or circular, as a PDF."
+msgstr "D'Notiz oder de Rondschreiwen, als PDF."
+
+msgid "HR editor"
+msgstr "Redakter Personalservice"
+
+msgid "Simple text"
+msgstr "Einfachen Text"

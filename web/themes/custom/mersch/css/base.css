@@ -204,3 +204,33 @@ input:focus-visible {
   font-size: 13px;
   color: var(--mersch-texte-2);
 }
+
+/* Actions des rédacteurs (ex. « Ajouter une nouvelle RH ») : boutons discrets */
+#block-mersch-actions nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+#block-mersch-actions li {
+  list-style: none;
+}
+
+#block-mersch-actions a {
+  display: inline-block;
+  padding: 7px 12px;
+  border: 1px solid var(--mersch-bleu);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#block-mersch-actions a::before {
+  content: "+ ";
+}
+
+#block-mersch-actions a:hover {
+  background: var(--mersch-fond-2);
+}

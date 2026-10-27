@@ -1,0 +1,63 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.rh_communication.field_rh_pdf
+  - field.field.node.rh_communication.field_rh_texte
+  - node.type.rh_communication
+  module:
+  - content_translation
+  - file
+  - text
+id: node.rh_communication.default
+targetEntityType: node
+bundle: rh_communication
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_texte:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 4
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_pdf:
+    type: file_generic
+    weight: 2
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {}
+  langcode:
+    type: language_select
+    weight: 3
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {}
+  translation:
+    weight: 4
+    region: content
+    settings: {}
+    third_party_settings: {}
+  status:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {}
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true

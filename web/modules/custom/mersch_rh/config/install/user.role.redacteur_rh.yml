@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.mersch_simple
+    - node.type.rh_communication
+    - node.type.rh_nouvelle
+  module:
+    - content_translation
+    - filter
+    - mersch_rh
+    - node
+    - system
+id: redacteur_rh
+label: 'HR editor'
+weight: 3
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access content overview'
+  - 'create content translations'
+  - 'create rh_communication content'
+  - 'create rh_nouvelle content'
+  - 'deposer organigramme mersch'
+  - 'edit any rh_communication content'
+  - 'edit any rh_nouvelle content'
+  - 'translate rh_communication node'
+  - 'translate rh_nouvelle node'
+  - 'update content translations'
+  - 'use text format mersch_simple'
+  - 'view own unpublished content'
+  - 'view rh_communication revisions'
+  - 'view rh_nouvelle revisions'
+  - 'view the administration theme'

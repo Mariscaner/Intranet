@@ -1,0 +1,9 @@
+# La page /rh elle-même est la route mersch_accueil.rh, dont le contrôleur
+# est remplacé par RouteSubscriber : le menu principal reste inchangé.
+mersch_rh.organigramme:
+  path: '/rh/organigramme'
+  defaults:
+    _form: '\Drupal\mersch_rh\Form\OrganigrammeForm'
+    _title: 'Replace the organisation chart'
+  requirements:
+    _permission: 'deposer organigramme mersch'

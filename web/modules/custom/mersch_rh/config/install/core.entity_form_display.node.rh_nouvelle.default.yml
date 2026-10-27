@@ -1,0 +1,98 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.rh_nouvelle.field_rh_accord
+  - field.field.node.rh_nouvelle.field_rh_categorie
+  - field.field.node.rh_nouvelle.field_rh_fin_publication
+  - field.field.node.rh_nouvelle.field_rh_photo
+  - field.field.node.rh_nouvelle.field_rh_service
+  - field.field.node.rh_nouvelle.field_rh_texte
+  - image.style.mersch_portrait
+  - node.type.rh_nouvelle
+  module:
+  - content_translation
+  - datetime
+  - image
+  - options
+  - text
+id: node.rh_nouvelle.default
+targetEntityType: node
+bundle: rh_nouvelle
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_categorie:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_rh_service:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_texte:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 8
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_photo:
+    type: image_image
+    weight: 4
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: mersch_portrait
+    third_party_settings: {}
+  field_rh_accord:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {}
+  field_rh_fin_publication:
+    type: datetime_default
+    weight: 6
+    region: content
+    settings: {}
+    third_party_settings: {}
+  langcode:
+    type: language_select
+    weight: 7
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {}
+  translation:
+    weight: 8
+    region: content
+    settings: {}
+    third_party_settings: {}
+  status:
+    type: boolean_checkbox
+    weight: 9
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {}
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true

@@ -1,0 +1,9 @@
+services:
+  mersch_rh.organigramme:
+    class: Drupal\mersch_rh\Organigramme
+    arguments: ['@state', '@entity_type.manager', '@file.usage', '@cache_tags.invalidator', '@datetime.time']
+  Drupal\mersch_rh\Organigramme: '@mersch_rh.organigramme'
+  mersch_rh.route_subscriber:
+    class: Drupal\mersch_rh\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

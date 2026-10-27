@@ -1,0 +1,17 @@
+name: 'RH Mersch'
+type: module
+description: 'Page RH : organigramme déposé par les rédacteurs RH, nouvelles du personnel et communications RH (US-12 à US-14).'
+package: Mersch
+core_version_requirement: ^11
+dependencies:
+  - drupal:content_translation
+  - drupal:datetime
+  - drupal:file
+  - drupal:filter
+  - drupal:image
+  - drupal:node
+  - drupal:options
+  - drupal:text
+  - mersch_accueil:mersch_accueil
+'interface translation project': mersch_rh
+'interface translation server pattern': modules/custom/mersch_rh/translations/%language.po

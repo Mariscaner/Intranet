@@ -1,0 +1,174 @@
+# Traductions de l'interface de la page RH (module mersch_rh).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "New faces"
+msgstr "Neue Gesichter"
+
+msgid "At the service of the departments and the citizens"
+msgstr "Im Dienst der Abteilungen und der Bürger"
+
+msgid "Thank you!"
+msgstr "Danke!"
+
+msgid "We wish you a happy retirement"
+msgstr "Wir wünschen einen schönen Ruhestand"
+
+msgid "Staff news"
+msgstr "Neuigkeiten aus dem Personal"
+
+msgid "Organisation chart"
+msgstr "Organigramm"
+
+msgid "Updated on @date."
+msgstr "Aktualisiert am @date."
+
+msgid "Open in full screen"
+msgstr "Im Vollbild öffnen"
+
+msgid "Download"
+msgstr "Herunterladen"
+
+msgid "image"
+msgstr "Bild"
+
+msgid "Zoom with the + and − buttons of the viewer. To print, open the chart in full screen, then Ctrl+P and “Fit to page”."
+msgstr "Mit den Schaltflächen + und − des Betrachters zoomen. Zum Drucken das Organigramm im Vollbild öffnen, dann Strg+P und „An Seite anpassen“."
+
+msgid "HR has not uploaded the organisation chart yet."
+msgstr "Die Personalabteilung hat das Organigramm noch nicht hochgeladen."
+
+msgid "Translation not available"
+msgstr "Übersetzung nicht verfügbar"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "No news at the moment."
+msgstr "Zurzeit keine Neuigkeiten."
+
+msgid "HR communications"
+msgstr "Mitteilungen der Personalabteilung"
+
+msgid "No communication at the moment."
+msgstr "Zurzeit keine Mitteilung."
+
+msgid "Replace the organisation chart"
+msgstr "Organigramm ersetzen"
+
+msgid "Add HR news"
+msgstr "Neuigkeit hinzufügen"
+
+msgid "Add HR communication"
+msgstr "Mitteilung hinzufügen"
+
+msgid "Current organisation chart"
+msgstr "Aktuelles Organigramm"
+
+msgid "%fichier, uploaded on @date."
+msgstr "%fichier, hochgeladen am @date."
+
+msgid "None yet."
+msgstr "Noch keines."
+
+msgid "New organisation chart"
+msgstr "Neues Organigramm"
+
+msgid "The PDF supplied by HR (or a PNG or JPG image), at most @taille. It replaces the current chart, which is deleted: there is no archive."
+msgstr "Das PDF der Personalabteilung (oder ein PNG- oder JPG-Bild), höchstens @taille. Es ersetzt das aktuelle Organigramm, das gelöscht wird: Es gibt kein Archiv."
+
+msgid "Replace"
+msgstr "Ersetzen"
+
+msgid "The organisation chart has been replaced."
+msgstr "Das Organigramm wurde ersetzt."
+
+msgid "The text has @mots words; the news template recommends 80 to 150 (D-023)."
+msgstr "Der Text hat @mots Wörter; die Vorlage für Neuigkeiten empfiehlt 80 bis 150 (D-023)."
+
+msgid "The text has @mots words; the maximum is 150 (D-023)."
+msgstr "Der Text hat @mots Wörter; erlaubt sind höchstens 150 (D-023)."
+
+msgid "A new face, a retirement or a photo requires the written consent of the person concerned (D-023)."
+msgstr "Für ein neues Gesicht, einen Ruhestand oder ein Foto ist die schriftliche Einwilligung der betroffenen Person erforderlich (D-023)."
+
+msgid "Upload the organisation chart"
+msgstr "Organigramm hochladen"
+
+msgid "HR news"
+msgstr "Neuigkeit der Personalabteilung"
+
+msgid "New staff, retirements and other staff news on the HR page (US-13): title, 80 to 150 words, optional photo (D-023)."
+msgstr "Neue Mitarbeitende, Ruhestände und andere Neuigkeiten auf der Seite der Personalabteilung: Titel, 80 bis 150 Wörter, Foto freiwillig (D-023)."
+
+msgid "Naming a person or showing a photo requires their written consent (D-023)."
+msgstr "Eine Person nennen oder ein Foto zeigen ist nur mit ihrer schriftlichen Einwilligung erlaubt (D-023)."
+
+msgid "HR communication"
+msgstr "Mitteilung der Personalabteilung"
+
+msgid "Official HR notes and circulars with a PDF attachment (US-14)."
+msgstr "Offizielle Notizen und Rundschreiben der Personalabteilung mit einem PDF."
+
+msgid "New face"
+msgstr "Neues Gesicht"
+
+msgid "Retirement"
+msgstr "Ruhestand"
+
+msgid "Other news"
+msgstr "Andere Neuigkeit"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Between 80 and 150 words (D-023)."
+msgstr "Zwischen 80 und 150 Wörtern (D-023)."
+
+msgid "Short summary of the document."
+msgstr "Kurze Zusammenfassung des Dokuments."
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "New faces and retirements are grouped under their own heading on the HR page."
+msgstr "Neue Gesichter und Ruhestände stehen auf der Seite der Personalabteilung unter einer eigenen Überschrift."
+
+msgid "Department"
+msgstr "Abteilung"
+
+msgid "For example: Service de régie / Voirie."
+msgstr "Zum Beispiel: Service de régie / Voirie."
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Optional. Only with the written consent of the person shown (D-023)."
+msgstr "Freiwillig. Nur mit der schriftlichen Einwilligung der abgebildeten Person (D-023)."
+
+msgid "Written consent obtained"
+msgstr "Schriftliche Einwilligung liegt vor"
+
+msgid "Required for a new face, a retirement or any news with a photo (D-023)."
+msgstr "Pflicht für ein neues Gesicht, einen Ruhestand oder jede Neuigkeit mit Foto (D-023)."
+
+msgid "End of publication"
+msgstr "Ende der Veröffentlichung"
+
+msgid "Optional. From the day after this date, the news no longer appears on the HR page."
+msgstr "Freiwillig. Ab dem Tag nach diesem Datum erscheint die Neuigkeit nicht mehr auf der Seite der Personalabteilung."
+
+msgid "PDF document"
+msgstr "PDF-Dokument"
+
+msgid "The note or circular, as a PDF."
+msgstr "Die Notiz oder das Rundschreiben als PDF."
+
+msgid "HR editor"
+msgstr "Redakteur Personalabteilung"
+
+msgid "Simple text"
+msgstr "Einfacher Text"

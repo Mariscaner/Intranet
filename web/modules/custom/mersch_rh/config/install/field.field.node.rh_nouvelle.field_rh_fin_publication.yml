@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_fin_publication
+  - node.type.rh_nouvelle
+  module:
+  - datetime
+id: node.rh_nouvelle.field_rh_fin_publication
+field_name: field_rh_fin_publication
+entity_type: node
+bundle: rh_nouvelle
+label: End of publication
+description: Optional. From the day after this date, the news no longer appears on
+  the HR page.
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: datetime
