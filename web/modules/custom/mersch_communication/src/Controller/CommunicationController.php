@@ -90,27 +90,29 @@ class CommunicationController extends ControllerBase {
   }
 
   /**
+   * Dernières nouvelles pour l'accueil (hook_mersch_accueil_nouvelles()).
+   */
+  public function dernieres(int $limite, CacheableMetadata $cache): array {
+    $cache->addCacheTags(['node_list:' . self::TYPE, self::CACHE_TAG_JOUR]);
+    $dernieres = [];
+    foreach ($this->charger($this->idsNouvelles($limite)) as $node) {
+      $cache->addCacheableDependency($node);
+      $dernieres[] = [
+        'titre' => $this->entityRepository->getTranslationFromContext($node)->label(),
+        'created' => (int) $node->getCreatedTime(),
+        'rubrique' => 'communication',
+      ];
+    }
+    return $dernieres;
+  }
+
+  /**
    * Nouvelles publiées et non échues, plus récentes d'abord.
    */
   private function nouvelles(CacheableMetadata $cache): array {
-    $aujourdhui = $this->dateFormatter->format($this->time->getRequestTime(), 'custom', 'Y-m-d');
-    $storage = $this->entityTypeManager()->getStorage('node');
-    $query = $storage->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('type', self::TYPE)
-      ->condition('status', NodeInterface::PUBLISHED);
-    $fin = $query->orConditionGroup()
-      ->notExists('field_comm_fin_publication')
-      ->condition('field_comm_fin_publication', $aujourdhui, '>=');
-    $ids = $query->condition($fin)
-      ->sort('created', 'DESC')
-      ->sort('nid', 'DESC')
-      ->range(0, self::LIMITE)
-      ->execute();
-
     $langue = $this->languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
     $nouvelles = [];
-    foreach ($ids ? $storage->loadMultiple($ids) : [] as $node) {
+    foreach ($this->charger($this->idsNouvelles(self::LIMITE)) as $node) {
       $cache->addCacheableDependency($node);
       $traduction = $this->entityRepository->getTranslationFromContext($node);
       $texte = $traduction->get('field_comm_texte');
@@ -136,6 +138,34 @@ class CommunicationController extends ControllerBase {
       ];
     }
     return $nouvelles;
+  }
+
+  /**
+   * Identifiants des nouvelles publiées et non échues, plus récentes d'abord.
+   */
+  private function idsNouvelles(int $limite): array {
+    $aujourdhui = $this->dateFormatter->format($this->time->getRequestTime(), 'custom', 'Y-m-d');
+    $query = $this->entityTypeManager()->getStorage('node')->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', self::TYPE)
+      ->condition('status', NodeInterface::PUBLISHED);
+    $fin = $query->orConditionGroup()
+      ->notExists('field_comm_fin_publication')
+      ->condition('field_comm_fin_publication', $aujourdhui, '>=');
+    return $query->condition($fin)
+      ->sort('created', 'DESC')
+      ->sort('nid', 'DESC')
+      ->range(0, $limite)
+      ->execute();
+  }
+
+  /**
+   * Charge des contenus dans l'ordre des identifiants.
+   *
+   * @return \Drupal\node\NodeInterface[]
+   */
+  private function charger(array $ids): array {
+    return $ids ? array_values($this->entityTypeManager()->getStorage('node')->loadMultiple($ids)) : [];
   }
 
   /**

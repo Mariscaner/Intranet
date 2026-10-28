@@ -6,6 +6,7 @@ namespace Drupal\Tests\mersch_rh\Kernel;
 
 use Drupal\file\Entity\File;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\mersch_accueil\Controller\AccueilController;
 use Drupal\mersch_rh\Controller\RhController;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\mersch_rh\Organigramme;
@@ -164,6 +165,10 @@ class PageRhTest extends KernelTestBase {
     $this->assertContains('node_list:rh_nouvelle', $page['#cache']['tags']);
     $this->assertContains('node_list:rh_poste', $page['#cache']['tags']);
     $this->assertContains(RhController::CACHE_TAG_JOUR, $page['#cache']['tags']);
+
+    $accueil = AccueilController::create($this->container)->accueil();
+    $this->assertSame(['Luc REISCH', 'Pol KUGENER', 'Ancien'], array_column($accueil['#nouvelles'], 'titre'));
+    $this->assertSame('rh', $accueil['#nouvelles'][0]['rubrique']['cle']);
   }
 
   /**

@@ -6,6 +6,7 @@ namespace Drupal\mersch_accueil\Controller;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\Core\Url;
 use Drupal\mersch_accueil\Entity\LienRapide;
@@ -20,8 +21,14 @@ class AccueilController extends ControllerBase {
    */
   private const ROUTE_ANNUAIRE = 'mersch_annuaire.annuaire';
 
+  /**
+   * Nombre de nouvelles affichées sur l'accueil, toutes rubriques confondues.
+   */
+  public const NOUVELLES = 3;
+
   public function __construct(
     private readonly RouteProviderInterface $routeProvider,
+    private readonly DateFormatterInterface $dateFormatter,
   ) {}
 
   /**
@@ -43,19 +50,40 @@ class AccueilController extends ControllerBase {
     }
 
     $annuaire = $this->annuaireDisponible() ? Url::fromRoute(self::ROUTE_ANNUAIRE)->toString() : NULL;
+    $cache = (new CacheableMetadata())
+      ->addCacheTags(['config:mersch_lien_rapide_list'])
+      ->addCacheContexts(['languages:language_interface', 'languages:language_content', 'user.permissions']);
+    $rubriques = $this->rubriques();
 
     $build = [
       '#theme' => 'mersch_accueil',
       '#liens' => $liens,
       '#annuaire' => $annuaire,
-      '#rubriques' => $this->rubriques(),
+      '#rubriques' => $rubriques,
+      '#nouvelles' => $this->nouvelles($rubriques, $cache),
       '#attached' => ['library' => ['mersch_accueil/accueil']],
     ];
-    (new CacheableMetadata())
-      ->addCacheTags(['config:mersch_lien_rapide_list'])
-      ->addCacheContexts(['languages:language_interface'])
-      ->applyTo($build);
+    $cache->applyTo($build);
     return $build;
+  }
+
+  /**
+   * Dernières nouvelles des rubriques, plus récentes d'abord, d'après la
+   * maquette. Chaque module de rubrique fournit les siennes
+   * (hook_mersch_accueil_nouvelles()).
+   */
+  private function nouvelles(array $rubriques, CacheableMetadata $cache): array {
+    $nouvelles = [];
+    $this->moduleHandler()->invokeAllWith('mersch_accueil_nouvelles', function (callable $hook) use (&$nouvelles, $cache) {
+      array_push($nouvelles, ...$hook(self::NOUVELLES, $cache));
+    });
+    usort($nouvelles, fn (array $a, array $b) => $b['created'] <=> $a['created']);
+
+    return array_map(fn (array $nouvelle) => [
+      'titre' => $nouvelle['titre'],
+      'date' => $this->dateFormatter->format($nouvelle['created'], 'custom', 'd.m.Y'),
+      'rubrique' => $rubriques[$nouvelle['rubrique']] ?? NULL,
+    ], array_slice($nouvelles, 0, self::NOUVELLES));
   }
 
   /**

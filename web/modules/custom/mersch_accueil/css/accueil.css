@@ -65,7 +65,7 @@
   overflow-wrap: anywhere;
 }
 
-/* Annuaire et rubriques */
+/* Annuaire, dernières nouvelles et rubriques */
 .mersch-accueil__grille {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -149,6 +149,44 @@
   padding: 16px;
   background: var(--mersch-fond-2, #f3f4f8);
   border-radius: 4px;
+}
+
+.mersch-accueil__colonne {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
+.mersch-accueil__liste-nouvelles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Couleur de la rubrique en filet, comme la liste des rubriques. */
+.mersch-accueil__liste-nouvelles li {
+  border-left: 6px solid var(--mersch-ligne, #d9dce8);
+  padding: 6px 0 6px 12px;
+  margin-bottom: 10px;
+}
+
+.mersch-accueil__liste-nouvelles li[data-rubrique="rh"] {
+  border-color: var(--mersch-rh, #c1ad76);
+}
+
+.mersch-accueil__liste-nouvelles li[data-rubrique="communication"] {
+  border-color: var(--mersch-communication, #f08372);
+}
+
+.mersch-accueil__liste-nouvelles a {
+  display: block;
+  font-weight: bold;
+}
+
+.mersch-accueil__meta {
+  display: block;
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
 }
 
 @media (max-width: 860px) {

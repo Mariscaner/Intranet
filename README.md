@@ -49,6 +49,7 @@ Le premier `composer install` crée `composer.lock` : il faut le committer.
 Le module `mersch_accueil` fournit la page d'accueil (`/accueil`, déclarée page d'accueil du site à l'installation), d'après la maquette validée :
 - liens rapides DSKNet, GESCOM, Helpdesk et mersch.lu, ouverts dans un nouvel onglet (US-10) ;
 - recherche dans l'annuaire, qui ouvre `/annuaire?q=…` avec le champ déjà rempli, et lien vers l'annuaire complet (affichés seulement si `mersch_annuaire` est installé) ;
+- « Dernières nouvelles » : les 3 nouvelles les plus récentes des rubriques RH et Communication, avec leur date et leur rubrique (chaque module de rubrique les fournit par `hook_mersch_accueil_nouvelles()`, voir `mersch_accueil.api.php`) ;
 - accès aux rubriques RH, Communication et Guides IT, aussi présentes dans le menu principal (US-03) ; `/rh`, `/communication` et `/guides-it` affichent une page d'attente tant que les rubriques ne sont pas construites ;
 - boutons LU / DE / FR en haut à droite (US-02) : le module crée les trois langues, met le luxembourgeois par défaut (adresses sans préfixe, `/de/…` et `/fr/…` pour les traductions).
 

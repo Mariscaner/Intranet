@@ -6,6 +6,7 @@ namespace Drupal\Tests\mersch_communication\Kernel;
 
 use Drupal\file\Entity\File;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\mersch_accueil\Controller\AccueilController;
 use Drupal\mersch_communication\Controller\CommunicationController;
 use Drupal\mersch_communication\Plugin\Validation\Constraint\NouvelleCommunicationConstraintValidator;
 use Drupal\node\Entity\Node;
@@ -105,6 +106,22 @@ class PageCommunicationTest extends KernelTestBase {
     $this->assertContains('node_list:comm_nouvelle', $page['#cache']['tags']);
     $this->assertContains('config:mersch_communication.settings', $page['#cache']['tags']);
     $this->assertContains(CommunicationController::CACHE_TAG_JOUR, $page['#cache']['tags']);
+  }
+
+  /**
+   * L'accueil affiche les 3 dernières nouvelles, avec leur rubrique.
+   */
+  public function testAccueil(): void {
+    $this->setCurrentUser($this->createUser(['access content']));
+    foreach ([1000, 4000, 2000, 3000] as $created) {
+      $this->nouvelle('Nouvelle ' . $created, created: $created);
+    }
+    $this->nouvelle('Échue', fin: '2020-01-01');
+
+    $accueil = AccueilController::create($this->container)->accueil();
+    $this->assertSame(['Nouvelle 4000', 'Nouvelle 3000', 'Nouvelle 2000'], array_column($accueil['#nouvelles'], 'titre'));
+    $this->assertSame('communication', $accueil['#nouvelles'][0]['rubrique']['cle']);
+    $this->assertContains('node_list:comm_nouvelle', $accueil['#cache']['tags']);
   }
 
   /**

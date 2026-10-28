@@ -13,7 +13,7 @@ declare(strict_types=1);
 function mersch_accueil_theme(): array {
   return [
     'mersch_accueil' => [
-      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => []],
+      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => [], 'nouvelles' => []],
     ],
     'mersch_rubrique' => [
       'variables' => ['rubrique' => []],

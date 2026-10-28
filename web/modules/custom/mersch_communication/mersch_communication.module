@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\mersch_communication\Controller\CommunicationController;
 
 /**
@@ -65,4 +66,11 @@ function mersch_communication_cron(): void {
     \Drupal::service('cache_tags.invalidator')->invalidateTags([CommunicationController::CACHE_TAG_JOUR]);
     $state->set('mersch_communication.jour', $jour);
   }
+}
+
+/**
+ * Implements hook_mersch_accueil_nouvelles().
+ */
+function mersch_communication_mersch_accueil_nouvelles(int $limite, CacheableMetadata $cache): array {
+  return \Drupal::classResolver(CommunicationController::class)->dernieres($limite, $cache);
 }
