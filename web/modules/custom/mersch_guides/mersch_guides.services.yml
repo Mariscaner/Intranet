@@ -1,0 +1,9 @@
+services:
+  mersch_guides.import:
+    class: Drupal\mersch_guides\ImportGuides
+    arguments: ['@entity_type.manager', '@file_system']
+  Drupal\mersch_guides\ImportGuides: '@mersch_guides.import'
+  mersch_guides.route_subscriber:
+    class: Drupal\mersch_guides\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

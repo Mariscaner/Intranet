@@ -1,0 +1,16 @@
+name: 'Guides IT Mersch'
+type: module
+description: 'Page Guides IT : guides informatiques par catégorie, recherche par mot-clé, lien vers le helpdesk (US-19 à US-21). Publiés par les administrateurs (D-007).'
+package: Mersch
+core_version_requirement: ^11
+dependencies:
+  - drupal:content_translation
+  - drupal:file
+  - drupal:filter
+  - drupal:image
+  - drupal:node
+  - drupal:options
+  - drupal:text
+  - mersch_accueil:mersch_accueil
+'interface translation project': mersch_guides
+'interface translation server pattern': modules/custom/mersch_guides/translations/%language.po

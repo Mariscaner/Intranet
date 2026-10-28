@@ -1,0 +1,139 @@
+# Traductions de l'interface de la page Guides IT (module mersch_guides).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Solve a problem yourself, or ask IT Hëllef vu Miersch."
+msgstr "Lösen Sie ein Problem selbst oder fragen Sie IT Hëllef vu Miersch."
+
+msgid "IT guides"
+msgstr "IT-Anleitungen"
+
+msgid "IT guide"
+msgstr "IT-Anleitung"
+
+msgid "Helpdesk"
+msgstr "Helpdesk"
+
+msgid "Applications"
+msgstr "Anwendungen"
+
+msgid "Email and calendar"
+msgstr "E-Mail und Kalender"
+
+msgid "Security and accounts"
+msgstr "Sicherheit und Konten"
+
+msgid "Hardware and software"
+msgstr "Hardware und Software"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Search a guide"
+msgstr "Eine Anleitung suchen"
+
+msgid "Keyword: password, DSKNet, Outlook…"
+msgstr "Stichwort: Passwort, DSKNet, Outlook…"
+
+msgid "@count guides"
+msgstr "@count Anleitungen"
+
+msgid "Translation not available"
+msgstr "Übersetzung nicht verfügbar"
+
+msgid "Open the PDF"
+msgstr "PDF öffnen"
+
+msgid "(opens in a new tab)"
+msgstr "(öffnet in einem neuen Tab)"
+
+msgid "Read the guide"
+msgstr "Anleitung lesen"
+
+msgid "Updated @date"
+msgstr "Aktualisiert @date"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "No guide found."
+msgstr "Keine Anleitung gefunden."
+
+msgid "No suitable guide? Open a ticket at the Helpdesk."
+msgstr "Keine passende Anleitung? Öffnen Sie ein Ticket beim Helpdesk."
+
+msgid "Open the guide (PDF, @size)"
+msgstr "Anleitung öffnen (PDF, @size)"
+
+msgid "Last updated on @date"
+msgstr "Aktualisiert am @date"
+
+msgid "Still stuck? Open a ticket at the Helpdesk."
+msgstr "Immer noch blockiert? Öffnen Sie ein Ticket beim Helpdesk."
+
+msgid "All IT guides"
+msgstr "Alle IT-Anleitungen"
+
+msgid "Add a guide"
+msgstr "Anleitung hinzufügen"
+
+msgid "Category and summary"
+msgstr "Kategorie und Zusammenfassung"
+
+msgid "PDF, last update and helpdesk"
+msgstr "PDF, letzte Aktualisierung und Helpdesk"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+msgid "Keywords"
+msgstr "Stichwörter"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Screenshots"
+msgstr "Bildschirmfotos"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Used to filter the guides on the IT guides page (US-19)."
+msgstr "Zum Filtern der Anleitungen auf der Seite IT-Anleitungen (US-19)."
+
+msgid "One sentence shown on the guide card, at most 200 characters."
+msgstr "Ein Satz auf der Karte der Anleitung, höchstens 200 Zeichen."
+
+msgid "Optional. Extra words for the search, separated by spaces (e.g. password Passwuert Passwort)."
+msgstr "Optional. Weitere Wörter für die Suche, durch Leerzeichen getrennt (z. B. password Passwuert Passwort)."
+
+msgid "The procedure step by step. A text or a PDF is required (US-21)."
+msgstr "Die Vorgehensweise Schritt für Schritt. Ein Text oder ein PDF ist erforderlich (US-21)."
+
+msgid "Optional, shown below the text. Hide every password, user name and personal data first (US-20)."
+msgstr "Optional, unter dem Text. Vorher alle Passwörter, Benutzernamen und personenbezogenen Daten unkenntlich machen (US-20)."
+
+msgid "The guide as a PDF. A text or a PDF is required (US-21)."
+msgstr "Die Anleitung als PDF. Ein Text oder ein PDF ist erforderlich (US-21)."
+
+msgid "A guide needs a text or a PDF (US-21)."
+msgstr "Eine Anleitung braucht einen Text oder ein PDF (US-21)."
+
+msgid "No password, user name or personal data in a guide or its screenshots (US-20)."
+msgstr "Keine Passwörter, Benutzernamen oder personenbezogenen Daten in einer Anleitung oder ihren Bildschirmfotos (US-20)."
+
+msgid "Screenshot (IT guides)"
+msgstr "Bildschirmfoto (IT-Anleitungen)"
+
+msgid "1 guide found"
+msgid_plural "@count guides found"
+msgstr[0] "1 Anleitung gefunden"
+msgstr[1] "@count Anleitungen gefunden"

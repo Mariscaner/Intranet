@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_guide_captures
+  - node.type.guide_it
+  module:
+  - image
+id: node.guide_it.field_guide_captures
+field_name: field_guide_captures
+entity_type: node
+bundle: guide_it
+label: Screenshots
+description: 'Optional, shown below the text. Hide every password, user name and personal data first (US-20).'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  handler: default:file
+  handler_settings: {}
+  file_directory: guides-it/captures
+  file_extensions: png jpg jpeg
+  max_filesize: 5 MB
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: false
+  title_field: false
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image

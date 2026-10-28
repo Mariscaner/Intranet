@@ -23,7 +23,7 @@ Le cahier des charges (01 v3), les rôles (04) et le journal des décisions (05)
 config/sync/              Configuration Drupal exportée (drush cex)
 docs/                     Feuille de route technique
 web/themes/custom/mersch/ Thème de l'intranet
-web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication)
+web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication, mersch_guides)
 ```
 
 ## Démarrer en local
@@ -36,7 +36,7 @@ ddev composer install
 ddev drush site:install minimal --locale=lb --site-name="Intranet Mersch"
 ddev drush theme:enable mersch
 ddev drush config:set system.theme default mersch -y
-ddev drush pm:install mersch_accueil mersch_annuaire mersch_rh mersch_communication -y
+ddev drush pm:install mersch_accueil mersch_annuaire mersch_rh mersch_communication mersch_guides -y
 ddev drush theme:enable claro
 ddev drush config:set system.theme admin claro -y
 ddev launch
@@ -50,7 +50,7 @@ Le module `mersch_accueil` fournit la page d'accueil (`/accueil`, déclarée pag
 - liens rapides DSKNet, GESCOM, Helpdesk et mersch.lu, ouverts dans un nouvel onglet (US-10) ;
 - recherche dans l'annuaire, qui ouvre `/annuaire?q=…` avec le champ déjà rempli, et lien vers l'annuaire complet (affichés seulement si `mersch_annuaire` est installé) ;
 - « Dernières nouvelles » : les 3 nouvelles les plus récentes des rubriques RH et Communication, avec leur date et leur rubrique (chaque module de rubrique les fournit par `hook_mersch_accueil_nouvelles()`, voir `mersch_accueil.api.php`) ;
-- accès aux rubriques RH, Communication et Guides IT, aussi présentes dans le menu principal (US-03) ; `/rh`, `/communication` et `/guides-it` affichent une page d'attente tant que les rubriques ne sont pas construites ;
+- accès aux rubriques RH, Communication et Guides IT, aussi présentes dans le menu principal (US-03) ; `/rh`, `/communication` et `/guides-it` affichent une page d'attente tant que le module de la rubrique n'est pas installé ;
 - boutons LU / DE / FR en haut à droite (US-02) : le module crée les trois langues, met le luxembourgeois par défaut (adresses sans préfixe, `/de/…` et `/fr/…` pour les traductions).
 
 Un admin gère les liens rapides depuis **Administration > Configuration > Quick links** (`/admin/config/mersch/liens-rapides`) : libellé et description en LU, DE et FR (une langue vide reprend le LU), URL en `https://` ou `http://` (une autre adresse est refusée), icône, affichage, ordre par glisser-déposer (US-11). Seuls les admins ont la permission « Administer quick links ».
@@ -114,6 +114,25 @@ Le format de texte « Simple text » (`mersch_simple`), commun aux nouvelles RH 
 Photos des nouvelles : données personnelles (accord écrit des personnes). Les fichiers déposés vont dans `web/sites/default/files/communication/`, ignoré par Git.
 
 Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_communication` (avec `drupal/core-dev` installé).
+
+## Page Guides IT
+
+Le module `mersch_guides` remplace la page d'attente `/guides-it` par la page Guides IT, d'après la maquette validée :
+
+- **Recherche** (US-19) : boutons de catégorie (Helpdesk, Applications, Messagerie et agenda, Sécurité et comptes, Matériel et logiciels ; seules les catégories qui contiennent un guide s'affichent) et champ de recherche dès 2 caractères, sans accents ni majuscules. La recherche porte sur le titre, le résumé et les mots-clés **dans les trois langues** et sur le nom de la catégorie : « passwuert » trouve le guide même en français. Lien direct possible : `/guides-it?q=dsknet`.
+- **Cartes** : catégorie, titre, résumé, lien vers le PDF (ou vers le guide s'il n'a qu'un texte), lien Helpdesk, date de dernière mise à jour ; bandeau « Pas de guide adapté ? Ouvrez un ticket au Helpdesk » en bas de page.
+- **Page d'un guide** : catégorie, résumé, texte, captures d'écran, bouton « Ouvrir le guide (PDF) », date de dernière mise à jour (US-21), lien Helpdesk, retour à la liste.
+- **Adresse du helpdesk** : celle du lien rapide « Helpdesk » de l'accueil (`/admin/config/mersch/liens-rapides`), pour ne pas la saisir deux fois ; `https://helpdesk/` si ce lien est supprimé.
+
+Type de contenu « IT guide » (`guide_it`) : titre, catégorie, résumé (200 caractères au plus), texte, captures d'écran, PDF, mots-clés. Un guide sans texte ni PDF est refusé (US-21). Titre, résumé, texte et mots-clés se traduisent en DE et FR ; le PDF et les captures sont communs aux trois langues.
+
+Droits : **administrateurs seulement** (D-007) ; aucun rôle de rédacteur n'a de droit sur les guides. Le bouton « Add a guide » et les liens « Edit » n'apparaissent qu'aux admins.
+
+**Reprise des 6 guides existants** (US-20, D-014) : `ddev drush mersch:guides-import <dossier>` lit `guides.json` (catégorie, titre, résumé et mots-clés en LU, DE et FR, nom du PDF) et publie les PDF (`--remplacer` pour tout recharger). Le dossier prêt à l'emploi est dans le dossier du projet, `guides-it/intranet/`, hors du dépôt. Ses PDF sont des copies corrigées des originaux : `https://apps` au lieu de `http://apps` dans le guide DSKnet, et noms des collègues masqués dans les captures (helpdesk : utilisateur connecté ; réservation : participants de l'Assistant Planification).
+
+À régler sur le serveur : taille maximale d'envoi PHP d'au moins 20 Mo (PDF des guides, comme pour la page RH).
+
+Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_guides` (avec `drupal/core-dev` installé).
 
 ## Règles du dépôt
 

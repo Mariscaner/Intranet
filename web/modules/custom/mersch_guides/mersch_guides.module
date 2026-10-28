@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Page Guides IT : guides par catégorie, recherche, lien vers le helpdesk.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\mersch_guides\Controller\GuidesController;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_guides_theme(): array {
+  return [
+    'mersch_guides' => [
+      'variables' => [
+        'rubrique' => [],
+        'categories' => [],
+        'guides' => [],
+        'helpdesk' => '',
+      ],
+    ],
+    'mersch_guide_entete' => [
+      'variables' => ['categorie' => [], 'resume' => '', 'non_traduit' => FALSE],
+    ],
+    'mersch_guide_pied' => [
+      'variables' => ['pdf' => NULL, 'date' => '', 'helpdesk' => '', 'retour' => ''],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function mersch_guides_entity_type_alter(array &$entity_types): void {
+  // Un guide contient un texte ou un PDF (US-21).
+  $entity_types['node']->addConstraint('MerschGuide');
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function mersch_guides_entity_extra_field_info(): array {
+  $champs['node'][GuidesController::TYPE]['display'] = [
+    'mersch_guide_entete' => [
+      'label' => t('Category and summary'),
+      'weight' => 0,
+    ],
+    'mersch_guide_pied' => [
+      'label' => t('PDF, last update and helpdesk'),
+      'weight' => 10,
+    ],
+  ];
+  return $champs;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for node.
+ */
+function mersch_guides_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, string $view_mode): void {
+  if ($node->bundle() !== GuidesController::TYPE) {
+    return;
+  }
+  $guides = \Drupal::classResolver(GuidesController::class);
+  if ($display->getComponent('mersch_guide_entete')) {
+    $build['mersch_guide_entete'] = $guides->entete($node);
+  }
+  if ($display->getComponent('mersch_guide_pied')) {
+    $build['mersch_guide_pied'] = $guides->pied($node);
+  }
+  $build['#attached']['library'][] = 'mersch_guides/guides';
+}

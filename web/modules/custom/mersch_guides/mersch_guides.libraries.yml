@@ -1,0 +1,10 @@
+guides:
+  version: VERSION
+  css:
+    component:
+      css/guides.css: {}
+  js:
+    js/guides.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

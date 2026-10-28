@@ -1,0 +1,7 @@
+mersch_guides.ajouter_guide:
+  route_name: node.add
+  route_parameters:
+    node_type: guide_it
+  title: 'Add a guide'
+  appears_on:
+    - mersch_accueil.guides_it

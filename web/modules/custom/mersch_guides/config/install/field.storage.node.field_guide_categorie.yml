@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_guide_categorie
+field_name: field_guide_categorie
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: helpdesk
+      label: 'Helpdesk'
+    -
+      value: applications
+      label: 'Applications'
+    -
+      value: messagerie
+      label: 'Email and calendar'
+    -
+      value: securite
+      label: 'Security and accounts'
+    -
+      value: materiel
+      label: 'Hardware and software'
+  allowed_values_function: ''
+module: options
+locked: true
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

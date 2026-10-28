@@ -1,0 +1,63 @@
+{#
+/**
+ * @file
+ * Page Guides IT, d'après la maquette validée : filtres par catégorie et
+ * recherche (US-19), cartes des guides, renvoi vers le helpdesk.
+ *
+ * Variables :
+ * - rubrique : { cle, texte }.
+ * - categories : liste de { cle, libelle } qui contiennent au moins un guide.
+ * - guides : liste de { titre, resume, categorie { cle, libelle }, url,
+ *   pdf { url, taille } ou NULL, date, recherche, non_traduit, modifier }.
+ * - helpdesk : adresse du helpdesk.
+ */
+#}
+<div class="mersch-guides" data-rubrique="{{ rubrique.cle }}" data-mersch-guides>
+  <p class="mersch-accueil__chapo">{{ rubrique.texte }}</p>
+
+  <section class="mersch-bloc mersch-guides__bloc" aria-label="{{ 'IT guides'|t }}">
+    {% if categories|length > 1 %}
+      <div class="mersch-guides__filtres" role="group" aria-label="{{ 'Categories'|t }}">
+        <button type="button" data-mersch-guides-categorie="" aria-pressed="true">{{ 'All'|t }}</button>
+        {% for categorie in categories %}
+          <button type="button" data-mersch-guides-categorie="{{ categorie.cle }}" aria-pressed="false">{{ categorie.libelle }}</button>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="mersch-accueil__recherche mersch-guides__recherche">
+      <label class="visually-hidden" for="mersch-guides-recherche">{{ 'Search a guide'|t }}</label>
+      <input id="mersch-guides-recherche" type="search" autocomplete="off" placeholder="{{ 'Keyword: password, DSKNet, Outlook…'|t }}" data-mersch-guides-recherche>
+    </div>
+    <p class="mersch-guides__compte" aria-live="polite" data-mersch-guides-compte data-total="{{ guides|length }}">{{ '@count guides'|t({'@count': guides|length}) }}</p>
+
+    {% if guides %}
+      <ul class="mersch-guides__liste">
+        {% for guide in guides %}
+          <li class="mersch-guides__guide" data-categorie="{{ guide.categorie.cle }}" data-recherche="{{ guide.recherche }}" data-mersch-guides-guide>
+            <span class="mersch-guides__etiquette">{{ guide.categorie.libelle }}</span>
+            <h3><a href="{{ guide.url }}">{{ guide.titre }}</a></h3>
+            {% if guide.non_traduit %}<p class="mersch-guides__non-traduit">{{ 'Translation not available'|t }}</p>{% endif %}
+            <p class="mersch-guides__resume">{{ guide.resume }}</p>
+            <div class="mersch-guides__bas">
+              {% if guide.pdf %}
+                <a href="{{ guide.pdf.url }}" target="_blank" rel="noopener">{{ 'Open the PDF'|t }}<span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span></a>
+              {% else %}
+                <a href="{{ guide.url }}">{{ 'Read the guide'|t }}</a>
+              {% endif %}
+              <a href="{{ helpdesk }}" target="_blank" rel="noopener noreferrer">Helpdesk <span aria-hidden="true">↗</span><span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span></a>
+              <span class="mersch-guides__date">{{ 'Updated @date'|t({'@date': guide.date}) }}</span>
+              {% if guide.modifier %}<a class="mersch-guides__modifier" href="{{ guide.modifier }}">{{ 'Edit'|t }}</a>{% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <p class="mersch-guides__vide" data-mersch-guides-vide{{ guides ? ' hidden' }}>{{ 'No guide found.'|t }}</p>
+  </section>
+
+  <div class="mersch-guides__aide">
+    <span>{{ 'No suitable guide? Open a ticket at the Helpdesk.'|t }}</span>
+    <a href="{{ helpdesk }}" target="_blank" rel="noopener noreferrer">{{ helpdesk|trim('/', 'right') }} <span aria-hidden="true">↗</span><span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span></a>
+  </div>
+</div>

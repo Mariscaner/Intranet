@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: mersch_capture
+label: 'Screenshot (IT guides)'
+effects:
+  7d0c2a9e-4b1f-4e6a-9c58-2f3e8b6d1a47:
+    uuid: 7d0c2a9e-4b1f-4e6a-9c58-2f3e8b6d1a47
+    id: image_scale
+    weight: 1
+    data:
+      width: 1000
+      height: null
+      upscale: false
