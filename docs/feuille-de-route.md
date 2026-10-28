@@ -12,9 +12,13 @@ Correspondance entre les user stories du MVP (cahier des charges 01 v3) et le tr
 | 6. RH | US-12 à US-14 | Module `mersch_rh` : organigramme structuré (services + personnes avec photo, sans grade ni ancienneté) tenu par les rédacteurs RH, recherche et impression ; nouvelles (150 mots au plus, case « accord écrit », « Nei Gesiichter » / « Merci! ») ; communications RH avec PDF ; rôle Rédacteur RH |
 | 7. Communication | US-15 à US-18 | Module `mersch_communication` : tuiles Nik, agenda et albums vers mersch.lu (adresses modifiables par un admin) ; nouvelles (150 mots au plus, case « accord écrit » pour une photo, fin de publication) ; rôle Rédacteur Communication |
 | 8. Guides IT | US-19 à US-21 | Module `mersch_guides` : type de contenu Guide IT (texte, captures ou PDF, date de mise à jour), 5 catégories, recherche LU/DE/FR sans accents, lien Helpdesk ; reprise des 6 guides existants (`drush mersch:guides-import`, PDF corrigés) ; admins seulement (D-007) |
+| Serveur de test | — | Installation sur un serveur Linux interne : `scripts/serveur/installer.sh`, imports, comptes ([guide](installation-serveur-test.md)) |
 | 9. Exploitation | — | Historique des révisions 12 mois (D-021), sauvegarde quotidienne, journaux limités |
 
 ## Points ouverts
+
+- Distribution Linux et base de données du serveur de test à confirmer par Marc (guide écrit pour Debian 13 ou Ubuntu 24.04 avec MariaDB).
+- `composer.lock` à ajouter au dépôt après le premier `composer install` sur le serveur.
 
 - Relecture par Marc des textes LU de la page RH (`mersch_rh/translations/lb.po`).
 - Flux RSS ou iCal de l'agenda mersch.lu : aucun trouvé sur le site public (2026-10-28) ; à demander au prestataire du site si l'affichage des prochains événements est souhaité.

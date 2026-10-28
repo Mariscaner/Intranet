@@ -21,10 +21,23 @@ Le cahier des charges (01 v3), les rôles (04) et le journal des décisions (05)
 ```
 .ddev/                    Environnement de développement local
 config/sync/              Configuration Drupal exportée (drush cex)
-docs/                     Feuille de route technique
+docs/                     Feuille de route technique, guide d'installation sur le serveur de test
+scripts/serveur/          Scripts d'installation du serveur Linux et de création des comptes
 web/themes/custom/mersch/ Thème de l'intranet
 web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication, mersch_guides)
 ```
+
+## Installer sur le serveur de test
+
+Guide pas à pas : [docs/installation-serveur-test.md](docs/installation-serveur-test.md). Sur Debian 13 ou Ubuntu 24.04, en root :
+
+```bash
+git clone https://github.com/Mariscaner/Intranet.git /var/www/intranet
+cp /var/www/intranet/scripts/serveur/intranet.conf.exemple /etc/intranet-mersch.conf   # à adapter
+bash /var/www/intranet/scripts/serveur/installer.sh
+```
+
+Le script installe Apache, PHP-FPM, MariaDB et Drupal, active le thème et les modules `mersch_*`, limite l'accès au réseau interne et règle le cron. Les imports (annuaire, organigramme, guides) et les 8 comptes (`scripts/serveur/creer-comptes.sh`) suivent, avec des fichiers qui restent hors du dépôt.
 
 ## Démarrer en local
 
