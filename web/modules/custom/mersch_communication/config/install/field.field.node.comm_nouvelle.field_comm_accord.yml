@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_comm_accord
+  - node.type.comm_nouvelle
+id: node.comm_nouvelle.field_comm_accord
+field_name: field_comm_accord
+entity_type: node
+bundle: comm_nouvelle
+label: Written consent obtained
+description: Required if the news names a person or has a photo (D-031).
+required: false
+translatable: false
+default_value:
+- value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

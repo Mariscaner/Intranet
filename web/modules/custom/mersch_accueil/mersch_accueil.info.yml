@@ -5,6 +5,7 @@ package: Mersch
 core_version_requirement: ^11
 dependencies:
   - drupal:block
+  - drupal:filter
   - drupal:language
   - drupal:locale
 'interface translation project': mersch_accueil

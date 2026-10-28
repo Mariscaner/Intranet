@@ -1,0 +1,108 @@
+# Traductions de l'interface de la page Communication (module mersch_communication).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "The Gemengebuet, the events calendar and the photos are on mersch.lu. Here you will find the links and the internal news."
+msgstr "De Gemengebuet, d'Agenda an d'Fotoe sinn op mersch.lu. Hei fannt Dir d'Linken an déi intern Neiegkeeten."
+
+msgid "All issues of the Gemengebuet."
+msgstr "All d'Editioune vum Gemengebuet."
+
+msgid "Upcoming events"
+msgstr "Nächst Evenementer"
+
+msgid "The events calendar of the commune."
+msgstr "Den Agenda vun der Gemeng."
+
+msgid "Photo albums"
+msgstr "Fotoalben"
+
+msgid "Photos of the commune events."
+msgstr "D'Fotoe vun de Gemengenevenementer."
+
+msgid "(opens in a new tab)"
+msgstr "(geet an engem neien Tab op)"
+
+msgid "News"
+msgstr "Neiegkeeten"
+
+msgid "No news at the moment."
+msgstr "Momentan keng Neiegkeeten."
+
+msgid "Translation not available"
+msgstr "Iwwersetzung net disponibel"
+
+msgid "Edit"
+msgstr "Änneren"
+
+msgid "Add news"
+msgstr "Neiegkeet derbäisetzen"
+
+msgid "The text has @mots words; the maximum is 150 (D-031)."
+msgstr "Den Text huet @mots Wierder; maximal sinn 150 erlaabt (D-031)."
+
+msgid "A photo requires the written consent of the people shown (D-031)."
+msgstr "Fir eng Foto brauch een d'schrëftlecht Averständnis vun de Leit, déi drop sinn (D-031)."
+
+msgid "Communication news"
+msgstr "Neiegkeet vum Kommunikatiounsservice"
+
+msgid "News from the communication department on the Communication page (US-18): title, at most 150 words, optional photo (D-031)."
+msgstr "Neiegkeeten vum Kommunikatiounsservice op der Säit Kommunikatioun (US-18): Titel, maximal 150 Wierder, Foto fakultativ (D-031)."
+
+msgid "Naming a person or showing a photo requires their written consent (D-031)."
+msgstr "Eng Persoun nennen oder eng Foto weisen geet nëmme mat hirem schrëftlechen Averständnis (D-031)."
+
+msgid "Text"
+msgstr "Text"
+
+msgid "At most 150 words (D-031)."
+msgstr "Maximal 150 Wierder (D-031)."
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Optional. Only with the written consent of the people shown (D-031). Event photos stay on mersch.lu (D-012)."
+msgstr "Fakultativ. Nëmme mam schrëftlechen Averständnis vun de Leit, déi drop sinn (D-031). D'Fotoe vun Evenementer bleiwen op mersch.lu (D-012)."
+
+msgid "Written consent obtained"
+msgstr "Schrëftlecht Averständnis kritt"
+
+msgid "Required if the news names a person or has a photo (D-031)."
+msgstr "Obligatoresch, wann d'Neiegkeet eng Persoun nennt oder eng Foto huet (D-031)."
+
+msgid "End of publication"
+msgstr "Enn vun der Publikatioun"
+
+msgid "Optional. From the day after this date, the news no longer appears on the Communication page."
+msgstr "Fakultativ. Vum Dag no dësem Datum un ass d'Neiegkeet net méi op der Säit Kommunikatioun."
+
+msgid "Communication editor"
+msgstr "Redakter Kommunikatiounsservice"
+
+msgid "News photo (Communication)"
+msgstr "Foto vun enger Neiegkeet (Kommunikatioun)"
+
+msgid "Communication page links"
+msgstr "Linken op der Säit Kommunikatioun"
+
+msgid "Addresses of the Gemengebuet, the events calendar and the photo albums on mersch.lu."
+msgstr "Adresse vum Gemengebuet, vum Agenda an de Fotoalben op mersch.lu."
+
+msgid "Administer the Communication page links"
+msgstr "D'Linken op der Säit Kommunikatioun verwalten"
+
+msgid "Gemengebuet Nik"
+msgstr "Gemengebuet Nik"
+
+msgid "Events calendar"
+msgstr "Agenda"
+
+msgid "The links open in a new tab. Nothing is copied into the intranet (D-012)."
+msgstr "D'Linke ginn an engem neien Tab op. Näischt gëtt an den Intranet kopéiert (D-012)."
+
+msgid "The URL %url is not valid. Enter a full address starting with https:// or http://."
+msgstr "D'URL %url ass net valabel. Gitt eng komplett Adress mat https:// oder http:// am Ufank an."

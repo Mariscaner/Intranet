@@ -23,7 +23,7 @@ Le cahier des charges (01 v3), les rôles (04) et le journal des décisions (05)
 config/sync/              Configuration Drupal exportée (drush cex)
 docs/                     Feuille de route technique
 web/themes/custom/mersch/ Thème de l'intranet
-web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh)
+web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication)
 ```
 
 ## Démarrer en local
@@ -36,7 +36,7 @@ ddev composer install
 ddev drush site:install minimal --locale=lb --site-name="Intranet Mersch"
 ddev drush theme:enable mersch
 ddev drush config:set system.theme default mersch -y
-ddev drush pm:install mersch_accueil mersch_annuaire mersch_rh -y
+ddev drush pm:install mersch_accueil mersch_annuaire mersch_rh mersch_communication -y
 ddev drush theme:enable claro
 ddev drush config:set system.theme admin claro -y
 ddev launch
@@ -95,6 +95,24 @@ Droits du rôle : créer, modifier, traduire (DE/FR) et dépublier les contenus 
 Photos et noms des nouvelles et de l'organigramme : données personnelles (photos avec l'accord signé des personnes). Rien de réel n'est dans le dépôt ; les fichiers déposés vont dans `web/sites/default/files/rh/`, ignoré par Git.
 
 Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_rh` (avec `drupal/core-dev` installé).
+
+## Page Communication
+
+Le module `mersch_communication` remplace la page d'attente `/communication` par la page Communication, d'après la maquette validée :
+
+- **Trois tuiles vers mersch.lu** (US-15 à US-17, D-012), ouvertes dans un nouvel onglet : « Nik » (rubrique Nik de la médiathèque), « Prochains événements » (agenda) et « Albums photos » (médiathèque). Rien n'est copié dans l'intranet. Un admin peut corriger ces adresses depuis **Administration > Configuration > Communication page links** (`/admin/config/mersch/communication`) ; une adresse sans `https://` ou `http://` est refusée.
+- **Agenda** : mersch.lu ne publie ni flux RSS ni iCal (vérifié le 2026-10-28 sur la page agenda et une fiche événement) ; la tuile renvoie donc vers l'agenda, l'affichage automatique des 5 prochains événements reste une évolution (US-16).
+- **Nouvelles** (US-18, D-031), type de contenu `comm_nouvelle` : titre, texte de 150 mots au plus (sans minimum), photo facultative, case « accord écrit obtenu », date de fin de publication facultative. Une photo sans la case cochée est refusée ; pour une nouvelle qui nomme une personne sans photo, le rédacteur coche la case lui-même (aide du champ). Plus récentes d'abord, les échues disparaissent le lendemain de leur date de fin.
+
+Le rôle « Communication editor » (`redacteur_communication`) est à attribuer à Aviva Rübel, Christian Mohr, Jill Manternach et John Manternach d'après 04. Droits : créer, modifier, traduire (DE/FR) et dépublier les nouvelles Communication, voir leurs révisions ; pas de suppression (D-019), pas d'accès aux contenus RH ni aux liens de la page (D-007).
+
+Le format de texte « Simple text » (`mersch_simple`), commun aux nouvelles RH et Communication, est désormais fourni par `mersch_accueil` (rien ne change sur un site où il existe déjà).
+
+À régler sur le serveur : le cron Drupal une fois par jour au moins (retire les nouvelles échues).
+
+Photos des nouvelles : données personnelles (accord écrit des personnes). Les fichiers déposés vont dans `web/sites/default/files/communication/`, ignoré par Git.
+
+Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_communication` (avec `drupal/core-dev` installé).
 
 ## Règles du dépôt
 

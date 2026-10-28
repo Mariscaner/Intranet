@@ -1,0 +1,5 @@
+mersch_communication.liens:
+  title: 'Communication page links'
+  description: 'Addresses of the Gemengebuet, the events calendar and the photo albums on mersch.lu.'
+  route_name: mersch_communication.liens
+  parent: system.admin_config_content

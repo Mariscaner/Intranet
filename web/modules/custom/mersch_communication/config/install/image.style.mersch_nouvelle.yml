@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: mersch_nouvelle
+label: 'News photo (Communication)'
+effects:
+  3b8e1f52-6c4a-4f0e-9d27-1a6c5e2b7d90:
+    uuid: 3b8e1f52-6c4a-4f0e-9d27-1a6c5e2b7d90
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 720
+      height: 405
+      anchor: center-center

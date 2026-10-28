@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Page Communication, d'après la maquette validée : liens vers mersch.lu
+ * (US-15 à US-17) et nouvelles du service Communication (US-18).
+ *
+ * Variables :
+ * - rubrique : { cle, texte }.
+ * - liens : { titre, texte, url, adresse } indexés par nik, agenda, albums.
+ * - nouvelles : liste de { titre, date, texte, photo (ou NULL),
+ *   non_traduit, modifier }, plus récentes d'abord.
+ */
+#}
+<div class="mersch-communication" data-rubrique="{{ rubrique.cle }}">
+  <p class="mersch-accueil__chapo">{{ rubrique.texte }}</p>
+
+  {% if liens %}
+    <ul class="mersch-communication__tuiles">
+      {% for cle, lien in liens %}
+        <li>
+          <a class="mersch-communication__tuile" data-lien="{{ cle }}" href="{{ lien.url }}" target="_blank" rel="noopener noreferrer">
+            <span class="mersch-communication__forme" aria-hidden="true"></span>
+            <b class="mersch-communication__titre-tuile">{{ lien.titre }}</b>
+            <span class="mersch-communication__texte-tuile">{{ lien.texte }}</span>
+            <span class="mersch-communication__adresse">{{ lien.adresse }} <span aria-hidden="true">↗</span></span>
+            <span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <section class="mersch-bloc mersch-communication__nouvelles" aria-labelledby="mersch-communication-nouvelles">
+    <h2 id="mersch-communication-nouvelles">{{ 'News'|t }}</h2>
+    {% if nouvelles %}
+      <ul class="mersch-communication__liste">
+        {% for nouvelle in nouvelles %}
+          <li class="mersch-communication__nouvelle{{ nouvelle.photo ? ' mersch-communication__nouvelle--photo' }}">
+            {% if nouvelle.photo %}<div class="mersch-communication__photo">{{ nouvelle.photo }}</div>{% endif %}
+            <div>
+              <p class="mersch-communication__meta">{{ nouvelle.date }}</p>
+              <h3>{{ nouvelle.titre }}</h3>
+              {% if nouvelle.non_traduit %}<p class="mersch-communication__non-traduit">{{ 'Translation not available'|t }}</p>{% endif %}
+              <div class="mersch-communication__texte">{{ nouvelle.texte }}</div>
+              {% if nouvelle.modifier %}<p class="mersch-communication__meta"><a href="{{ nouvelle.modifier }}">{{ 'Edit'|t }}</a></p>{% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="mersch-communication__vide">{{ 'No news at the moment.'|t }}</p>
+    {% endif %}
+  </section>
+</div>

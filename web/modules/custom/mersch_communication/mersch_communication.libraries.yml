@@ -1,0 +1,5 @@
+communication:
+  version: VERSION
+  css:
+    component:
+      css/communication.css: {}

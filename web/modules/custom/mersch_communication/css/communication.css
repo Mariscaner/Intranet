@@ -1,0 +1,136 @@
+/*
+ * Page Communication. Couleurs du thème mersch (variables --mersch-*), avec
+ * repli ; la couleur du domaine Communication ne sert qu'aux filets et
+ * formes, jamais au texte.
+ */
+.mersch-communication .mersch-bloc {
+  border-top-color: var(--mersch-communication, #f08372);
+}
+
+/* Liens vers mersch.lu (Nik, agenda, albums) */
+.mersch-communication__tuiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-communication__tuile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 18px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 6px;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.mersch-communication__tuile:hover {
+  border-color: var(--mersch-bleu, #26336a);
+  background: var(--mersch-fond-2, #f3f4f8);
+}
+
+.mersch-communication__forme {
+  display: block;
+  width: 48px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--mersch-communication, #f08372);
+  margin-bottom: 14px;
+}
+
+.mersch-communication__titre-tuile {
+  font: bold 22px/1.2 var(--mersch-police-titre, Georgia, serif);
+  margin-bottom: 6px;
+}
+
+.mersch-communication__texte-tuile {
+  color: var(--mersch-texte-2, #4a5480);
+  margin-bottom: 10px;
+}
+
+.mersch-communication__adresse {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+/* Nouvelles */
+.mersch-communication__nouvelles {
+  max-width: 760px;
+}
+
+.mersch-communication__liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-communication__nouvelle {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--mersch-ligne, #d9dce8);
+}
+
+.mersch-communication__nouvelle:first-child {
+  padding-top: 0;
+}
+
+.mersch-communication__nouvelle--photo {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.mersch-communication__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.mersch-communication__nouvelle h3 {
+  font: bold 17px/1.3 var(--mersch-police-titre, Georgia, serif);
+  margin: 0 0 6px;
+}
+
+.mersch-communication__meta,
+.mersch-communication__vide {
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+  margin: 0 0 4px;
+}
+
+.mersch-communication__texte {
+  font-size: 14px;
+}
+
+.mersch-communication__texte p {
+  margin: 0 0 8px;
+}
+
+.mersch-communication__non-traduit {
+  display: inline-block;
+  font-size: 12px;
+  background: var(--mersch-fond-2, #f3f4f8);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin: 0 0 6px;
+}
+
+@media (max-width: 860px) {
+  .mersch-communication__tuiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .mersch-communication__nouvelle--photo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
