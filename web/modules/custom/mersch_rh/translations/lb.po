@@ -26,21 +26,6 @@ msgstr "Organigramm"
 msgid "Updated on @date."
 msgstr "Aktualiséiert den @date."
 
-msgid "Open in full screen"
-msgstr "Am ganze Bildschierm opmaachen"
-
-msgid "Download"
-msgstr "Eroflueden"
-
-msgid "image"
-msgstr "Bild"
-
-msgid "Zoom with the + and − buttons of the viewer. To print, open the chart in full screen, then Ctrl+P and “Fit to page”."
-msgstr "Mat de Knäppercher + a − vum Viewer vergréisseren. Fir ze drécken: d'Organigramm am ganze Bildschierm opmaachen, dann Ctrl+P an „Un d'Säit upassen“."
-
-msgid "HR has not uploaded the organisation chart yet."
-msgstr "De Personalservice huet d'Organigramm nach net eropgelueden."
-
 msgid "Translation not available"
 msgstr "Iwwersetzung net disponibel"
 
@@ -56,38 +41,11 @@ msgstr "Matdeelunge vum Personalservice"
 msgid "No communication at the moment."
 msgstr "Momentan keng Matdeelung."
 
-msgid "Replace the organisation chart"
-msgstr "Organigramm ersetzen"
-
 msgid "Add HR news"
 msgstr "Neiegkeet derbäisetzen"
 
 msgid "Add HR communication"
 msgstr "Matdeelung derbäisetzen"
-
-msgid "Current organisation chart"
-msgstr "Aktuellt Organigramm"
-
-msgid "%fichier, uploaded on @date."
-msgstr "%fichier, eropgelueden den @date."
-
-msgid "None yet."
-msgstr "Nach keent."
-
-msgid "New organisation chart"
-msgstr "Neit Organigramm"
-
-msgid "The PDF supplied by HR (or a PNG or JPG image), at most @taille. It replaces the current chart, which is deleted: there is no archive."
-msgstr "De PDF vum Personalservice (oder e PNG- oder JPG-Bild), maximal @taille. Et ersetzt dat aktuellt Organigramm, dat geläscht gëtt: et gëtt keen Archiv."
-
-msgid "Replace"
-msgstr "Ersetzen"
-
-msgid "The organisation chart has been replaced."
-msgstr "D'Organigramm gouf ersat."
-
-msgid "The text has @mots words; the news template recommends 80 to 150 (D-023)."
-msgstr "Den Text huet @mots Wierder; d'Virlag fir Neiegkeeten empfeelt 80 bis 150 (D-023)."
 
 msgid "The text has @mots words; the maximum is 150 (D-023)."
 msgstr "Den Text huet @mots Wierder; maximal sinn 150 erlaabt (D-023)."
@@ -95,14 +53,8 @@ msgstr "Den Text huet @mots Wierder; maximal sinn 150 erlaabt (D-023)."
 msgid "A new face, a retirement or a photo requires the written consent of the person concerned (D-023)."
 msgstr "Fir en neit Gesiicht, eng Pensioun oder eng Foto brauch een d'schrëftlecht Averständnis vun der betraffener Persoun (D-023)."
 
-msgid "Upload the organisation chart"
-msgstr "Organigramm eroplueden"
-
 msgid "HR news"
 msgstr "Neiegkeet vum Personalservice"
-
-msgid "New staff, retirements and other staff news on the HR page (US-13): title, 80 to 150 words, optional photo (D-023)."
-msgstr "Nei Mataarbechter, Pensiounen an aner Neiegkeeten op der Säit vum Personalservice: Titel, 80 bis 150 Wierder, Foto fakultativ (D-023)."
 
 msgid "Naming a person or showing a photo requires their written consent (D-023)."
 msgstr "Eng Persoun nennen oder eng Foto weisen geet nëmme mat hirem schrëftlechen Averständnis (D-023)."
@@ -124,9 +76,6 @@ msgstr "Aner Neiegkeet"
 
 msgid "Text"
 msgstr "Text"
-
-msgid "Between 80 and 150 words (D-023)."
-msgstr "Tëscht 80 a 150 Wierder (D-023)."
 
 msgid "Short summary of the document."
 msgstr "Kuerz Zesummefaassung vum Dokument."
@@ -172,3 +121,90 @@ msgstr "Redakter Personalservice"
 
 msgid "Simple text"
 msgstr "Einfachen Text"
+
+msgid "New staff, retirements and other staff news on the HR page (US-13): title, at most 150 words, optional photo (D-023)."
+msgstr "Nei Mataarbechter, Pensiounen an aner Neiegkeeten op der Säit vum Personalservice: Titel, maximal 150 Wierder, Foto fakultativ (D-023)."
+
+msgid "At most 150 words (D-023)."
+msgstr "Maximal 150 Wierder (D-023)."
+
+msgid "@personnes people in the departments of the commune."
+msgstr "@personnes Leit an de Servicer vun der Gemeng."
+
+msgid "Open the organisation chart"
+msgstr "D'Organigramm opmaachen"
+
+msgid "HR has not entered the organisation chart yet."
+msgstr "De Personalservice huet d'Organigramm nach net agedroen."
+
+msgid "Who does what in the commune: @personnes people."
+msgstr "Wien mécht wat an der Gemeng: @personnes Leit."
+
+msgid "Search the organisation chart"
+msgstr "Am Organigramm sichen"
+
+msgid "Search for a name, a job title or a department…"
+msgstr "Numm, Funktioun oder Service sichen…"
+
+msgid "Sections of the organisation chart"
+msgstr "Deeler vum Organigramm"
+
+msgid "Print"
+msgstr "Drécken"
+
+msgid "@count results"
+msgstr "@count Resultater"
+
+msgid "No one matches this search."
+msgstr "Keen entsprécht dëser Sich."
+
+msgid "Vacant post"
+msgstr "Fräie Posten"
+
+msgid "Find in the staff directory"
+msgstr "Am Personalverzeechnes sichen"
+
+msgid "Add a person"
+msgstr "Persoun derbäisetzen"
+
+msgid "Manage departments"
+msgstr "Servicer verwalten"
+
+msgid "Organisation chart departments"
+msgstr "Servicer vum Organigramm"
+
+msgid "Departments and teams of the organisation chart (US-12). The order and the parent set the layout of the chart."
+msgstr "Servicer an Ekippe vum Organigramm. D'Reiefolleg an den iwwergeuerdente Service bestëmmen d'Opstellung."
+
+msgid "Organisation chart entry"
+msgstr "Persoun am Organigramm"
+
+msgid "A person or a vacant post on the organisation chart (US-12): name, job title, department, photo."
+msgstr "Eng Persoun oder e fräie Posten am Organigramm: Numm, Funktioun, Service, Foto."
+
+msgid "A photo only with the consent form signed by the person."
+msgstr "Eng Foto nëmme mam ënnerschriwwenen Averständnis vun der Persoun."
+
+msgid "Name"
+msgstr "Numm"
+
+msgid "As on the organisation chart: SURNAME First name. For a vacant post: Poste vacant."
+msgstr "Wéi um Organigramm: NUMM Virnumm. Fir e fräie Posten: Poste vacant."
+
+msgid "Job title"
+msgstr "Funktioun"
+
+msgid "Optional. For example: Contremaître, Secrétaire communal."
+msgstr "Fakultativ. Zum Beispill: Contremaître, Secrétaire communal."
+
+msgid "Where the person appears on the organisation chart."
+msgstr "Wou d'Persoun um Organigramm steet."
+
+msgid "Only with the consent form signed by the person. Without a photo, the initials are shown."
+msgstr "Nëmme mam ënnerschriwwenen Averständnis vun der Persoun. Ouni Foto stinn d'Initialen do."
+
+msgid "Order"
+msgstr "Reiefolleg"
+
+msgid "Position in the department: smallest first (0 for the head of department). Same number: alphabetical order."
+msgstr "Plaz am Service: déi klengst Zuel fir d'éischt (0 fir de Chef). Selwecht Zuel: alphabetesch."

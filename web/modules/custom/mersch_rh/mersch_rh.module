@@ -8,9 +8,7 @@
 declare(strict_types=1);
 
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\mersch_rh\Controller\RhController;
-use Drupal\mersch_rh\Plugin\Validation\Constraint\NouvelleRhConstraintValidator;
 
 /**
  * Implements hook_theme().
@@ -24,6 +22,9 @@ function mersch_rh_theme(): array {
         'nouvelles' => [],
         'communications' => [],
       ],
+    ],
+    'mersch_organigramme' => [
+      'variables' => ['sections' => [], 'personnes' => 0, 'date' => NULL],
     ],
   ];
 }
@@ -51,29 +52,6 @@ function mersch_rh_entity_field_access_alter(array &$grants, array $context): vo
   $entity = $items->getEntity();
   if ($entity->getEntityTypeId() === 'node' && in_array($entity->bundle(), RhController::TYPES, TRUE)) {
     $grants[':default'] = AccessResult::allowedIfHasPermission($context['account'], 'edit any ' . $entity->bundle() . ' content');
-  }
-}
-
-/**
- * Implements hook_form_BASE_FORM_ID_alter() for node_form.
- */
-function mersch_rh_form_node_form_alter(array &$form, FormStateInterface $form_state): void {
-  $node = $form_state->getFormObject()->getEntity();
-  if ($node->bundle() !== 'rh_nouvelle') {
-    return;
-  }
-  // Moins de 80 mots : signalé sans bloquer (les annonces courtes existent).
-  $form['actions']['submit']['#submit'][] = 'mersch_rh_nouvelle_avertir_longueur';
-}
-
-/**
- * Avertit quand une nouvelle a moins de 80 mots (D-023).
- */
-function mersch_rh_nouvelle_avertir_longueur(array $form, FormStateInterface $form_state): void {
-  $node = $form_state->getFormObject()->getEntity();
-  $mots = NouvelleRhConstraintValidator::compterMots((string) $node->get('field_rh_texte')->value);
-  if ($mots < NouvelleRhConstraintValidator::MOTS_MIN) {
-    \Drupal::messenger()->addWarning(t('The text has @mots words; the news template recommends 80 to 150 (D-023).', ['@mots' => $mots]));
   }
 }
 

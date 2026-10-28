@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 name: 'HR news'
 type: rh_nouvelle
-description: 'New staff, retirements and other staff news on the HR page (US-13): title, 80 to 150 words, optional photo (D-023).'
+description: 'New staff, retirements and other staff news on the HR page (US-13): title, at most 150 words, optional photo (D-023).'
 help: 'Naming a person or showing a photo requires their written consent (D-023).'
 new_revision: true
 preview_mode: 1

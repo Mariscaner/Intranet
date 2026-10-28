@@ -12,7 +12,7 @@ field_name: field_rh_texte
 entity_type: node
 bundle: rh_nouvelle
 label: Text
-description: Between 80 and 150 words (D-023).
+description: At most 150 words (D-023).
 required: true
 translatable: true
 default_value: []

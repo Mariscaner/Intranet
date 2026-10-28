@@ -11,6 +11,7 @@ use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\ByteSizeMarkup;
+use Drupal\Core\Url;
 use Drupal\mersch_rh\Organigramme;
 use Drupal\node\NodeInterface;
 
@@ -22,7 +23,7 @@ class RhController extends ControllerBase {
   /**
    * Types de contenu de la rubrique RH, éditables par les rédacteurs RH.
    */
-  public const TYPES = ['rh_nouvelle', 'rh_communication'];
+  public const TYPES = ['rh_nouvelle', 'rh_communication', 'rh_poste'];
 
   /**
    * Étiquette de cache vidée chaque jour par le cron (fin de publication).
@@ -49,7 +50,8 @@ class RhController extends ControllerBase {
       ->addCacheTags([
         'node_list:rh_nouvelle',
         'node_list:rh_communication',
-        Organigramme::CACHE_TAG,
+        'node_list:rh_poste',
+        'taxonomy_term_list:rh_service',
         self::CACHE_TAG_JOUR,
       ])
       ->addCacheContexts(['languages:language_interface', 'languages:language_content', 'user.permissions']);
@@ -70,19 +72,19 @@ class RhController extends ControllerBase {
   }
 
   /**
-   * Organigramme actuel, ou NULL.
+   * Résumé de l'organigramme : nombre de personnes, date, sections.
    */
-  private function organigramme(CacheableMetadata $cache): ?array {
-    $fichier = $this->organigramme->fichier();
-    if (!$fichier) {
-      return NULL;
-    }
-    $cache->addCacheableDependency($fichier);
+  private function organigramme(CacheableMetadata $cache): array {
+    $donnees = $this->organigramme->donnees($cache);
+    $url = Url::fromRoute('mersch_rh.organigramme');
     return [
-      'url' => $fichier->createFileUrl(),
-      'pdf' => Organigramme::estPdf($fichier),
-      'date' => $this->dateFormatter->format($this->organigramme->date(), 'custom', 'd.m.Y'),
-      'taille' => ByteSizeMarkup::create((int) $fichier->getSize()),
+      'url' => $url->toString(),
+      'personnes' => $donnees['personnes'],
+      'date' => $donnees['date'] ? $this->dateFormatter->format($donnees['date'], 'custom', 'd.m.Y') : NULL,
+      'sections' => array_map(fn (array $section) => [
+        'nom' => $section['nom'],
+        'url' => $url->setOption('fragment', $section['id'])->toString(),
+      ], $donnees['sections']),
     ];
   }
 

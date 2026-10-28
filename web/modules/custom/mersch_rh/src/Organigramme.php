@@ -4,87 +4,118 @@ declare(strict_types=1);
 
 namespace Drupal\mersch_rh;
 
-use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\State\StateInterface;
-use Drupal\file\FileInterface;
-use Drupal\file\FileUsage\FileUsageInterface;
+use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Url;
+use Drupal\mersch_rh\Controller\RhController;
+use Drupal\node\NodeInterface;
 
 /**
- * Organigramme fourni par les RH (US-12, D-011).
+ * Organigramme tenu à jour par les rédacteurs RH (US-12).
  *
- * Un seul fichier à la fois : le nouveau remplace l'ancien, qui est supprimé
- * (pas d'archive). Le fichier et sa date sont gardés dans l'état du site,
- * pas dans la configuration : c'est du contenu.
+ * Les services sont les termes du vocabulaire rh_service (ordre et parent
+ * donnent la mise en page), les personnes et postes vacants sont des
+ * contenus rh_poste : nom, fonction, service, photo. Ni grade, ni
+ * ancienneté, ni temps de travail.
  */
 class Organigramme {
 
   /**
-   * Clé d'état : fid, date du dépôt, auteur.
+   * Route de l'annuaire (mersch_annuaire), pour trouver le téléphone.
    */
-  public const ETAT = 'mersch_rh.organigramme';
-
-  /**
-   * Étiquette de cache de la page RH à vider à chaque dépôt.
-   */
-  public const CACHE_TAG = 'mersch_rh_organigramme';
-
-  /**
-   * Formats acceptés : le PDF des RH, ou une image.
-   */
-  public const EXTENSIONS = 'pdf png jpg jpeg';
+  private const ROUTE_ANNUAIRE = 'mersch_annuaire.annuaire';
 
   public function __construct(
-    private readonly StateInterface $state,
     private readonly EntityTypeManagerInterface $entityTypeManager,
-    private readonly FileUsageInterface $fileUsage,
-    private readonly CacheTagsInvalidatorInterface $cacheTagsInvalidator,
-    private readonly TimeInterface $time,
+    private readonly RouteProviderInterface $routeProvider,
   ) {}
 
   /**
-   * Fichier actuel, ou NULL si aucun organigramme n'a été déposé.
+   * Arbre des services avec leurs postes, nombre de personnes, dernière
+   * modification.
    */
-  public function fichier(): ?FileInterface {
-    $fid = $this->state->get(self::ETAT)['fid'] ?? NULL;
-    return $fid ? $this->entityTypeManager->getStorage('file')->load($fid) : NULL;
-  }
-
-  /**
-   * Date du dernier dépôt (horodatage), ou NULL.
-   */
-  public function date(): ?int {
-    return $this->state->get(self::ETAT)['date'] ?? NULL;
-  }
-
-  /**
-   * Remplace l'organigramme par un fichier déposé ; l'ancien est supprimé.
-   */
-  public function remplacer(FileInterface $nouveau, int $uid): void {
-    $ancien = $this->fichier();
-
-    $nouveau->setPermanent();
-    $nouveau->save();
-    $this->fileUsage->add($nouveau, 'mersch_rh', 'organigramme', 1);
-    $this->state->set(self::ETAT, [
-      'fid' => (int) $nouveau->id(),
-      'date' => $this->time->getRequestTime(),
-      'uid' => $uid,
-    ]);
-
-    if ($ancien && $ancien->id() !== $nouveau->id()) {
-      $this->fileUsage->delete($ancien, 'mersch_rh', 'organigramme', 1, 0);
-      $ancien->delete();
+  public function donnees(CacheableMetadata $cache): array {
+    $ids = $this->entityTypeManager->getStorage('node')->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', 'rh_poste')
+      ->condition('status', NodeInterface::PUBLISHED)
+      ->sort('field_rh_ordre')
+      ->sort('title')
+      ->execute();
+    $postes = [];
+    $personnes = 0;
+    $date = 0;
+    $annuaire = count($this->routeProvider->getRoutesByNames([self::ROUTE_ANNUAIRE])) > 0;
+    foreach ($ids ? $this->entityTypeManager->getStorage('node')->loadMultiple($ids) : [] as $node) {
+      $cache->addCacheableDependency($node);
+      $nom = $node->label();
+      $vacant = self::estVacant($nom);
+      $photo = $node->get('field_rh_photo');
+      $postes[$node->get('field_rh_unite')->target_id][] = [
+        'nom' => $nom,
+        'fonction' => $node->get('field_rh_fonction')->value,
+        'vacant' => $vacant,
+        'photo' => $photo->isEmpty() || !$photo->entity ? NULL : [
+          '#theme' => 'image_style',
+          '#style_name' => 'mersch_portrait',
+          '#uri' => $photo->entity->getFileUri(),
+          '#alt' => $nom,
+          '#attributes' => ['loading' => 'lazy'],
+        ],
+        'initiales' => RhController::initiales($nom),
+        'annuaire' => $annuaire && !$vacant ? Url::fromRoute(self::ROUTE_ANNUAIRE, [], ['query' => ['q' => $nom]])->toString() : NULL,
+        'modifier' => $node->access('update') ? $node->toUrl('edit-form')->toString() : NULL,
+      ];
+      $personnes += $vacant ? 0 : 1;
+      $date = max($date, $node->getChangedTime());
     }
-    $this->cacheTagsInvalidator->invalidateTags([self::CACHE_TAG]);
+
+    // Arbre des services, dans l'ordre choisi par les RH.
+    $services = [];
+    $racines = [];
+    foreach ($this->entityTypeManager->getStorage('taxonomy_term')->loadTree('rh_service', 0, NULL, TRUE) as $terme) {
+      $date = max($date, $terme->getChangedTime());
+      $id = (int) $terme->id();
+      $services[$id] = [
+        'id' => 'service-' . $id,
+        'nom' => $terme->label(),
+        'postes' => $postes[$id] ?? [],
+        'enfants' => [],
+        'large' => FALSE,
+      ];
+      $parent = (int) ($terme->parents[0] ?? 0);
+      if ($parent && isset($services[$parent])) {
+        $services[$parent]['enfants'][] = &$services[$id];
+      }
+      else {
+        $racines[] = &$services[$id];
+      }
+    }
+
+    return [
+      'sections' => array_values(array_filter(array_map([self::class, 'elaguer'], $racines))),
+      'personnes' => $personnes,
+      'date' => $date ?: NULL,
+    ];
   }
 
   /**
-   * L'organigramme est-il un PDF (sinon une image) ?
+   * Retire les services sans personne ni sous-service rempli, et repère les
+   * services à afficher sur toute la largeur (plusieurs équipes, comme le
+   * Service régie).
    */
-  public static function estPdf(FileInterface $fichier): bool {
-    return $fichier->getMimeType() === 'application/pdf';
+  private static function elaguer(array $service): ?array {
+    $service['enfants'] = array_values(array_filter(array_map([self::class, 'elaguer'], $service['enfants'])));
+    $service['large'] = count($service['enfants']) > 2 || array_filter(array_column($service['enfants'], 'enfants'));
+    return $service['postes'] || $service['enfants'] ? $service : NULL;
+  }
+
+  /**
+   * « Poste vacant » saisi à la place d'un nom.
+   */
+  public static function estVacant(string $nom): bool {
+    return (bool) preg_match('/^postes?\s+vacants?\b/iu', trim($nom));
   }
 
 }

@@ -3,7 +3,7 @@
 mersch_rh.organigramme:
   path: '/rh/organigramme'
   defaults:
-    _form: '\Drupal\mersch_rh\Form\OrganigrammeForm'
-    _title: 'Replace the organisation chart'
+    _controller: '\Drupal\mersch_rh\Controller\OrganigrammeController::page'
+    _title: 'Organisation chart'
   requirements:
-    _permission: 'deposer organigramme mersch'
+    _permission: 'access content'

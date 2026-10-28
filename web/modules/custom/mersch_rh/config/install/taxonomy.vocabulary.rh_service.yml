@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Organisation chart departments'
+vid: rh_service
+description: 'Departments and teams of the organisation chart (US-12). The order and the parent set the layout of the chart.'
+weight: 0
+new_revision: false

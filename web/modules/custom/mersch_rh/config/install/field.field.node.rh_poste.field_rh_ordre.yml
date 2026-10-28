@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_ordre
+  - node.type.rh_poste
+id: node.rh_poste.field_rh_ordre
+field_name: field_rh_ordre
+entity_type: node
+bundle: rh_poste
+label: Order
+description: 'Position in the department: smallest first (0 for the head of department).
+  Same number: alphabetical order.'
+required: false
+translatable: false
+default_value:
+- value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.rh_poste.field_rh_fonction
+  - field.field.node.rh_poste.field_rh_ordre
+  - field.field.node.rh_poste.field_rh_photo
+  - field.field.node.rh_poste.field_rh_unite
+  - image.style.mersch_portrait
+  - node.type.rh_poste
+  module:
+  - image
+  - user
+id: node.rh_poste.default
+targetEntityType: node
+bundle: rh_poste
+mode: default
+content:
+  field_rh_photo:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: mersch_portrait
+      image_loading:
+        attribute: lazy
+    third_party_settings: {}
+    weight: 0
+    region: content
+  field_rh_fonction:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {}
+    weight: 1
+    region: content
+  field_rh_unite:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: false
+    third_party_settings: {}
+    weight: 2
+    region: content
+hidden:
+  field_rh_ordre: true
+  langcode: true
+  links: true

@@ -9,11 +9,10 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Vérifie le gabarit d'une nouvelle RH (US-13, D-023).
+ * Vérifie le gabarit d'une nouvelle RH (US-13, D-023) : un maximum de mots,
+ * pas de minimum (demande de Marc du 2026-10-28).
  */
 class NouvelleRhConstraintValidator extends ConstraintValidator {
-
-  public const MOTS_MIN = 80;
 
   public const MOTS_MAX = 150;
 

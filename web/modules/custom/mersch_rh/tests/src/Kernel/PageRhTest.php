@@ -7,6 +7,7 @@ namespace Drupal\Tests\mersch_rh\Kernel;
 use Drupal\file\Entity\File;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\mersch_rh\Controller\RhController;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\mersch_rh\Organigramme;
 use Drupal\mersch_rh\Plugin\Validation\Constraint\NouvelleRhConstraintValidator;
 use Drupal\node\Entity\Node;
@@ -26,7 +27,7 @@ class PageRhTest extends KernelTestBase {
 
   protected static $modules = [
     'system', 'user', 'field', 'file', 'image', 'text', 'filter', 'options',
-    'datetime', 'node', 'block', 'language', 'locale', 'content_translation',
+    'datetime', 'node', 'taxonomy', 'block', 'language', 'locale', 'content_translation',
     'mersch_accueil', 'mersch_rh',
   ];
 
@@ -35,6 +36,7 @@ class PageRhTest extends KernelTestBase {
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
     $this->installEntitySchema('file');
+    $this->installEntitySchema('taxonomy_term');
     $this->installSchema('file', ['file_usage']);
     $this->installSchema('node', ['node_access']);
     $this->installConfig(['system', 'filter', 'node', 'mersch_accueil', 'mersch_rh']);
@@ -49,7 +51,8 @@ class PageRhTest extends KernelTestBase {
   public function testRoleRedacteurRh(): void {
     $role = Role::load('redacteur_rh');
     $this->assertTrue($role->hasPermission('edit any rh_nouvelle content'));
-    $this->assertTrue($role->hasPermission('deposer organigramme mersch'));
+    $this->assertTrue($role->hasPermission('edit any rh_poste content'));
+    $this->assertTrue($role->hasPermission('edit terms in rh_service'));
     $this->assertFalse($role->hasPermission('delete any rh_nouvelle content'));
     $this->assertFalse($role->hasPermission('administer nodes'));
 
@@ -81,23 +84,56 @@ class PageRhTest extends KernelTestBase {
   }
 
   /**
-   * Un nouvel organigramme remplace l'ancien, qui est supprimé (D-011).
+   * Premier chargement depuis l'extraction du PDF, puis arbre affiché :
+   * services dans l'ordre, sous-services imbriqués, services vides retirés,
+   * postes vacants à part (US-12).
    */
-  public function testRemplacementOrganigramme(): void {
-    $service = $this->container->get('mersch_rh.organigramme');
-    $this->assertNull($service->fichier());
+  public function testOrganigramme(): void {
+    $dossier = $this->siteDirectory . '/organigramme';
+    mkdir($dossier . '/photos', 0777, TRUE);
+    file_put_contents($dossier . '/photos/neyens-tom.jpg', 'jpg');
+    file_put_contents($dossier . '/organigramme.json', json_encode([
+      'services' => [
+        ['id' => 'admin', 'nom' => 'Service administration', 'parent' => NULL, 'ordre' => 1],
+        ['id' => 'college', 'nom' => 'Collège', 'parent' => NULL, 'ordre' => 0],
+        ['id' => 'personnel', 'nom' => 'Personnel & scolaire', 'parent' => 'admin', 'ordre' => 2],
+        ['id' => 'bus', 'nom' => 'Bus scolaire', 'parent' => 'personnel', 'ordre' => 3],
+        ['id' => 'vide', 'nom' => 'Service vide', 'parent' => 'admin', 'ordre' => 4],
+      ],
+      'postes' => [
+        ['nom' => 'NEYENS Tom', 'fonction' => 'Secrétaire communal', 'service' => 'admin', 'ordre' => 0, 'photo' => 'photos/neyens-tom.jpg'],
+        ['nom' => 'REUTER Sarah', 'fonction' => '', 'service' => 'personnel', 'ordre' => 1, 'photo' => NULL],
+        ['nom' => 'HIPPERTCHEN André', 'fonction' => '', 'service' => 'personnel', 'ordre' => 0, 'photo' => NULL],
+        ['nom' => 'Poste vacant', 'fonction' => '', 'service' => 'bus', 'ordre' => 9, 'photo' => NULL],
+        ['nom' => 'MALHERBE Michel', 'fonction' => 'Bourgmestre', 'service' => 'college', 'ordre' => 0, 'photo' => '../../secret.jpg'],
+      ],
+    ]));
 
-    $ancien = $this->fichier('organigramme-1.pdf');
-    $service->remplacer($ancien, 1);
-    $this->assertSame($ancien->id(), $service->fichier()->id());
-    $this->assertTrue(Organigramme::estPdf($service->fichier()));
+    $import = $this->container->get('mersch_rh.import_organigramme');
+    $this->assertSame(['services' => 5, 'postes' => 5, 'photos' => 1], $import->importer($dossier));
+    try {
+      $import->importer($dossier);
+      $this->fail('Un second import sans remplacement doit être refusé.');
+    }
+    catch (\InvalidArgumentException) {
+    }
+    $this->assertSame(['services' => 5, 'postes' => 5, 'photos' => 1], $import->importer($dossier, TRUE));
+    $this->assertCount(5, Node::loadMultiple());
 
-    $nouveau = $this->fichier('organigramme-2.pdf');
-    $service->remplacer($nouveau, 1);
-    $this->assertSame($nouveau->id(), $service->fichier()->id());
-    $this->assertTrue($service->fichier()->isPermanent());
-    $this->assertNull(File::load($ancien->id()));
-    $this->assertFileDoesNotExist('public://organigramme-1.pdf');
+    $this->setCurrentUser($this->createUser(['access content']));
+    $donnees = $this->container->get('mersch_rh.organigramme')->donnees(new CacheableMetadata());
+    $this->assertSame(4, $donnees['personnes']);
+    $this->assertSame(['Collège', 'Service administration'], array_column($donnees['sections'], 'nom'));
+    $admin = $donnees['sections'][1];
+    $this->assertSame(['NEYENS Tom'], array_column($admin['postes'], 'nom'));
+    $this->assertNotNull($admin['postes'][0]['photo']);
+    $this->assertSame(['Personnel & scolaire'], array_column($admin['enfants'], 'nom'));
+    $personnel = $admin['enfants'][0];
+    $this->assertSame(['HIPPERTCHEN André', 'REUTER Sarah'], array_column($personnel['postes'], 'nom'));
+    $this->assertTrue($personnel['enfants'][0]['postes'][0]['vacant']);
+    $this->assertNull($donnees['sections'][0]['postes'][0]['photo']);
+    $this->assertTrue(Organigramme::estVacant('POSTE VACANT'));
+    $this->assertFalse(Organigramme::estVacant('VACANTI Paolo'));
   }
 
   /**
@@ -124,8 +160,9 @@ class PageRhTest extends KernelTestBase {
     $this->assertSame('PK', $page['#nouvelles']['arrivee']['elements'][0]['initiales']);
     $this->assertNull($page['#nouvelles']['arrivee']['elements'][0]['modifier']);
     $this->assertSame(['Circulaire congés'], array_column($page['#communications'], 'titre'));
-    $this->assertNull($page['#organigramme']);
+    $this->assertSame(0, $page['#organigramme']['personnes']);
     $this->assertContains('node_list:rh_nouvelle', $page['#cache']['tags']);
+    $this->assertContains('node_list:rh_poste', $page['#cache']['tags']);
     $this->assertContains(RhController::CACHE_TAG_JOUR, $page['#cache']['tags']);
   }
 

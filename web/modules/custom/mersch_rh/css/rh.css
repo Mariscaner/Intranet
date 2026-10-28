@@ -16,24 +16,40 @@
   margin: 0 0 10px;
 }
 
-.mersch-rh__visionneuse {
-  display: block;
-  width: 100%;
-  height: 70vh;
-  min-height: 420px;
+.mersch-rh__sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-rh__sections a {
+  display: inline-block;
+  padding: 4px 10px;
   border: 1px solid var(--mersch-ligne, #d9dce8);
-  border-radius: 6px;
-  box-sizing: border-box;
-  background: var(--mersch-fond-2, #f3f4f8);
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
 }
 
-.mersch-rh__visionneuse--image {
-  overflow: auto;
+.mersch-rh__sections a:hover {
+  border-color: var(--mersch-bleu, #26336a);
 }
 
-.mersch-rh__visionneuse--image img {
-  display: block;
-  max-width: none;
+.mersch-rh__bouton {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 4px;
+  background: var(--mersch-bleu, #26336a);
+  color: var(--mersch-blanc, #fff);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.mersch-rh__bouton:hover {
+  opacity: 0.9;
 }
 
 .mersch-rh__aide,
@@ -159,10 +175,5 @@
 @media (max-width: 860px) {
   .mersch-rh__grille {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .mersch-rh__visionneuse {
-    height: 60vh;
-    min-height: 320px;
   }
 }

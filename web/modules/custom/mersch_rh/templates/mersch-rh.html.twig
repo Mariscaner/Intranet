@@ -6,7 +6,7 @@
  *
  * Variables :
  * - rubrique : { cle, texte }.
- * - organigramme : { url, pdf, date, taille }, ou NULL si aucun dépôt.
+ * - organigramme : { url, personnes, date, sections } (résumé, US-12).
  * - nouvelles : groupes { titre, sous_titre, elements } indexés par
  *   catégorie (arrivee, retraite, info) ; chaque élément a titre, date,
  *   texte, service, photo (ou NULL), initiales, non_traduit, modifier.
@@ -18,22 +18,19 @@
 
   <section class="mersch-bloc mersch-rh__organigramme" aria-labelledby="mersch-rh-organigramme">
     <h2 id="mersch-rh-organigramme">{{ 'Organisation chart'|t }}</h2>
-    {% if organigramme %}
+    {% if organigramme.sections %}
       <p class="mersch-rh__meta">
-        {{ 'Updated on @date.'|t({'@date': organigramme.date}) }}
-        <a href="{{ organigramme.url }}" target="_blank" rel="noopener">{{ 'Open in full screen'|t }}<span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span></a>
-        · <a href="{{ organigramme.url }}" download>{{ 'Download'|t }}</a> ({{ organigramme.pdf ? 'PDF' : 'image'|t }}, {{ organigramme.taille }})
+        {{ '@personnes people in the departments of the commune.'|t({'@personnes': organigramme.personnes}) }}
+        {% if organigramme.date %}{{ 'Updated on @date.'|t({'@date': organigramme.date}) }}{% endif %}
       </p>
-      {% if organigramme.pdf %}
-        <iframe class="mersch-rh__visionneuse" src="{{ organigramme.url }}#view=FitH" title="{{ 'Organisation chart'|t }}"></iframe>
-        <p class="mersch-rh__aide">{{ 'Zoom with the + and − buttons of the viewer. To print, open the chart in full screen, then Ctrl+P and “Fit to page”.'|t }}</p>
-      {% else %}
-        <div class="mersch-rh__visionneuse mersch-rh__visionneuse--image">
-          <img src="{{ organigramme.url }}" alt="{{ 'Organisation chart'|t }}">
-        </div>
-      {% endif %}
+      <ul class="mersch-rh__sections">
+        {% for section in organigramme.sections %}
+          <li><a href="{{ section.url }}">{{ section.nom }}</a></li>
+        {% endfor %}
+      </ul>
+      <p><a class="mersch-rh__bouton" href="{{ organigramme.url }}">{{ 'Open the organisation chart'|t }}</a></p>
     {% else %}
-      <p class="mersch-rh__vide">{{ 'HR has not uploaded the organisation chart yet.'|t }}</p>
+      <p class="mersch-rh__vide">{{ 'HR has not entered the organisation chart yet.'|t }}</p>
     {% endif %}
   </section>
 

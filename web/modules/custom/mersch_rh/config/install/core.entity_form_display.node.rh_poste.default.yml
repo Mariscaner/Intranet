@@ -1,0 +1,67 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.rh_poste.field_rh_fonction
+  - field.field.node.rh_poste.field_rh_ordre
+  - field.field.node.rh_poste.field_rh_photo
+  - field.field.node.rh_poste.field_rh_unite
+  - image.style.mersch_portrait
+  - node.type.rh_poste
+  module:
+  - image
+id: node.rh_poste.default
+targetEntityType: node
+bundle: rh_poste
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_fonction:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_unite:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_rh_ordre:
+    type: number
+    weight: 3
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {}
+  field_rh_photo:
+    type: image_image
+    weight: 4
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: mersch_portrait
+    third_party_settings: {}
+  status:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {}
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
+  uid: true

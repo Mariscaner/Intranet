@@ -81,17 +81,18 @@ Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit 
 
 Le module `mersch_rh` remplace la page d'attente `/rh` par la page RH, gérée par les rédacteurs RH (rôle « HR editor », `redacteur_rh`, à attribuer à Sarah Reuter et André Hippertchen d'après 04) :
 
-- **Organigramme** (US-12, D-011) : un rédacteur RH clique sur « Replace the organisation chart » (`/rh/organigramme`) et dépose le PDF fourni par les RH (une image PNG ou JPG est aussi acceptée). Le nouveau fichier remplace l'ancien, qui est supprimé (pas d'archive) ; la date de mise à jour s'affiche. Le PDF est affiché dans la visionneuse d'Edge ou de Chrome, avec liens « plein écran » (pour zoomer et imprimer) et « télécharger ».
-- **Nouvelles RH** (US-13, D-023), type de contenu `rh_nouvelle` : catégorie (nouveau visage, départ à la retraite, autre), titre (le nom de la personne), service, texte, photo facultative, date de fin de publication facultative. La case « accord écrit obtenu » est obligatoire pour un nouveau visage, une retraite ou une photo ; plus de 150 mots est refusé, moins de 80 mots donne un simple avertissement. Sur la page, les nouvelles sont groupées sous « Nei Gesiichter » et « Merci! », plus récentes d'abord ; sans photo, les initiales s'affichent.
+- **Organigramme** (US-12), page `/rh/organigramme` : les services sont les termes du vocabulaire « Organisation chart departments » (`rh_service` : nom, service parent, ordre), les personnes et postes vacants sont des contenus « Organisation chart entry » (`rh_poste` : nom, fonction, service, ordre, photo). Ni grade, ni ancienneté, ni temps de travail. Les rédacteurs RH les tiennent à jour depuis l'administration (boutons « Add a person » et « Manage departments » sur la page). Mise en page : une section par bandeau or (Collège, Service administration, Service technique, Autres services), la direction en tête, les services en cartes, les équipes imbriquées ; recherche par nom, fonction ou service sans accents ; lien de chaque nom vers l'annuaire ; impression (une section par page). Sans photo, les initiales s'affichent.
+- **Premier chargement de l'organigramme** : `ddev drush mersch:organigramme-import <dossier>` lit `organigramme.json` et `photos/` extraits du PDF des RH (`--remplacer` pour tout recharger). Ce dossier contient des données personnelles : il reste hors du dépôt (dossier du projet `organigramme/`).
+- **Nouvelles RH** (US-13, D-023), type de contenu `rh_nouvelle` : catégorie (nouveau visage, départ à la retraite, autre), titre (le nom de la personne), service, texte, photo facultative, date de fin de publication facultative. La case « accord écrit obtenu » est obligatoire pour un nouveau visage, une retraite ou une photo ; plus de 150 mots est refusé, sans minimum. Sur la page, les nouvelles sont groupées sous « Nei Gesiichter » et « Merci! », plus récentes d'abord ; sans photo, les initiales s'affichent.
 - **Communications RH** (US-14), type de contenu `rh_communication` : titre, court texte, PDF obligatoire.
 
-Droits du rôle : créer, modifier, traduire (DE/FR) et dépublier les contenus RH (case « Publié »), voir leurs révisions, déposer l'organigramme ; pas de suppression (D-019), pas d'accès aux contenus Communication (D-007).
+Droits du rôle : créer, modifier, traduire (DE/FR) et dépublier les contenus RH (case « Publié »), voir leurs révisions ; créer et modifier les services de l'organigramme ; supprimer une personne de l'organigramme (départ : ses données ne sont pas gardées) ; pas d'autre suppression (D-019), pas d'accès aux contenus Communication (D-007).
 
 À régler sur le serveur :
-- taille maximale d'envoi PHP (`upload_max_filesize` et `post_max_size`) d'au moins 20 Mo : le PDF des RH d'août 2026 pèse 7,6 Mo ;
+- taille maximale d'envoi PHP (`upload_max_filesize` et `post_max_size`) d'au moins 20 Mo pour les PDF des communications RH ;
 - le cron Drupal une fois par jour au moins : il retire de la page les nouvelles dont la date de fin est passée.
 
-Photos et noms des nouvelles, organigramme : données personnelles. Rien de réel n'est dans le dépôt ; les fichiers déposés vont dans `web/sites/default/files/rh/`, ignoré par Git.
+Photos et noms des nouvelles et de l'organigramme : données personnelles (photos avec l'accord signé des personnes). Rien de réel n'est dans le dépôt ; les fichiers déposés vont dans `web/sites/default/files/rh/`, ignoré par Git.
 
 Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_rh` (avec `drupal/core-dev` installé).
 

@@ -4,13 +4,16 @@ dependencies:
   config:
     - filter.format.mersch_simple
     - node.type.rh_communication
+    - node.type.rh_poste
     - node.type.rh_nouvelle
+    - taxonomy.vocabulary.rh_service
   module:
     - content_translation
     - filter
     - mersch_rh
     - node
     - system
+    - taxonomy
 id: redacteur_rh
 label: 'HR editor'
 weight: 3
@@ -18,12 +21,17 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access content overview'
+  - 'access taxonomy overview'
   - 'create content translations'
   - 'create rh_communication content'
   - 'create rh_nouvelle content'
-  - 'deposer organigramme mersch'
+  - 'create rh_poste content'
+  - 'create terms in rh_service'
+  - 'delete any rh_poste content'
   - 'edit any rh_communication content'
   - 'edit any rh_nouvelle content'
+  - 'edit any rh_poste content'
+  - 'edit terms in rh_service'
   - 'translate rh_communication node'
   - 'translate rh_nouvelle node'
   - 'update content translations'
@@ -31,4 +39,5 @@ permissions:
   - 'view own unpublished content'
   - 'view rh_communication revisions'
   - 'view rh_nouvelle revisions'
+  - 'view rh_poste revisions'
   - 'view the administration theme'
