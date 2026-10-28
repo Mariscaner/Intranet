@@ -1,0 +1,96 @@
+{#
+/**
+ * @file
+ * Page RH : organigramme (US-12), nouvelles du personnel (US-13) et
+ * communications RH (US-14).
+ *
+ * Variables :
+ * - rubrique : { cle, texte }.
+ * - organigramme : { url, personnes, date, sections } (résumé, US-12).
+ * - nouvelles : groupes { titre, sous_titre, elements } indexés par
+ *   catégorie (arrivee, retraite, info) ; chaque élément a titre, date,
+ *   texte, service, photo (ou NULL), initiales, non_traduit, modifier.
+ * - communications : liste de { titre, date, texte, pdf, non_traduit, modifier }.
+ */
+#}
+<div class="mersch-rh" data-rubrique="{{ rubrique.cle }}">
+  <p class="mersch-accueil__chapo">{{ rubrique.texte }}</p>
+
+  <section class="mersch-bloc mersch-rh__organigramme" aria-labelledby="mersch-rh-organigramme">
+    <h2 id="mersch-rh-organigramme">{{ 'Organisation chart'|t }}</h2>
+    {% if organigramme.sections %}
+      <p class="mersch-rh__meta">
+        {{ '@personnes people in the departments of the commune.'|t({'@personnes': organigramme.personnes}) }}
+        {% if organigramme.date %}{{ 'Updated on @date.'|t({'@date': organigramme.date}) }}{% endif %}
+      </p>
+      <ul class="mersch-rh__sections">
+        {% for section in organigramme.sections %}
+          <li><a href="{{ section.url }}">{{ section.nom }}</a></li>
+        {% endfor %}
+      </ul>
+      <p><a class="mersch-rh__bouton" href="{{ organigramme.url }}">{{ 'Open the organisation chart'|t }}</a></p>
+    {% else %}
+      <p class="mersch-rh__vide">{{ 'HR has not entered the organisation chart yet.'|t }}</p>
+    {% endif %}
+  </section>
+
+  <div class="mersch-rh__grille">
+    <div class="mersch-rh__nouvelles">
+      {% for cle, groupe in nouvelles %}
+        <section class="mersch-rh__groupe" data-categorie="{{ cle }}" aria-labelledby="mersch-rh-{{ cle }}">
+          <h2 class="mersch-rh__titre-groupe" id="mersch-rh-{{ cle }}">{{ groupe.titre }}</h2>
+          {% if groupe.sous_titre %}<p class="mersch-rh__sous-titre">{{ groupe.sous_titre }}</p>{% endif %}
+          <ul class="mersch-rh__cartes">
+            {% for nouvelle in groupe.elements %}
+              <li class="mersch-rh__carte">
+                {% if nouvelle.photo %}
+                  <div class="mersch-rh__photo">{{ nouvelle.photo }}</div>
+                {% else %}
+                  <div class="mersch-rh__photo mersch-rh__photo--initiales" aria-hidden="true">{{ nouvelle.initiales }}</div>
+                {% endif %}
+                <h3>{{ nouvelle.titre }}</h3>
+                {% if nouvelle.service %}<p class="mersch-rh__service">{{ nouvelle.service }}</p>{% endif %}
+                {% if nouvelle.non_traduit %}<p class="mersch-rh__non-traduit">{{ 'Translation not available'|t }}</p>{% endif %}
+                <div class="mersch-rh__texte">{{ nouvelle.texte }}</div>
+                <p class="mersch-rh__meta">
+                  {{ nouvelle.date }}
+                  {% if nouvelle.modifier %} · <a href="{{ nouvelle.modifier }}">{{ 'Edit'|t }}</a>{% endif %}
+                </p>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% else %}
+        <section class="mersch-bloc">
+          <h2>{{ 'Staff news'|t }}</h2>
+          <p class="mersch-rh__vide">{{ 'No news at the moment.'|t }}</p>
+        </section>
+      {% endfor %}
+    </div>
+
+    <section class="mersch-bloc mersch-rh__communications" aria-labelledby="mersch-rh-communications">
+      <h2 id="mersch-rh-communications">{{ 'HR communications'|t }}</h2>
+      {% if communications %}
+        <ul class="mersch-rh__liste">
+          {% for communication in communications %}
+            <li>
+              {% if communication.pdf %}
+                <a class="mersch-rh__document" href="{{ communication.pdf.url }}" target="_blank" rel="noopener">{{ communication.titre }}</a>
+              {% else %}
+                <b>{{ communication.titre }}</b>
+              {% endif %}
+              {% if communication.non_traduit %}<p class="mersch-rh__non-traduit">{{ 'Translation not available'|t }}</p>{% endif %}
+              {% if communication.texte %}<div class="mersch-rh__texte">{{ communication.texte }}</div>{% endif %}
+              <p class="mersch-rh__meta">
+                {{ communication.date }}{% if communication.pdf %} · PDF, {{ communication.pdf.taille }}{% endif %}
+                {% if communication.modifier %} · <a href="{{ communication.modifier }}">{{ 'Edit'|t }}</a>{% endif %}
+              </p>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="mersch-rh__vide">{{ 'No communication at the moment.'|t }}</p>
+      {% endif %}
+    </section>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.rh_nouvelle.field_rh_photo
+  - field.field.node.rh_nouvelle.field_rh_service
+  - field.field.node.rh_nouvelle.field_rh_texte
+  - image.style.mersch_portrait
+  - node.type.rh_nouvelle
+  module:
+  - image
+  - text
+  - user
+id: node.rh_nouvelle.default
+targetEntityType: node
+bundle: rh_nouvelle
+mode: default
+content:
+  field_rh_photo:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: mersch_portrait
+      image_loading:
+        attribute: lazy
+    third_party_settings: {}
+    weight: 0
+    region: content
+  field_rh_service:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {}
+    weight: 1
+    region: content
+  field_rh_texte:
+    type: text_default
+    label: hidden
+    settings: {}
+    third_party_settings: {}
+    weight: 2
+    region: content
+hidden:
+  langcode: true
+  links: true

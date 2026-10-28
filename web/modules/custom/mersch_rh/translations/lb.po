@@ -1,0 +1,210 @@
+# Traductions de l'interface de la page RH (module mersch_rh).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "New faces"
+msgstr "Nei Gesiichter"
+
+msgid "At the service of the departments and the citizens"
+msgstr "Am Déngscht vun de Servicer an de Bierger"
+
+msgid "Thank you!"
+msgstr "Merci!"
+
+msgid "We wish you a happy retirement"
+msgstr "Mir wënschen eng schéi Pensioun"
+
+msgid "Staff news"
+msgstr "Neiegkeeten aus dem Personal"
+
+msgid "Organisation chart"
+msgstr "Organigramm"
+
+msgid "Updated on @date."
+msgstr "Aktualiséiert den @date."
+
+msgid "Translation not available"
+msgstr "Iwwersetzung net disponibel"
+
+msgid "Edit"
+msgstr "Änneren"
+
+msgid "No news at the moment."
+msgstr "Momentan keng Neiegkeeten."
+
+msgid "HR communications"
+msgstr "Matdeelunge vum Personalservice"
+
+msgid "No communication at the moment."
+msgstr "Momentan keng Matdeelung."
+
+msgid "Add HR news"
+msgstr "Neiegkeet derbäisetzen"
+
+msgid "Add HR communication"
+msgstr "Matdeelung derbäisetzen"
+
+msgid "The text has @mots words; the maximum is 150 (D-023)."
+msgstr "Den Text huet @mots Wierder; maximal sinn 150 erlaabt (D-023)."
+
+msgid "A new face, a retirement or a photo requires the written consent of the person concerned (D-023)."
+msgstr "Fir en neit Gesiicht, eng Pensioun oder eng Foto brauch een d'schrëftlecht Averständnis vun der betraffener Persoun (D-023)."
+
+msgid "HR news"
+msgstr "Neiegkeet vum Personalservice"
+
+msgid "Naming a person or showing a photo requires their written consent (D-023)."
+msgstr "Eng Persoun nennen oder eng Foto weisen geet nëmme mat hirem schrëftlechen Averständnis (D-023)."
+
+msgid "HR communication"
+msgstr "Matdeelung vum Personalservice"
+
+msgid "Official HR notes and circulars with a PDF attachment (US-14)."
+msgstr "Offiziell Noten a Rondschreiwe vum Personalservice mat engem PDF."
+
+msgid "New face"
+msgstr "Neit Gesiicht"
+
+msgid "Retirement"
+msgstr "Pensioun"
+
+msgid "Other news"
+msgstr "Aner Neiegkeet"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Short summary of the document."
+msgstr "Kuerz Zesummefaassung vum Dokument."
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "New faces and retirements are grouped under their own heading on the HR page."
+msgstr "Nei Gesiichter a Pensioune stinn op der Säit vum Personalservice ënner hirer eegener Iwwerschrëft."
+
+msgid "Department"
+msgstr "Service"
+
+msgid "For example: Service de régie / Voirie."
+msgstr "Zum Beispill: Service de régie / Voirie."
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Optional. Only with the written consent of the person shown (D-023)."
+msgstr "Fakultativ. Nëmme mam schrëftlechen Averständnis vun der Persoun op der Foto (D-023)."
+
+msgid "Written consent obtained"
+msgstr "Schrëftlecht Averständnis kritt"
+
+msgid "Required for a new face, a retirement or any news with a photo (D-023)."
+msgstr "Obligatoresch fir en neit Gesiicht, eng Pensioun oder all Neiegkeet mat Foto (D-023)."
+
+msgid "End of publication"
+msgstr "Enn vun der Publikatioun"
+
+msgid "Optional. From the day after this date, the news no longer appears on the HR page."
+msgstr "Fakultativ. Vum Dag no dësem Datum un ass d'Neiegkeet net méi op der Säit vum Personalservice."
+
+msgid "PDF document"
+msgstr "PDF-Dokument"
+
+msgid "The note or circular, as a PDF."
+msgstr "D'Notiz oder de Rondschreiwen, als PDF."
+
+msgid "HR editor"
+msgstr "Redakter Personalservice"
+
+msgid "Simple text"
+msgstr "Einfachen Text"
+
+msgid "New staff, retirements and other staff news on the HR page (US-13): title, at most 150 words, optional photo (D-023)."
+msgstr "Nei Mataarbechter, Pensiounen an aner Neiegkeeten op der Säit vum Personalservice: Titel, maximal 150 Wierder, Foto fakultativ (D-023)."
+
+msgid "At most 150 words (D-023)."
+msgstr "Maximal 150 Wierder (D-023)."
+
+msgid "@personnes people in the departments of the commune."
+msgstr "@personnes Leit an de Servicer vun der Gemeng."
+
+msgid "Open the organisation chart"
+msgstr "D'Organigramm opmaachen"
+
+msgid "HR has not entered the organisation chart yet."
+msgstr "De Personalservice huet d'Organigramm nach net agedroen."
+
+msgid "Who does what in the commune: @personnes people."
+msgstr "Wien mécht wat an der Gemeng: @personnes Leit."
+
+msgid "Search the organisation chart"
+msgstr "Am Organigramm sichen"
+
+msgid "Search for a name, a job title or a department…"
+msgstr "Numm, Funktioun oder Service sichen…"
+
+msgid "Sections of the organisation chart"
+msgstr "Deeler vum Organigramm"
+
+msgid "Print"
+msgstr "Drécken"
+
+msgid "@count results"
+msgstr "@count Resultater"
+
+msgid "No one matches this search."
+msgstr "Keen entsprécht dëser Sich."
+
+msgid "Vacant post"
+msgstr "Fräie Posten"
+
+msgid "Find in the staff directory"
+msgstr "Am Personalverzeechnes sichen"
+
+msgid "Add a person"
+msgstr "Persoun derbäisetzen"
+
+msgid "Manage departments"
+msgstr "Servicer verwalten"
+
+msgid "Organisation chart departments"
+msgstr "Servicer vum Organigramm"
+
+msgid "Departments and teams of the organisation chart (US-12). The order and the parent set the layout of the chart."
+msgstr "Servicer an Ekippe vum Organigramm. D'Reiefolleg an den iwwergeuerdente Service bestëmmen d'Opstellung."
+
+msgid "Organisation chart entry"
+msgstr "Persoun am Organigramm"
+
+msgid "A person or a vacant post on the organisation chart (US-12): name, job title, department, photo."
+msgstr "Eng Persoun oder e fräie Posten am Organigramm: Numm, Funktioun, Service, Foto."
+
+msgid "A photo only with the consent form signed by the person."
+msgstr "Eng Foto nëmme mam ënnerschriwwenen Averständnis vun der Persoun."
+
+msgid "Name"
+msgstr "Numm"
+
+msgid "As on the organisation chart: SURNAME First name. For a vacant post: Poste vacant."
+msgstr "Wéi um Organigramm: NUMM Virnumm. Fir e fräie Posten: Poste vacant."
+
+msgid "Job title"
+msgstr "Funktioun"
+
+msgid "Optional. For example: Contremaître, Secrétaire communal."
+msgstr "Fakultativ. Zum Beispill: Contremaître, Secrétaire communal."
+
+msgid "Where the person appears on the organisation chart."
+msgstr "Wou d'Persoun um Organigramm steet."
+
+msgid "Only with the consent form signed by the person. Without a photo, the initials are shown."
+msgstr "Nëmme mam ënnerschriwwenen Averständnis vun der Persoun. Ouni Foto stinn d'Initialen do."
+
+msgid "Order"
+msgstr "Reiefolleg"
+
+msgid "Position in the department: smallest first (0 for the head of department). Same number: alphabetical order."
+msgstr "Plaz am Service: déi klengst Zuel fir d'éischt (0 fir de Chef). Selwecht Zuel: alphabetesch."

@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'HR communication'
+type: rh_communication
+description: 'Official HR notes and circulars with a PDF attachment (US-14).'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

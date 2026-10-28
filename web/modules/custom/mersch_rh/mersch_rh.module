@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Page RH : organigramme, nouvelles du personnel, communications RH.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\mersch_rh\Controller\RhController;
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_rh_theme(): array {
+  return [
+    'mersch_rh' => [
+      'variables' => [
+        'rubrique' => [],
+        'organigramme' => NULL,
+        'nouvelles' => [],
+        'communications' => [],
+      ],
+    ],
+    'mersch_organigramme' => [
+      'variables' => ['sections' => [], 'personnes' => 0, 'date' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function mersch_rh_entity_type_alter(array &$entity_types): void {
+  // Gabarit de nouvelle (D-023) : 150 mots au plus, accord écrit.
+  $entity_types['node']->addConstraint('MerschNouvelleRh');
+}
+
+/**
+ * Implements hook_entity_field_access_alter().
+ *
+ * Un rédacteur peut dépublier un contenu de sa rubrique (D-019) : le cœur
+ * réserve la case « Publié » à « administer nodes », on l'ouvre ici à ceux
+ * qui peuvent modifier ce type de contenu RH.
+ */
+function mersch_rh_entity_field_access_alter(array &$grants, array $context): void {
+  $items = $context['items'];
+  if ($context['operation'] !== 'edit' || $context['field_definition']->getName() !== 'status' || !$items) {
+    return;
+  }
+  $entity = $items->getEntity();
+  if ($entity->getEntityTypeId() === 'node' && in_array($entity->bundle(), RhController::TYPES, TRUE)) {
+    $grants[':default'] = AccessResult::allowedIfHasPermission($context['account'], 'edit any ' . $entity->bundle() . ' content');
+  }
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Une fois par jour, vide le cache de la page RH : les nouvelles dont la date
+ * de fin de publication est passée disparaissent, y compris pour les lecteurs
+ * anonymes (le cache de page ignore la durée de vie).
+ */
+function mersch_rh_cron(): void {
+  $jour = \Drupal::service('date.formatter')->format(\Drupal::time()->getRequestTime(), 'custom', 'Y-m-d');
+  $state = \Drupal::state();
+  if ($state->get('mersch_rh.jour') !== $jour) {
+    \Drupal::service('cache_tags.invalidator')->invalidateTags([RhController::CACHE_TAG_JOUR]);
+    $state->set('mersch_rh.jour', $jour);
+  }
+}
+

@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_pdf
+  - node.type.rh_communication
+  module:
+  - file
+id: node.rh_communication.field_rh_pdf
+field_name: field_rh_pdf
+entity_type: node
+bundle: rh_communication
+label: PDF document
+description: The note or circular, as a PDF.
+required: true
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  handler: default:file
+  handler_settings: {}
+  file_directory: rh/communications
+  file_extensions: pdf
+  max_filesize: 20 MB
+  description_field: false
+field_type: file

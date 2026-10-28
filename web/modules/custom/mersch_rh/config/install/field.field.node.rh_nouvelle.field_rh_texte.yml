@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_texte
+  - filter.format.mersch_simple
+  - node.type.rh_nouvelle
+  module:
+  - text
+id: node.rh_nouvelle.field_rh_texte
+field_name: field_rh_texte
+entity_type: node
+bundle: rh_nouvelle
+label: Text
+description: At most 150 words (D-023).
+required: true
+translatable: true
+default_value: []
+default_value_callback: ''
+settings:
+  allowed_formats:
+  - mersch_simple
+field_type: text_long

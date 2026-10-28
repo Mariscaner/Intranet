@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_categorie
+  - node.type.rh_nouvelle
+  module:
+  - options
+id: node.rh_nouvelle.field_rh_categorie
+field_name: field_rh_categorie
+entity_type: node
+bundle: rh_nouvelle
+label: Category
+description: New faces and retirements are grouped under their own heading on the
+  HR page.
+required: true
+translatable: false
+default_value:
+- value: arrivee
+default_value_callback: ''
+settings: {}
+field_type: list_string

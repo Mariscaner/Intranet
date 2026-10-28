@@ -1,0 +1,13 @@
+services:
+  mersch_rh.organigramme:
+    class: Drupal\mersch_rh\Organigramme
+    arguments: ['@entity_type.manager', '@router.route_provider']
+  Drupal\mersch_rh\Organigramme: '@mersch_rh.organigramme'
+  mersch_rh.import_organigramme:
+    class: Drupal\mersch_rh\ImportOrganigramme
+    arguments: ['@entity_type.manager', '@file_system']
+  Drupal\mersch_rh\ImportOrganigramme: '@mersch_rh.import_organigramme'
+  mersch_rh.route_subscriber:
+    class: Drupal\mersch_rh\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,179 @@
+/*
+ * Page RH. Couleurs du thème mersch (variables --mersch-*), avec repli ;
+ * la couleur du domaine RH ne sert qu'aux filets et contours, jamais au texte.
+ */
+.mersch-rh .mersch-bloc {
+  border-top-color: var(--mersch-rh, #c1ad76);
+}
+
+.mersch-rh__organigramme {
+  margin-bottom: 36px;
+}
+
+.mersch-rh__meta {
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+  margin: 0 0 10px;
+}
+
+.mersch-rh__sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-rh__sections a {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.mersch-rh__sections a:hover {
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-rh__bouton {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 4px;
+  background: var(--mersch-bleu, #26336a);
+  color: var(--mersch-blanc, #fff);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.mersch-rh__bouton:hover {
+  opacity: 0.9;
+}
+
+.mersch-rh__aide,
+.mersch-rh__vide {
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-rh__grille {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+/* Nouvelles : « Nei Gesiichter », « Merci! », d'après le gabarit des RH */
+.mersch-rh__groupe {
+  border-top: 4px solid var(--mersch-rh, #c1ad76);
+  padding-top: 14px;
+  margin-bottom: 32px;
+}
+
+.mersch-rh__titre-groupe {
+  font: bold 30px/1.15 var(--mersch-police-titre, Georgia, serif);
+  margin: 0;
+}
+
+.mersch-rh__sous-titre {
+  font-weight: bold;
+  margin: 4px 0 18px;
+}
+
+.mersch-rh__cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-rh__photo {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 3px solid var(--mersch-rh, #c1ad76);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.mersch-rh__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mersch-rh__photo--initiales {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: var(--mersch-fond-2, #f3f4f8);
+  font: bold 36px var(--mersch-police-titre, Georgia, serif);
+}
+
+.mersch-rh__carte h3 {
+  font: bold 16px/1.3 var(--mersch-police-titre, Georgia, serif);
+  margin: 0;
+}
+
+.mersch-rh__service {
+  font-weight: bold;
+  font-size: 13px;
+  margin: 2px 0 8px;
+}
+
+.mersch-rh__texte {
+  font-size: 14px;
+}
+
+.mersch-rh__texte p {
+  margin: 0 0 8px;
+}
+
+.mersch-rh__non-traduit {
+  display: inline-block;
+  font-size: 12px;
+  background: var(--mersch-fond-2, #f3f4f8);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+/* Communications RH */
+.mersch-rh__liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-rh__liste li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--mersch-ligne, #d9dce8);
+}
+
+.mersch-rh__document {
+  font-weight: bold;
+}
+
+.mersch-rh__document::before {
+  content: "PDF";
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--mersch-bleu, #26336a);
+  color: var(--mersch-blanc, #fff);
+  font-size: 11px;
+  vertical-align: 2px;
+}
+
+@media (max-width: 860px) {
+  .mersch-rh__grille {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

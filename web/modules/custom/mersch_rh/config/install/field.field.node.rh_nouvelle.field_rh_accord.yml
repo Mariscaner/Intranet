@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_accord
+  - node.type.rh_nouvelle
+id: node.rh_nouvelle.field_rh_accord
+field_name: field_rh_accord
+entity_type: node
+bundle: rh_nouvelle
+label: Written consent obtained
+description: Required for a new face, a retirement or any news with a photo (D-023).
+required: false
+translatable: false
+default_value:
+- value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

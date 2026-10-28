@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_rh_service
+  - node.type.rh_nouvelle
+id: node.rh_nouvelle.field_rh_service
+field_name: field_rh_service
+entity_type: node
+bundle: rh_nouvelle
+label: Department
+description: 'For example: Service de régie / Voirie.'
+required: false
+translatable: true
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: string

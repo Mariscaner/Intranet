@@ -1,0 +1,210 @@
+# Traductions de l'interface de la page RH (module mersch_rh).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "New faces"
+msgstr "Neue Gesichter"
+
+msgid "At the service of the departments and the citizens"
+msgstr "Im Dienst der Abteilungen und der Bürger"
+
+msgid "Thank you!"
+msgstr "Danke!"
+
+msgid "We wish you a happy retirement"
+msgstr "Wir wünschen einen schönen Ruhestand"
+
+msgid "Staff news"
+msgstr "Neuigkeiten aus dem Personal"
+
+msgid "Organisation chart"
+msgstr "Organigramm"
+
+msgid "Updated on @date."
+msgstr "Aktualisiert am @date."
+
+msgid "Translation not available"
+msgstr "Übersetzung nicht verfügbar"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "No news at the moment."
+msgstr "Zurzeit keine Neuigkeiten."
+
+msgid "HR communications"
+msgstr "Mitteilungen der Personalabteilung"
+
+msgid "No communication at the moment."
+msgstr "Zurzeit keine Mitteilung."
+
+msgid "Add HR news"
+msgstr "Neuigkeit hinzufügen"
+
+msgid "Add HR communication"
+msgstr "Mitteilung hinzufügen"
+
+msgid "The text has @mots words; the maximum is 150 (D-023)."
+msgstr "Der Text hat @mots Wörter; erlaubt sind höchstens 150 (D-023)."
+
+msgid "A new face, a retirement or a photo requires the written consent of the person concerned (D-023)."
+msgstr "Für ein neues Gesicht, einen Ruhestand oder ein Foto ist die schriftliche Einwilligung der betroffenen Person erforderlich (D-023)."
+
+msgid "HR news"
+msgstr "Neuigkeit der Personalabteilung"
+
+msgid "Naming a person or showing a photo requires their written consent (D-023)."
+msgstr "Eine Person nennen oder ein Foto zeigen ist nur mit ihrer schriftlichen Einwilligung erlaubt (D-023)."
+
+msgid "HR communication"
+msgstr "Mitteilung der Personalabteilung"
+
+msgid "Official HR notes and circulars with a PDF attachment (US-14)."
+msgstr "Offizielle Notizen und Rundschreiben der Personalabteilung mit einem PDF."
+
+msgid "New face"
+msgstr "Neues Gesicht"
+
+msgid "Retirement"
+msgstr "Ruhestand"
+
+msgid "Other news"
+msgstr "Andere Neuigkeit"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Short summary of the document."
+msgstr "Kurze Zusammenfassung des Dokuments."
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "New faces and retirements are grouped under their own heading on the HR page."
+msgstr "Neue Gesichter und Ruhestände stehen auf der Seite der Personalabteilung unter einer eigenen Überschrift."
+
+msgid "Department"
+msgstr "Abteilung"
+
+msgid "For example: Service de régie / Voirie."
+msgstr "Zum Beispiel: Service de régie / Voirie."
+
+msgid "Photo"
+msgstr "Foto"
+
+msgid "Optional. Only with the written consent of the person shown (D-023)."
+msgstr "Freiwillig. Nur mit der schriftlichen Einwilligung der abgebildeten Person (D-023)."
+
+msgid "Written consent obtained"
+msgstr "Schriftliche Einwilligung liegt vor"
+
+msgid "Required for a new face, a retirement or any news with a photo (D-023)."
+msgstr "Pflicht für ein neues Gesicht, einen Ruhestand oder jede Neuigkeit mit Foto (D-023)."
+
+msgid "End of publication"
+msgstr "Ende der Veröffentlichung"
+
+msgid "Optional. From the day after this date, the news no longer appears on the HR page."
+msgstr "Freiwillig. Ab dem Tag nach diesem Datum erscheint die Neuigkeit nicht mehr auf der Seite der Personalabteilung."
+
+msgid "PDF document"
+msgstr "PDF-Dokument"
+
+msgid "The note or circular, as a PDF."
+msgstr "Die Notiz oder das Rundschreiben als PDF."
+
+msgid "HR editor"
+msgstr "Redakteur Personalabteilung"
+
+msgid "Simple text"
+msgstr "Einfacher Text"
+
+msgid "New staff, retirements and other staff news on the HR page (US-13): title, at most 150 words, optional photo (D-023)."
+msgstr "Neue Mitarbeitende, Ruhestände und andere Neuigkeiten auf der Seite der Personalabteilung: Titel, höchstens 150 Wörter, Foto freiwillig (D-023)."
+
+msgid "At most 150 words (D-023)."
+msgstr "Höchstens 150 Wörter (D-023)."
+
+msgid "@personnes people in the departments of the commune."
+msgstr "@personnes Personen in den Abteilungen der Gemeinde."
+
+msgid "Open the organisation chart"
+msgstr "Organigramm öffnen"
+
+msgid "HR has not entered the organisation chart yet."
+msgstr "Die Personalabteilung hat das Organigramm noch nicht erfasst."
+
+msgid "Who does what in the commune: @personnes people."
+msgstr "Wer macht was in der Gemeinde: @personnes Personen."
+
+msgid "Search the organisation chart"
+msgstr "Im Organigramm suchen"
+
+msgid "Search for a name, a job title or a department…"
+msgstr "Name, Funktion oder Abteilung suchen…"
+
+msgid "Sections of the organisation chart"
+msgstr "Bereiche des Organigramms"
+
+msgid "Print"
+msgstr "Drucken"
+
+msgid "@count results"
+msgstr "@count Ergebnisse"
+
+msgid "No one matches this search."
+msgstr "Niemand entspricht dieser Suche."
+
+msgid "Vacant post"
+msgstr "Freie Stelle"
+
+msgid "Find in the staff directory"
+msgstr "Im Mitarbeiterverzeichnis suchen"
+
+msgid "Add a person"
+msgstr "Person hinzufügen"
+
+msgid "Manage departments"
+msgstr "Abteilungen verwalten"
+
+msgid "Organisation chart departments"
+msgstr "Abteilungen des Organigramms"
+
+msgid "Departments and teams of the organisation chart (US-12). The order and the parent set the layout of the chart."
+msgstr "Abteilungen und Teams des Organigramms. Reihenfolge und übergeordnete Abteilung bestimmen den Aufbau."
+
+msgid "Organisation chart entry"
+msgstr "Eintrag im Organigramm"
+
+msgid "A person or a vacant post on the organisation chart (US-12): name, job title, department, photo."
+msgstr "Eine Person oder eine freie Stelle im Organigramm: Name, Funktion, Abteilung, Foto."
+
+msgid "A photo only with the consent form signed by the person."
+msgstr "Ein Foto nur mit der von der Person unterschriebenen Einwilligung."
+
+msgid "Name"
+msgstr "Name"
+
+msgid "As on the organisation chart: SURNAME First name. For a vacant post: Poste vacant."
+msgstr "Wie im Organigramm: NACHNAME Vorname. Für eine freie Stelle: Poste vacant."
+
+msgid "Job title"
+msgstr "Funktion"
+
+msgid "Optional. For example: Contremaître, Secrétaire communal."
+msgstr "Freiwillig. Zum Beispiel: Contremaître, Secrétaire communal."
+
+msgid "Where the person appears on the organisation chart."
+msgstr "Wo die Person im Organigramm erscheint."
+
+msgid "Only with the consent form signed by the person. Without a photo, the initials are shown."
+msgstr "Nur mit der unterschriebenen Einwilligung der Person. Ohne Foto erscheinen die Initialen."
+
+msgid "Order"
+msgstr "Reihenfolge"
+
+msgid "Position in the department: smallest first (0 for the head of department). Same number: alphabetical order."
+msgstr "Position in der Abteilung: kleinste Zahl zuerst (0 für die Leitung). Gleiche Zahl: alphabetisch."

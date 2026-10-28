@@ -1,0 +1,28 @@
+mersch_rh.ajouter_nouvelle:
+  route_name: node.add
+  route_parameters:
+    node_type: rh_nouvelle
+  title: 'Add HR news'
+  appears_on:
+    - mersch_accueil.rh
+mersch_rh.ajouter_communication:
+  route_name: node.add
+  route_parameters:
+    node_type: rh_communication
+  title: 'Add HR communication'
+  appears_on:
+    - mersch_accueil.rh
+mersch_rh.ajouter_poste:
+  route_name: node.add
+  route_parameters:
+    node_type: rh_poste
+  title: 'Add a person'
+  appears_on:
+    - mersch_rh.organigramme
+mersch_rh.services:
+  route_name: entity.taxonomy_vocabulary.overview_form
+  route_parameters:
+    taxonomy_vocabulary: rh_service
+  title: 'Manage departments'
+  appears_on:
+    - mersch_rh.organigramme

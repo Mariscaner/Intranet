@@ -1,0 +1,15 @@
+rh:
+  version: VERSION
+  css:
+    component:
+      css/rh.css: {}
+organigramme:
+  version: VERSION
+  css:
+    component:
+      css/organigramme.css: {}
+  js:
+    js/organigramme.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

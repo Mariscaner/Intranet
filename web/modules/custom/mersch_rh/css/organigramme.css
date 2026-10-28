@@ -1,0 +1,280 @@
+/*
+ * Organigramme (US-12), d'après la mise en page du PDF des RH : bandeau or
+ * par section, en-têtes de service bleus, photos rondes.
+ * Couleurs du thème mersch (variables --mersch-*), avec repli.
+ */
+/* Résultats de recherche : [hidden] l'emporte sur display: flex */
+.mersch-org [hidden] {
+  display: none !important;
+}
+
+.mersch-org__outils {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+
+.mersch-org__recherche {
+  flex: 1 1 280px;
+}
+
+.mersch-org__recherche input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 4px;
+  font: inherit;
+  color: inherit;
+}
+
+.mersch-org__sommaire {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mersch-org__sommaire a,
+.mersch-org__imprimer {
+  padding: 6px 11px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 999px;
+  background: var(--mersch-blanc, #fff);
+  color: var(--mersch-bleu, #26336a);
+  font: 13px var(--mersch-police-texte, Arial, sans-serif);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mersch-org__sommaire a:hover,
+.mersch-org__imprimer:hover {
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-org__resultat {
+  font-weight: bold;
+  margin: -12px 0 20px;
+}
+
+/* Sections : bandeau or comme sur le PDF (texte bleu : contraste suffisant) */
+.mersch-org__section {
+  margin-bottom: 40px;
+  scroll-margin-top: 12px;
+}
+
+.mersch-org__bandeau {
+  margin: 0 0 20px;
+  padding: 9px 14px;
+  background: var(--mersch-rh, #c1ad76);
+  color: var(--mersch-bleu, #26336a);
+  font: bold 15px/1.3 var(--mersch-police-texte, Arial, sans-serif);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Direction d'une section, reliée aux services par un trait */
+.mersch-org__direction {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 28px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-org__direction .mersch-org__poste {
+  min-width: 220px;
+  padding: 10px 14px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-top: 4px solid var(--mersch-bleu, #26336a);
+  border-radius: 6px;
+  background: var(--mersch-blanc, #fff);
+}
+
+.mersch-org__direction .mersch-org__photo {
+  width: 72px;
+  height: 72px;
+}
+
+.mersch-org__grille--liee {
+  position: relative;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 2px solid var(--mersch-bleu, #26336a);
+}
+
+.mersch-org__grille--liee::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  height: 28px;
+  border-left: 2px solid var(--mersch-bleu, #26336a);
+}
+
+/* Services en cartes */
+.mersch-org__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.mersch-org__service {
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 6px;
+  background: var(--mersch-blanc, #fff);
+  overflow: hidden;
+  break-inside: avoid;
+  scroll-margin-top: 12px;
+}
+
+.mersch-org__service--large {
+  grid-column: 1 / -1;
+  background: var(--mersch-fond-2, #f3f4f8);
+}
+
+.mersch-org__titre-service {
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--mersch-bleu, #26336a);
+  color: var(--mersch-blanc, #fff);
+  font: bold 13px/1.3 var(--mersch-police-texte, Arial, sans-serif);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mersch-org__grille--interne {
+  padding: 0 12px 12px;
+}
+
+/* Sous-service d'une petite carte (ex. Bus scolaire) : empilé dedans */
+.mersch-org__service:not(.mersch-org__service--large) > .mersch-org__grille--interne {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.mersch-org__service:not(.mersch-org__service--large) .mersch-org__service {
+  border-color: var(--mersch-fond-2, #f3f4f8);
+}
+
+.mersch-org__service--large > .mersch-org__postes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+
+.mersch-org__postes {
+  margin: 0;
+  padding: 6px 12px 10px;
+  list-style: none;
+}
+
+/* Personne */
+.mersch-org__poste {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.mersch-org__postes .mersch-org__poste + .mersch-org__poste {
+  border-top: 1px solid var(--mersch-fond-2, #f3f4f8);
+}
+
+.mersch-org__photo {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--mersch-rh, #c1ad76);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mersch-org__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mersch-org__photo--initiales,
+.mersch-org__photo--vacant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mersch-fond-2, #f3f4f8);
+  font: bold 17px var(--mersch-police-titre, Georgia, serif);
+}
+
+.mersch-org__photo--vacant {
+  border-style: dashed;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-org__identite {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mersch-org__nom {
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+a.mersch-org__nom:hover {
+  text-decoration: underline;
+}
+
+.mersch-org__poste--vacant .mersch-org__nom {
+  font-weight: normal;
+  font-style: italic;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-org__fonction {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-org__modifier {
+  font-size: 12px;
+}
+
+@media print {
+  .mersch-entete,
+  .mersch-menu,
+  .mersch-pied,
+  #block-mersch-actions,
+  .mersch-org__outils,
+  .mersch-org__resultat,
+  .mersch-org__modifier {
+    display: none !important;
+  }
+
+  .mersch-org__section {
+    break-before: page;
+  }
+
+  .mersch-org__section:first-of-type {
+    break-before: auto;
+  }
+
+  .mersch-org__bandeau,
+  .mersch-org__titre-service,
+  .mersch-org__service--large {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  a.mersch-org__nom {
+    color: inherit;
+  }
+}

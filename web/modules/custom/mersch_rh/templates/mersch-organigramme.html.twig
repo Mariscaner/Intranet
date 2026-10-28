@@ -1,0 +1,93 @@
+{#
+/**
+ * @file
+ * Organigramme (US-12) : sections (Collège, services) en bandeaux, services
+ * en cartes, sous-services imbriqués ; recherche et impression.
+ *
+ * Variables :
+ * - sections : arbre de { id, nom, postes, enfants, large } ; chaque poste a nom,
+ *   fonction, vacant, photo (ou NULL), initiales, annuaire, modifier.
+ * - personnes : nombre de personnes (postes vacants exclus).
+ * - date : date de la dernière modification, ou NULL.
+ */
+#}
+{% import _self as org %}
+
+{% macro poste(poste) %}
+  <li class="mersch-org__poste{{ poste.vacant ? ' mersch-org__poste--vacant' }}" data-recherche="{{ poste.nom }} {{ poste.fonction }}">
+    {% if poste.photo %}
+      <span class="mersch-org__photo">{{ poste.photo }}</span>
+    {% elseif poste.vacant %}
+      <span class="mersch-org__photo mersch-org__photo--vacant" aria-hidden="true">?</span>
+    {% else %}
+      <span class="mersch-org__photo mersch-org__photo--initiales" aria-hidden="true">{{ poste.initiales }}</span>
+    {% endif %}
+    <span class="mersch-org__identite">
+      {% if poste.vacant %}
+        <span class="mersch-org__nom">{{ 'Vacant post'|t }}</span>
+      {% elseif poste.annuaire %}
+        <a class="mersch-org__nom" href="{{ poste.annuaire }}" title="{{ 'Find in the staff directory'|t }}">{{ poste.nom }}</a>
+      {% else %}
+        <span class="mersch-org__nom">{{ poste.nom }}</span>
+      {% endif %}
+      {% if poste.fonction %}<span class="mersch-org__fonction">{{ poste.fonction }}</span>{% endif %}
+      {% if poste.modifier %}<a class="mersch-org__modifier" href="{{ poste.modifier }}">{{ 'Edit'|t }}</a>{% endif %}
+    </span>
+  </li>
+{% endmacro %}
+
+{% macro service(service) %}
+  {% import _self as org %}
+  <article class="mersch-org__service{{ service.large ? ' mersch-org__service--large' }}" id="{{ service.id }}" data-service="{{ service.nom }}">
+    <h3 class="mersch-org__titre-service">{{ service.nom }}</h3>
+    {% if service.postes %}
+      <ul class="mersch-org__postes">
+        {% for poste in service.postes %}{{ org.poste(poste) }}{% endfor %}
+      </ul>
+    {% endif %}
+    {% if service.enfants %}
+      <div class="mersch-org__grille mersch-org__grille--interne">
+        {% for enfant in service.enfants %}{{ org.service(enfant) }}{% endfor %}
+      </div>
+    {% endif %}
+  </article>
+{% endmacro %}
+
+<div class="mersch-org" data-rubrique="rh">
+  {% if sections %}
+    <p class="mersch-accueil__chapo">
+      {{ 'Who does what in the commune: @personnes people.'|t({'@personnes': personnes}) }}
+      {% if date %}{{ 'Updated on @date.'|t({'@date': date}) }}{% endif %}
+    </p>
+
+    <div class="mersch-org__outils">
+      <div class="mersch-org__recherche" role="search">
+        <label for="mersch-org-recherche" class="visually-hidden">{{ 'Search the organisation chart'|t }}</label>
+        <input type="search" id="mersch-org-recherche" placeholder="{{ 'Search for a name, a job title or a department…'|t }}" autocomplete="off">
+      </div>
+      <nav class="mersch-org__sommaire" aria-label="{{ 'Sections of the organisation chart'|t }}">
+        {% for section in sections %}<a href="#{{ section.id }}">{{ section.nom }}</a>{% endfor %}
+      </nav>
+      <button type="button" class="mersch-org__imprimer" onclick="window.print()">{{ 'Print'|t }}</button>
+    </div>
+    <p class="mersch-org__resultat" aria-live="polite" data-modele="{{ '@count results'|t }}" data-aucun="{{ 'No one matches this search.'|t }}" hidden></p>
+
+    {% for section in sections %}
+      <section class="mersch-org__section" id="{{ section.id }}" data-service="{{ section.nom }}" aria-labelledby="{{ section.id }}-titre">
+        <h2 class="mersch-org__bandeau" id="{{ section.id }}-titre">{{ section.nom }}</h2>
+        {% if section.postes %}
+          <ul class="mersch-org__direction">
+            {% for poste in section.postes %}{{ org.poste(poste) }}{% endfor %}
+          </ul>
+        {% endif %}
+        {% if section.enfants %}
+          <div class="mersch-org__grille{{ section.postes ? ' mersch-org__grille--liee' }}">
+            {% for service in section.enfants %}{{ org.service(service) }}{% endfor %}
+          </div>
+        {% endif %}
+      </section>
+    {% endfor %}
+  {% else %}
+    <p class="mersch-rh__vide">{{ 'HR has not entered the organisation chart yet.'|t }}</p>
+  {% endif %}
+</div>
