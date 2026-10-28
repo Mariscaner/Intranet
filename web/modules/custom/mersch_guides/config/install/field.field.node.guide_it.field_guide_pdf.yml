@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_guide_pdf
+  - node.type.guide_it
+  module:
+  - file
+id: node.guide_it.field_guide_pdf
+field_name: field_guide_pdf
+entity_type: node
+bundle: guide_it
+label: PDF
+description: 'The guide as a PDF. A text or a PDF is required (US-21).'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  handler: default:file
+  handler_settings: {}
+  file_directory: guides-it
+  file_extensions: pdf
+  max_filesize: 20 MB
+  description_field: false
+field_type: file

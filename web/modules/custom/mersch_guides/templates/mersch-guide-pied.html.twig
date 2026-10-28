@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Pied de la page d'un guide IT : PDF, date de mise à jour (US-21), lien
+ * vers le helpdesk (US-19) et retour à la liste.
+ *
+ * Variables :
+ * - pdf : { url, taille } ou NULL.
+ * - date : date de dernière mise à jour (jj.mm.aaaa).
+ * - helpdesk : adresse du helpdesk.
+ * - retour : adresse de la page Guides IT.
+ */
+#}
+<div class="mersch-guide__pied">
+  {% if pdf %}
+    <p><a class="mersch-guide__pdf" href="{{ pdf.url }}" target="_blank" rel="noopener">{{ 'Open the guide (PDF, @size)'|t({'@size': pdf.taille}) }}<span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span></a></p>
+  {% endif %}
+  <p class="mersch-guides__date">{{ 'Last updated on @date'|t({'@date': date}) }}</p>
+  <div class="mersch-guides__aide">
+    <span>{{ 'Still stuck? Open a ticket at the Helpdesk.'|t }}</span>
+    <a href="{{ helpdesk }}" target="_blank" rel="noopener noreferrer">{{ helpdesk|trim('/', 'right') }} <span aria-hidden="true">↗</span><span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span></a>
+  </div>
+  <p><a href="{{ retour }}">← {{ 'All IT guides'|t }}</a></p>
+</div>

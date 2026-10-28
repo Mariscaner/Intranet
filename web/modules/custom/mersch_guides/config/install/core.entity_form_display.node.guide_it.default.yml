@@ -1,0 +1,100 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.guide_it.field_guide_captures
+  - field.field.node.guide_it.field_guide_categorie
+  - field.field.node.guide_it.field_guide_mots_cles
+  - field.field.node.guide_it.field_guide_pdf
+  - field.field.node.guide_it.field_guide_resume
+  - field.field.node.guide_it.field_guide_texte
+  - image.style.mersch_capture
+  - node.type.guide_it
+  module:
+  - content_translation
+  - file
+  - image
+  - options
+  - text
+id: node.guide_it.default
+targetEntityType: node
+bundle: guide_it
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_guide_categorie:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_guide_resume:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 80
+      placeholder: ''
+    third_party_settings: {}
+  field_guide_texte:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 12
+      placeholder: ''
+    third_party_settings: {}
+  field_guide_captures:
+    type: image_image
+    weight: 4
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {}
+  field_guide_pdf:
+    type: file_generic
+    weight: 5
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {}
+  field_guide_mots_cles:
+    type: string_textfield
+    weight: 6
+    region: content
+    settings:
+      size: 80
+      placeholder: ''
+    third_party_settings: {}
+  langcode:
+    type: language_select
+    weight: 7
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {}
+  translation:
+    weight: 8
+    region: content
+    settings: {}
+    third_party_settings: {}
+  status:
+    type: boolean_checkbox
+    weight: 9
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {}
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true

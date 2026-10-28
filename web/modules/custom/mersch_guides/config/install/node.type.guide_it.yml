@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'IT guide'
+type: guide_it
+description: 'IT procedure on the IT guides page (US-19 to US-21): category, summary, text with screenshots or a PDF. Administrators only (D-007).'
+help: 'No password, user name or personal data in a guide or its screenshots (US-20).'
+new_revision: true
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,204 @@
+/*
+ * Page Guides IT et page d'un guide, d'après la maquette validée. Couleurs du
+ * thème mersch (variables --mersch-*), avec repli ; la couleur du domaine
+ * Guides IT ne sert qu'aux filets et étiquettes, jamais au texte courant.
+ */
+.mersch-guides .mersch-bloc {
+  border-top-color: var(--mersch-guides-it, #00aba0);
+}
+
+/* Filtres par catégorie */
+.mersch-guides__filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mersch-guides__filtres button {
+  font: 13px var(--mersch-police-texte, Arial, sans-serif);
+  color: var(--mersch-bleu, #26336a);
+  background: var(--mersch-blanc, #fff);
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.mersch-guides__filtres button:hover {
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-guides__filtres button[aria-pressed="true"] {
+  color: var(--mersch-blanc, #fff);
+  background: var(--mersch-bleu, #26336a);
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-guides__recherche {
+  max-width: 520px;
+}
+
+.mersch-guides__compte,
+.mersch-guides__vide {
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+  margin: 0 0 12px;
+}
+
+/* Cartes des guides */
+.mersch-guides__liste {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-guides__guide {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-top: 4px solid var(--mersch-guides-it, #00aba0);
+  border-radius: 6px;
+}
+
+.mersch-guides__guide[hidden] {
+  display: none;
+}
+
+.mersch-guides__guide h3 {
+  font: bold 16px/1.3 var(--mersch-police-texte, Arial, sans-serif);
+  margin: 0;
+}
+
+.mersch-guides__guide h3 a {
+  text-decoration: none;
+}
+
+.mersch-guides__guide h3 a:hover {
+  text-decoration: underline;
+}
+
+.mersch-guides__resume {
+  margin: 0;
+  font-size: 14px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-guides__etiquette {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--mersch-bleu, #26336a);
+  background: color-mix(in srgb, var(--mersch-guides-it, #00aba0) 18%, #fff);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.mersch-guides__non-traduit {
+  display: inline-block;
+  font-size: 12px;
+  background: var(--mersch-fond-2, #f3f4f8);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin: 0;
+}
+
+.mersch-guides__bas {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  font-size: 13px;
+}
+
+.mersch-guides__bas a {
+  font-weight: bold;
+}
+
+.mersch-guides__date {
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-guides__bas .mersch-guides__date {
+  margin-left: auto;
+}
+
+/* Renvoi vers le helpdesk */
+.mersch-guides__aide {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 16px 18px;
+  color: var(--mersch-blanc, #fff);
+  background: var(--mersch-bleu, #26336a);
+  border-radius: 6px;
+}
+
+.mersch-guides__aide a {
+  color: var(--mersch-blanc, #fff);
+  font-weight: bold;
+}
+
+/* Page d'un guide */
+.mersch-guide__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.mersch-guide__entete .mersch-accueil__chapo {
+  flex-basis: 100%;
+  margin: 4px 0 16px;
+}
+
+.node--type-guide-it .field--name-field-guide-texte,
+.node--type-guide-it .field--name-field-guide-captures {
+  max-width: 760px;
+}
+
+.node--type-guide-it .field--name-field-guide-captures img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 12px 0;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 4px;
+}
+
+.mersch-guide__pied {
+  max-width: 760px;
+  margin-top: 20px;
+}
+
+.mersch-guide__pdf {
+  display: inline-block;
+  font-weight: bold;
+  color: var(--mersch-blanc, #fff);
+  background: var(--mersch-bleu, #26336a);
+  padding: 10px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.mersch-guide__pdf:hover {
+  background: var(--mersch-texte-2, #4a5480);
+}
+
+@media (max-width: 860px) {
+  .mersch-guides__liste {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

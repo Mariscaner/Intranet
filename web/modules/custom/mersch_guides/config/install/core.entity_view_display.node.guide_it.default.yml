@@ -1,0 +1,56 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.guide_it.field_guide_captures
+  - field.field.node.guide_it.field_guide_categorie
+  - field.field.node.guide_it.field_guide_mots_cles
+  - field.field.node.guide_it.field_guide_pdf
+  - field.field.node.guide_it.field_guide_resume
+  - field.field.node.guide_it.field_guide_texte
+  - image.style.mersch_capture
+  - node.type.guide_it
+  module:
+  - image
+  - text
+  - user
+id: node.guide_it.default
+targetEntityType: node
+bundle: guide_it
+mode: default
+content:
+  mersch_guide_entete:
+    weight: 0
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_guide_texte:
+    type: text_default
+    label: hidden
+    settings: {}
+    third_party_settings: {}
+    weight: 1
+    region: content
+  field_guide_captures:
+    type: image
+    label: hidden
+    settings:
+      image_link: file
+      image_style: mersch_capture
+      image_loading:
+        attribute: lazy
+    third_party_settings: {}
+    weight: 2
+    region: content
+  mersch_guide_pied:
+    weight: 3
+    region: content
+    settings: {}
+    third_party_settings: {}
+hidden:
+  field_guide_categorie: true
+  field_guide_mots_cles: true
+  field_guide_pdf: true
+  field_guide_resume: true
+  langcode: true
+  links: true

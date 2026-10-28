@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_guide_mots_cles
+  - node.type.guide_it
+id: node.guide_it.field_guide_mots_cles
+field_name: field_guide_mots_cles
+entity_type: node
+bundle: guide_it
+label: Keywords
+description: 'Optional. Extra words for the search, separated by spaces (e.g. password Passwuert Passwort).'
+required: false
+translatable: true
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: string

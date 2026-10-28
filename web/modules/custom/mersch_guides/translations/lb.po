@@ -1,0 +1,140 @@
+# Traductions de l'interface de la page Guides IT (module mersch_guides).
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Solve a problem yourself, or ask IT Hëllef vu Miersch."
+msgstr "Léist e Problem selwer, oder frot d'IT Hëllef vu Miersch."
+
+msgid "IT guides"
+msgstr "IT-Uleedungen"
+
+msgid "IT guide"
+msgstr "IT-Uleedung"
+
+msgid "Helpdesk"
+msgstr "Helpdesk"
+
+msgid "Applications"
+msgstr "Applikatiounen"
+
+msgid "Email and calendar"
+msgstr "Mail an Agenda"
+
+msgid "Security and accounts"
+msgstr "Sécherheet a Konten"
+
+msgid "Hardware and software"
+msgstr "Material a Software"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "All"
+msgstr "All"
+
+msgid "Search a guide"
+msgstr "Eng Uleedung sichen"
+
+msgid "Keyword: password, DSKNet, Outlook…"
+msgstr "Stéchwuert: Passwuert, DSKNet, Outlook…"
+
+msgid "@count guides"
+msgstr "@count Uleedungen"
+
+msgid "Translation not available"
+msgstr "Iwwersetzung net disponibel"
+
+msgid "Open the PDF"
+msgstr "PDF opmaachen"
+
+msgid "(opens in a new tab)"
+msgstr "(geet an engem neien Tab op)"
+
+msgid "Read the guide"
+msgstr "Uleedung liesen"
+
+msgid "Updated @date"
+msgstr "Aktualiséiert @date"
+
+msgid "Edit"
+msgstr "Änneren"
+
+msgid "No guide found."
+msgstr "Keng Uleedung fonnt."
+
+msgid "No suitable guide? Open a ticket at the Helpdesk."
+msgstr "Keng passend Uleedung? Maacht en Ticket beim Helpdesk op."
+
+msgid "Open the guide (PDF, @size)"
+msgstr "Uleedung opmaachen (PDF, @size)"
+
+msgid "Last updated on @date"
+msgstr "Aktualiséiert den @date"
+
+msgid "Still stuck? Open a ticket at the Helpdesk."
+msgstr "Nach ëmmer blockéiert? Maacht en Ticket beim Helpdesk op."
+
+msgid "All IT guides"
+msgstr "All d'IT-Uleedungen"
+
+msgid "Add a guide"
+msgstr "Eng Uleedung derbäisetzen"
+
+msgid "Category and summary"
+msgstr "Kategorie a Resumé"
+
+msgid "PDF, last update and helpdesk"
+msgstr "PDF, lescht Aktualiséierung an Helpdesk"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Summary"
+msgstr "Resumé"
+
+msgid "Keywords"
+msgstr "Stéchwierder"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Screenshots"
+msgstr "Screenshots"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Used to filter the guides on the IT guides page (US-19)."
+msgstr "Fir d'Uleedungen op der Säit IT-Uleedungen ze filteren (US-19)."
+
+msgid "One sentence shown on the guide card, at most 200 characters."
+msgstr "Ee Saz op der Kaart vun der Uleedung, maximal 200 Zeechen."
+
+msgid "Optional. Extra words for the search, separated by spaces (e.g. password Passwuert Passwort)."
+msgstr "Fakultativ. Aner Wierder fir d'Sich, mat Espacen getrennt (z. B. password Passwuert Passwort)."
+
+msgid "The procedure step by step. A text or a PDF is required (US-21)."
+msgstr "D'Prozedur Schrëtt fir Schrëtt. En Text oder e PDF ass obligatoresch (US-21)."
+
+msgid "Optional, shown below the text. Hide every password, user name and personal data first (US-20)."
+msgstr "Fakultativ, ënner dem Text. Virdrun all Passwuert, Benotzernumm a perséinlech Donnéeë verstoppen (US-20)."
+
+msgid "The guide as a PDF. A text or a PDF is required (US-21)."
+msgstr "D'Uleedung als PDF. En Text oder e PDF ass obligatoresch (US-21)."
+
+msgid "A guide needs a text or a PDF (US-21)."
+msgstr "Eng Uleedung brauch en Text oder e PDF (US-21)."
+
+msgid "No password, user name or personal data in a guide or its screenshots (US-20)."
+msgstr "Keen Passwuert, kee Benotzernumm a keng perséinlech Donnéeën an enger Uleedung oder hire Screenshots (US-20)."
+
+msgid "Screenshot (IT guides)"
+msgstr "Screenshot (IT-Uleedungen)"
+
+msgid "1 guide found"
+msgid_plural "@count guides found"
+msgstr[0] "1 Uleedung fonnt"
+msgstr[1] "@count Uleedunge fonnt"

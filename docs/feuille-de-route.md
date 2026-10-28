@@ -11,7 +11,7 @@ Correspondance entre les user stories du MVP (cahier des charges 01 v3) et le tr
 | 5. Accueil | US-10, US-11 | Module `mersch_accueil` : liens rapides administrables (libellé LU/DE/FR, URL, icône, ordre), recherche vers l'annuaire, accès aux rubriques, menu principal |
 | 6. RH | US-12 à US-14 | Module `mersch_rh` : organigramme structuré (services + personnes avec photo, sans grade ni ancienneté) tenu par les rédacteurs RH, recherche et impression ; nouvelles (150 mots au plus, case « accord écrit », « Nei Gesiichter » / « Merci! ») ; communications RH avec PDF ; rôle Rédacteur RH |
 | 7. Communication | US-15 à US-18 | Module `mersch_communication` : tuiles Nik, agenda et albums vers mersch.lu (adresses modifiables par un admin) ; nouvelles (150 mots au plus, case « accord écrit » pour une photo, fin de publication) ; rôle Rédacteur Communication |
-| 8. Guides IT | US-19 à US-21 | Type de contenu Guide, catégories, recherche ; reprise des 6 guides existants |
+| 8. Guides IT | US-19 à US-21 | Module `mersch_guides` : type de contenu Guide IT (texte, captures ou PDF, date de mise à jour), 5 catégories, recherche LU/DE/FR sans accents, lien Helpdesk ; reprise des 6 guides existants (`drush mersch:guides-import`, PDF corrigés) ; admins seulement (D-007) |
 | 9. Exploitation | — | Historique des révisions 12 mois (D-021), sauvegarde quotidienne, journaux limités |
 
 ## Points ouverts
@@ -23,3 +23,5 @@ Correspondance entre les user stories du MVP (cahier des charges 01 v3) et le tr
 - Confirmer les noms complets SR et ST (D-029).
 - Traduction LU/DE/FR des textes de l'interface de l'annuaire (étape 2) : à ajouter dans un `.po` comme pour `mersch_accueil`.
 - Relecture par Marc des textes LU de l'accueil (`mersch_accueil/translations/lb.po`).
+- Relecture par Marc des textes LU de la page Guides IT (`mersch_guides/translations/lb.po`) et des titres et résumés LU des 6 guides (`guides-it/intranet/guides.json` dans le dossier du projet).
+- Validation par Marc des PDF corrigés des guides (https://apps, noms masqués) avant la reprise.

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_guide_texte
+  - filter.format.mersch_simple
+  - node.type.guide_it
+  module:
+  - text
+id: node.guide_it.field_guide_texte
+field_name: field_guide_texte
+entity_type: node
+bundle: guide_it
+label: Text
+description: 'The procedure step by step. A text or a PDF is required (US-21).'
+required: false
+translatable: true
+default_value: []
+default_value_callback: ''
+settings:
+  allowed_formats:
+  - mersch_simple
+field_type: text_long

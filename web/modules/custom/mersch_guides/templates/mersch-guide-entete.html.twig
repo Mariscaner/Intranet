@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * En-tête de la page d'un guide IT : catégorie et résumé.
+ *
+ * Variables :
+ * - categorie : { cle, libelle }.
+ * - resume : une phrase.
+ * - non_traduit : la version LU est affichée faute de traduction (US-02).
+ */
+#}
+<div class="mersch-guide__entete">
+  <span class="mersch-guides__etiquette">{{ categorie.libelle }}</span>
+  {% if non_traduit %}<span class="mersch-guides__non-traduit">{{ 'Translation not available'|t }}</span>{% endif %}
+  <p class="mersch-accueil__chapo">{{ resume }}</p>
+</div>
