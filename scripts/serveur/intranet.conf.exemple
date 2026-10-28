@@ -1,0 +1,31 @@
+# Réglages du serveur de test de l'intranet Mersch.
+# Copier ce fichier en /etc/intranet-mersch.conf, l'adapter, puis lancer
+# scripts/serveur/installer.sh. Aucun mot de passe ici : le script crée
+# lui-même le mot de passe de la base de données, sans l'afficher.
+
+# Nom DNS interne du serveur, tel que les agents le taperont dans Edge ou Chrome.
+NOM_SERVEUR="intranet-test.mersch.local"
+
+# Réseaux internes autorisés (séparés par des espaces). Toute autre adresse
+# reçoit une erreur 403 (D-003 : réseau interne uniquement).
+RESEAUX_INTERNES="10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+
+# Dossier d'installation du code (le dépôt Git y est cloné ou copié).
+DOSSIER="/var/www/intranet"
+
+# Adresse du dépôt, utilisée seulement si DOSSIER n'existe pas encore.
+DEPOT="https://github.com/Mariscaner/Intranet.git"
+BRANCHE="main"
+
+# Base de données MariaDB (nom de la base et de l'utilisateur).
+BASE="intranet"
+UTILISATEUR_BASE="intranet"
+
+# Compte Drupal n° 1 (compte de secours, pas un compte personnel).
+COMPTE_SECOURS="admin"
+MAIL_SITE=""   # adresse e-mail du service informatique (obligatoire)
+
+# Certificat HTTPS délivré par l'informatique communale (laisser vide pour
+# un premier essai en HTTP seulement).
+CERTIFICAT=""
+CLE_CERTIFICAT=""

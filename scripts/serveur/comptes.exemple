@@ -1,0 +1,8 @@
+# Comptes Drupal locaux de l'intranet (04_roles-et-droits, D-028).
+# Copier en /root/comptes.txt, remplacer les exemples par les 8 personnes de 04,
+# puis : bash scripts/serveur/creer-comptes.sh /root/comptes.txt
+# Format : identifiant;e-mail professionnel;rôle
+# Rôles : administrator, redacteur_rh, redacteur_communication
+prenom.nom;prenom.nom@exemple.lu;administrator
+prenom2.nom2;prenom2.nom2@exemple.lu;redacteur_rh
+prenom3.nom3;prenom3.nom3@exemple.lu;redacteur_communication
