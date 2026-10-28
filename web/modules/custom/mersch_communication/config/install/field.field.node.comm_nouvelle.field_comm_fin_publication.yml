@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_comm_fin_publication
+  - node.type.comm_nouvelle
+  module:
+  - datetime
+id: node.comm_nouvelle.field_comm_fin_publication
+field_name: field_comm_fin_publication
+entity_type: node
+bundle: comm_nouvelle
+label: End of publication
+description: Optional. From the day after this date, the news no longer appears on
+  the Communication page.
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: datetime

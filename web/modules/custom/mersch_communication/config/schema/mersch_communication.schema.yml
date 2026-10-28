@@ -1,0 +1,13 @@
+mersch_communication.settings:
+  type: config_object
+  label: 'Communication page links'
+  mapping:
+    nik:
+      type: uri
+      label: 'Gemengebuet Nik'
+    agenda:
+      type: uri
+      label: 'Events calendar'
+    albums:
+      type: uri
+      label: 'Photo albums'

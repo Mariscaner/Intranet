@@ -1,0 +1,5 @@
+services:
+  mersch_communication.route_subscriber:
+    class: Drupal\mersch_communication\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

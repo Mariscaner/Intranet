@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.storage.node.field_comm_photo
+  - node.type.comm_nouvelle
+  module:
+  - image
+id: node.comm_nouvelle.field_comm_photo
+field_name: field_comm_photo
+entity_type: node
+bundle: comm_nouvelle
+label: Photo
+description: Optional. Only with the written consent of the people shown (D-031). Event photos stay on mersch.lu (D-012).
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  handler: default:file
+  handler_settings: {}
+  file_directory: communication/nouvelles
+  file_extensions: png jpg jpeg
+  max_filesize: 5 MB
+  max_resolution: 2000x2000
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: false
+  title_field: false
+  default_image:
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image

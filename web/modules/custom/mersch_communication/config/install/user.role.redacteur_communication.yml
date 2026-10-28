@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.mersch_simple
+    - node.type.comm_nouvelle
+  module:
+    - content_translation
+    - filter
+    - node
+    - system
+id: redacteur_communication
+label: 'Communication editor'
+weight: 4
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access content overview'
+  - 'create comm_nouvelle content'
+  - 'create content translations'
+  - 'edit any comm_nouvelle content'
+  - 'translate comm_nouvelle node'
+  - 'update content translations'
+  - 'use text format mersch_simple'
+  - 'view comm_nouvelle revisions'
+  - 'view own unpublished content'
+  - 'view the administration theme'

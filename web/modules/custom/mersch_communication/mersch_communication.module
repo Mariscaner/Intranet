@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Page Communication : liens vers mersch.lu et nouvelles internes.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\mersch_communication\Controller\CommunicationController;
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_communication_theme(): array {
+  return [
+    'mersch_communication' => [
+      'variables' => [
+        'rubrique' => [],
+        'liens' => [],
+        'nouvelles' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function mersch_communication_entity_type_alter(array &$entity_types): void {
+  // Gabarit de nouvelle (D-031) : 150 mots au plus, accord écrit.
+  $entity_types['node']->addConstraint('MerschNouvelleCommunication');
+}
+
+/**
+ * Implements hook_entity_field_access_alter().
+ *
+ * Un rédacteur peut dépublier une nouvelle de sa rubrique (D-019) : le cœur
+ * réserve la case « Publié » à « administer nodes », on l'ouvre ici à ceux
+ * qui peuvent modifier les nouvelles Communication.
+ */
+function mersch_communication_entity_field_access_alter(array &$grants, array $context): void {
+  $items = $context['items'];
+  if ($context['operation'] !== 'edit' || $context['field_definition']->getName() !== 'status' || !$items) {
+    return;
+  }
+  $entity = $items->getEntity();
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === CommunicationController::TYPE) {
+    $grants[':default'] = AccessResult::allowedIfHasPermission($context['account'], 'edit any ' . CommunicationController::TYPE . ' content');
+  }
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Une fois par jour, vide le cache de la page Communication : les nouvelles
+ * dont la date de fin de publication est passée disparaissent, y compris pour
+ * les lecteurs anonymes (le cache de page ignore la durée de vie).
+ */
+function mersch_communication_cron(): void {
+  $jour = \Drupal::service('date.formatter')->format(\Drupal::time()->getRequestTime(), 'custom', 'Y-m-d');
+  $state = \Drupal::state();
+  if ($state->get('mersch_communication.jour') !== $jour) {
+    \Drupal::service('cache_tags.invalidator')->invalidateTags([CommunicationController::CACHE_TAG_JOUR]);
+    $state->set('mersch_communication.jour', $jour);
+  }
+}
+
+/**
+ * Implements hook_mersch_accueil_nouvelles().
+ */
+function mersch_communication_mersch_accueil_nouvelles(int $limite, CacheableMetadata $cache): array {
+  return \Drupal::classResolver(CommunicationController::class)->dernieres($limite, $cache);
+}

@@ -8,6 +8,8 @@
  * - liens : liste de { libelle, description, url, icone }, déjà triée.
  * - annuaire : adresse de l'annuaire, ou NULL si le module est absent.
  * - rubriques : liste de { cle, titre, texte, url }.
+ * - nouvelles : les dernières nouvelles des rubriques, liste de
+ *   { titre, date, rubrique: { cle, titre, url } }.
  */
 #}
 <div class="mersch-accueil">
@@ -47,16 +49,38 @@
       </section>
     {% endif %}
 
-    <section class="mersch-bloc">
-      <h2>{{ 'Sections'|t }}</h2>
-      <ul class="mersch-rubriques">
-        {% for rubrique in rubriques %}
-          <li class="mersch-rubriques__rubrique" data-rubrique="{{ rubrique.cle }}">
-            <a href="{{ rubrique.url }}">{{ rubrique.titre }}</a>
-            <span>{{ rubrique.texte }}</span>
-          </li>
-        {% endfor %}
-      </ul>
-    </section>
+    <div class="mersch-accueil__colonne">
+      <section class="mersch-bloc mersch-accueil__nouvelles" aria-labelledby="mersch-accueil-nouvelles">
+        <h2 id="mersch-accueil-nouvelles">{{ 'Latest news'|t }}</h2>
+        {% if nouvelles %}
+          <ul class="mersch-accueil__liste-nouvelles">
+            {% for nouvelle in nouvelles %}
+              <li data-rubrique="{{ nouvelle.rubrique.cle }}">
+                <span class="mersch-accueil__meta">{{ nouvelle.date }}{% if nouvelle.rubrique %} · {{ nouvelle.rubrique.titre }}{% endif %}</span>
+                {% if nouvelle.rubrique %}
+                  <a href="{{ nouvelle.rubrique.url }}">{{ nouvelle.titre }}</a>
+                {% else %}
+                  <b>{{ nouvelle.titre }}</b>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="mersch-accueil__meta">{{ 'No news at the moment.'|t }}</p>
+        {% endif %}
+      </section>
+
+      <section class="mersch-bloc">
+        <h2>{{ 'Sections'|t }}</h2>
+        <ul class="mersch-rubriques">
+          {% for rubrique in rubriques %}
+            <li class="mersch-rubriques__rubrique" data-rubrique="{{ rubrique.cle }}">
+              <a href="{{ rubrique.url }}">{{ rubrique.titre }}</a>
+              <span>{{ rubrique.texte }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
   </div>
 </div>

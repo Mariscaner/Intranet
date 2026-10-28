@@ -139,3 +139,9 @@ msgstr "D'URL %url ass net valabel. Gitt eng komplett Adress mat https:// oder h
 
 msgid "The quick link %label has been saved."
 msgstr "De Séier Link %label gouf gespäichert."
+
+msgid "Latest news"
+msgstr "Lescht Neiegkeeten"
+
+msgid "No news at the moment."
+msgstr "Momentan keng Neiegkeeten."

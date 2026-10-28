@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 #[RunTestsInSeparateProcesses]
 class LienRapideTest extends KernelTestBase {
 
-  protected static $modules = ['system', 'user', 'block', 'language', 'locale', 'mersch_accueil'];
+  protected static $modules = ['system', 'user', 'block', 'filter', 'language', 'locale', 'mersch_accueil'];
 
   protected function setUp(): void {
     parent::setUp();

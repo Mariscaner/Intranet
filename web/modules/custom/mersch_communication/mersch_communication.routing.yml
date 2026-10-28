@@ -1,0 +1,9 @@
+# La page /communication elle-même est la route mersch_accueil.communication,
+# dont le contrôleur est remplacé par RouteSubscriber : le menu reste inchangé.
+mersch_communication.liens:
+  path: '/admin/config/mersch/communication'
+  defaults:
+    _form: '\Drupal\mersch_communication\Form\LiensForm'
+    _title: 'Communication page links'
+  requirements:
+    _permission: 'administer mersch communication'

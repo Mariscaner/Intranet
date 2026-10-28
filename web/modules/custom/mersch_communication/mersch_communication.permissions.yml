@@ -1,0 +1,4 @@
+administer mersch communication:
+  title: 'Administer the Communication page links'
+  description: 'Change the addresses of the Gemengebuet, the events calendar and the photo albums on mersch.lu. Administrators only.'
+  restrict access: true

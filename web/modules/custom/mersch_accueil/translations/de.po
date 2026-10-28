@@ -139,3 +139,9 @@ msgstr "Die URL %url ist ungültig. Geben Sie eine vollständige Adresse ein, di
 
 msgid "The quick link %label has been saved."
 msgstr "Der Schnellzugriff-Link %label wurde gespeichert."
+
+msgid "Latest news"
+msgstr "Neueste Neuigkeiten"
+
+msgid "No news at the moment."
+msgstr "Zurzeit keine Neuigkeiten."

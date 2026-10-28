@@ -1,0 +1,17 @@
+name: 'Communication Mersch'
+type: module
+description: 'Page Communication : liens vers le Gemengebuet « Nik », l''agenda et les albums photos de mersch.lu, nouvelles du service Communication (US-15 à US-18).'
+package: Mersch
+core_version_requirement: ^11
+configure: mersch_communication.liens
+dependencies:
+  - drupal:content_translation
+  - drupal:datetime
+  - drupal:file
+  - drupal:filter
+  - drupal:image
+  - drupal:node
+  - drupal:text
+  - mersch_accueil:mersch_accueil
+'interface translation project': mersch_communication
+'interface translation server pattern': modules/custom/mersch_communication/translations/%language.po

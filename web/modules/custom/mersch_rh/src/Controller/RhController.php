@@ -89,10 +89,26 @@ class RhController extends ControllerBase {
   }
 
   /**
-   * Nouvelles publiées et non échues, groupées par catégorie, plus récentes
-   * d'abord.
+   * Dernières nouvelles pour l'accueil (hook_mersch_accueil_nouvelles()).
    */
-  private function nouvelles(CacheableMetadata $cache): array {
+  public function dernieres(int $limite, CacheableMetadata $cache): array {
+    $cache->addCacheTags(['node_list:rh_nouvelle', self::CACHE_TAG_JOUR]);
+    $dernieres = [];
+    foreach ($this->charger($this->idsNouvelles($limite)) as $node) {
+      $cache->addCacheableDependency($node);
+      $dernieres[] = [
+        'titre' => $this->entityRepository->getTranslationFromContext($node)->label(),
+        'created' => (int) $node->getCreatedTime(),
+        'rubrique' => 'rh',
+      ];
+    }
+    return $dernieres;
+  }
+
+  /**
+   * Identifiants des nouvelles publiées et non échues, plus récentes d'abord.
+   */
+  private function idsNouvelles(int $limite): array {
     $aujourdhui = $this->dateFormatter->format($this->time->getRequestTime(), 'custom', 'Y-m-d');
     $query = $this->entityTypeManager()->getStorage('node')->getQuery()
       ->accessCheck(TRUE)
@@ -101,11 +117,19 @@ class RhController extends ControllerBase {
     $fin = $query->orConditionGroup()
       ->notExists('field_rh_fin_publication')
       ->condition('field_rh_fin_publication', $aujourdhui, '>=');
-    $ids = $query->condition($fin)
+    return $query->condition($fin)
       ->sort('created', 'DESC')
       ->sort('nid', 'DESC')
-      ->range(0, self::LIMITE)
+      ->range(0, $limite)
       ->execute();
+  }
+
+  /**
+   * Nouvelles publiées et non échues, groupées par catégorie, plus récentes
+   * d'abord.
+   */
+  private function nouvelles(CacheableMetadata $cache): array {
+    $ids = $this->idsNouvelles(self::LIMITE);
 
     $groupes = [
       'arrivee' => [

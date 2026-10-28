@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - field.field.node.comm_nouvelle.field_comm_photo
+  - field.field.node.comm_nouvelle.field_comm_texte
+  - image.style.mersch_nouvelle
+  - node.type.comm_nouvelle
+  module:
+  - image
+  - text
+  - user
+id: node.comm_nouvelle.default
+targetEntityType: node
+bundle: comm_nouvelle
+mode: default
+content:
+  field_comm_photo:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: mersch_nouvelle
+      image_loading:
+        attribute: lazy
+    third_party_settings: {}
+    weight: 0
+    region: content
+  field_comm_texte:
+    type: text_default
+    label: hidden
+    settings: {}
+    third_party_settings: {}
+    weight: 1
+    region: content
+hidden:
+  langcode: true
+  links: true
