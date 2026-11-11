@@ -18,7 +18,7 @@ Le script `scripts/serveur/installer.sh` fait les étapes 3 et 4 d'un coup ; les
 | Serveur web | Apache 2.4 + PHP-FPM | Installés par le script |
 | Nom DNS interne | ex. `intranet-test.mersch.local` | Créé par l'informatique, pointe vers le serveur |
 | Certificat HTTPS | Certificat de l'autorité interne (fichiers `.crt` et `.key`) | Facultatif pour un premier essai en HTTP |
-| Accès Internet sortant | `github.com`, `repo.packagist.org`, `packages.drupal.org`, `ftp.drupal.org` (HTTPS) | Pendant l'installation seulement (Composer). Sans `ftp.drupal.org`, Drupal s'installe en anglais puis passe en LU (voir étape 4) |
+| Accès Internet sortant | `github.com`, `repo.packagist.org`, `packages.drupal.org`, `ftp.drupal.org` (HTTPS) | Pendant l'installation seulement (Composer). `ftp.drupal.org` sert aux traductions de Drupal ; sans lui, certains écrans d'administration restent en anglais (voir étape 4) |
 | Réseau | Ports 80 et 443 ouverts depuis le réseau interne seulement | Le script refuse aussi les autres adresses dans Apache (403) |
 | Fichiers à importer | Dossier du projet : `organigramme/`, `guides-it/intranet/` ; liste Excel du personnel | Hors dépôt (RGPD) |
 
@@ -59,7 +59,7 @@ Le script s'arrête à la première erreur avec un message en français ; il peu
 | 2. Réglages PHP | Envois jusqu'à 20 Mo (PDF des communications RH et des guides), mémoire 256 Mo |
 | 3. Code | `composer install --no-dev` dans `/var/www/intranet` |
 | 4. Base | Base `intranet` en utf8mb4, utilisateur local avec mot de passe aléatoire, `settings.php` (connexion, `config/sync`, nom de serveur autorisé) |
-| 5. Drupal | `drush site:install minimal` en luxembourgeois ; compte n° 1 « admin » = compte de secours, sans mot de passe affiché |
+| 5. Drupal | `drush site:install minimal` (en anglais, puis LU par défaut à l'étape 6) ; compte n° 1 « admin » = compte de secours, sans mot de passe affiché |
 | 6. Modules | Thème `mersch`, thème d'administration Claro, `admin_toolbar` et les 5 modules `mersch_*` ; inscription libre désactivée ; rôle « Administrator » avec tous les droits |
 | 7. Apache | Site `intranet-mersch` sur `NOM_SERVEUR`, `Require ip` limité aux réseaux internes, HTTPS si un certificat est donné (HTTP redirigé) |
 | 8. Cron | Cron Drupal toutes les heures (retire les nouvelles échues) ; commande `drush-intranet` |
@@ -81,7 +81,7 @@ drush-intranet core:requirements --severity=2
 | Depuis une adresse hors `RESEAUX_INTERNES` | Erreur 403 |
 | `core:requirements` | Pas d'erreur, sauf « Failed to retrieve security advisory data » si le serveur n'a pas d'accès Internet permanent (sans gravité) |
 
-Si `ftp.drupal.org` n'était pas joignable, le script l'a signalé et a installé Drupal en anglais : le luxembourgeois reste la langue par défaut et les textes de l'intranet sont traduits (fichiers `.po` des modules), seuls certains écrans d'administration de Drupal restent en anglais. Pour les traduire plus tard, avec un accès Internet : `drush-intranet locale:check && drush-intranet locale:update`.
+Drupal s'installe en anglais (le site de traduction n'a pas toujours de fichier luxembourgeois pour la dernière version), puis le module `mersch_accueil` met le luxembourgeois par défaut et le script télécharge les traductions de Drupal disponibles. Si ce téléchargement échoue, le script le signale : le luxembourgeois reste la langue par défaut et les textes de l'intranet sont traduits (fichiers `.po` des modules), seuls certains écrans d'administration de Drupal restent en anglais. Pour les traduire plus tard, avec un accès Internet : `drush-intranet locale:check && drush-intranet locale:update`.
 
 ## 5. Importer l'annuaire, l'organigramme et les guides
 
