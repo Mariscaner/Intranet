@@ -41,6 +41,9 @@ drush() { sudo -u www-data "$DOSSIER/vendor/bin/drush" --root="$WEB" --uri="$URL
 
 etape "1/8 Paquets Apache, PHP, MariaDB, Composer"
 export DEBIAN_FRONTEND=noninteractive
+# Ubuntu : needrestart redémarre les services sans poser de question (sinon
+# sa fenêtre bloque le script, invisible derrière un tee).
+export NEEDRESTART_MODE=a NEEDRESTART_SUSPEND=1
 apt-get update -q
 apt-get install -y -q --no-install-recommends \
   apache2 mariadb-server \
@@ -49,7 +52,10 @@ apt-get install -y -q --no-install-recommends \
 php -r 'exit(version_compare(PHP_VERSION, "8.3", ">=") ? 0 : 1);' \
   || erreur "PHP $(php -r 'echo PHP_VERSION;') trop ancien : Drupal 11 demande PHP 8.3 ou plus (Debian 13 ou Ubuntu 24.04)."
 PHP_VERSION="$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')"
-apt-get install -y -q --no-install-recommends "php$PHP_VERSION-opcache"
+# OPcache est intégré à PHP depuis 8.5 ; paquet séparé avant.
+if ! php -m | grep -q "Zend OPcache"; then
+  apt-get install -y -q --no-install-recommends "php$PHP_VERSION-opcache"
+fi
 echo "PHP $PHP_VERSION, $(mariadb --version)"
 
 etape "2/8 Réglages PHP (envois de 20 Mo pour les PDF RH et guides)"
