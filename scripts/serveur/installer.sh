@@ -118,23 +118,18 @@ PHP
 fi
 install -d -o www-data -g www-data -m 2770 "$WEB/sites/default/files"
 
-etape "5/8 Installation de Drupal (luxembourgeois par défaut)"
+etape "5/8 Installation de Drupal"
 if [[ "$(drush status --field=bootstrap 2>/dev/null || true)" == *Successful* ]]; then
   echo "Drupal est déjà installé."
 else
-  # L'installation en luxembourgeois télécharge les traductions de Drupal sur
-  # ftp.drupal.org ; sans accès Internet, installation en anglais : le module
-  # mersch_accueil met de toute façon le luxembourgeois par défaut.
-  if curl -sfI --max-time 10 https://ftp.drupal.org/files/translations/ >/dev/null; then
-    LANGUE=lb
-  else
-    LANGUE=en
-    echo "ftp.drupal.org injoignable : installation en anglais, traductions de Drupal à importer plus tard."
-  fi
+  # Installation en anglais : localize.drupal.org n'a pas toujours de fichier
+  # luxembourgeois pour la version de Drupal installée, et site:install
+  # s'arrête alors. Le module mersch_accueil met ensuite le luxembourgeois par
+  # défaut, et les traductions de Drupal sont importées à l'étape 6.
   # Root écrit hash_salt dans settings.php ; le mot de passe tiré au hasard
   # pour le compte de secours n'est pas affiché (connexion par drush user:login).
   "$DOSSIER/vendor/bin/drush" --root="$WEB" --uri="$URL" site:install minimal \
-    --locale="$LANGUE" --site-name="Intranet Mersch" --site-mail="$MAIL_SITE" \
+    --locale=en --site-name="Intranet Mersch" --site-mail="$MAIL_SITE" \
     --account-name="$COMPTE_SECOURS" --account-mail="$MAIL_SITE" --yes 2>&1 \
     | sed '/[Pp]assword/d'
 fi
@@ -157,6 +152,10 @@ drush php:eval '
     ?? \Drupal\user\Entity\Role::create(["id" => "administrator", "label" => "Administrator", "weight" => 2]);
   $role->setIsAdmin(TRUE)->save();
 '
+# Traductions de Drupal (LU, DE, FR) quand elles existent : sans Internet ou
+# sans fichier pour cette version, l'intranet garde les siennes (.po des modules).
+drush locale:check && drush locale:update \
+  || echo "Traductions de Drupal non téléchargées : à refaire plus tard avec drush-intranet locale:update."
 drush cache:rebuild
 
 etape "7/8 Apache : $URL, réseau interne seulement"
