@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_snouv_service
+    - node.type.service
+    - node.type.service_nouvelle
+id: node.service_nouvelle.field_snouv_service
+field_name: field_snouv_service
+entity_type: node
+bundle: service_nouvelle
+label: Department
+description: 'The news appears on the page of this department.'
+required: true
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      service: service
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

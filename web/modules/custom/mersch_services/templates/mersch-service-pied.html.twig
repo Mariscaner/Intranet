@@ -1,9 +1,13 @@
 {#
 /**
  * @file
- * Bas de page d'un service : liens (US-24) puis contacts (US-23).
+ * Bas de page d'un service : nouvelles, liens (US-24) puis contacts (US-23).
  *
  * Variables :
+ * - nouvelles : liste de { titre, date, texte, lien { url, titre, externe }
+ *   ou NULL, non_traduit, modifier }.
+ * - ajouter_nouvelle : adresse du formulaire de nouvelle pour les rédacteurs
+ *   du service, ou NULL.
  * - liens : liste de { titre, url, externe }.
  * - general : { email, telephone, tel_lien } ou NULL (contact du service).
  * - contacts : liste de { nom, prenom, role, service, batiment, telephone,
@@ -12,6 +16,35 @@
  */
 #}
 <div class="mersch-service-pied">
+  {% if nouvelles or ajouter_nouvelle %}
+    <section class="mersch-bloc mersch-service-pied__nouvelles" aria-labelledby="mersch-service-nouvelles">
+      <h2 id="mersch-service-nouvelles">{{ 'News'|t }}</h2>
+      {% if nouvelles %}
+        <ul class="mersch-service-pied__liste-nouvelles">
+          {% for nouvelle in nouvelles %}
+            <li>
+              <h3>{{ nouvelle.titre }}</h3>
+              {% if nouvelle.non_traduit %}<p class="mersch-service-pied__non-traduit">{{ 'Translation not available'|t }}</p>{% endif %}
+              <div class="mersch-service-pied__texte">{{ nouvelle.texte }}</div>
+              {% if nouvelle.lien %}
+                <p><a href="{{ nouvelle.lien.url }}"{% if nouvelle.lien.externe %} target="_blank" rel="noopener"{% endif %}>{{ nouvelle.lien.titre ?: 'Read more'|t }}</a>{% if nouvelle.lien.externe %}<span class="visually-hidden"> {{ '(opens in a new tab)'|t }}</span>{% endif %}</p>
+              {% endif %}
+              <p class="mersch-service-pied__meta">
+                {{ nouvelle.date }}
+                {% if nouvelle.modifier %} · <a href="{{ nouvelle.modifier }}">{{ 'Edit'|t }}</a>{% endif %}
+              </p>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="mersch-service-pied__vide">{{ 'No news at the moment.'|t }}</p>
+      {% endif %}
+      {% if ajouter_nouvelle %}
+        <p class="mersch-service-pied__modifier"><a href="{{ ajouter_nouvelle }}">{{ 'Add news'|t }}</a></p>
+      {% endif %}
+    </section>
+  {% endif %}
+
   {% if liens %}
     <section class="mersch-bloc mersch-service-pied__liens" aria-labelledby="mersch-service-liens">
       <h2 id="mersch-service-liens">{{ 'Links'|t }}</h2>

@@ -89,8 +89,13 @@ class ContenusListBuilder extends NodeListBuilder {
       $groupe = $query->orConditionGroup();
       foreach ($rubriques as $rubrique) {
         if ($rubrique === 'services' && !$admin) {
-          // Seulement les services dont la personne est rédacteur (US-26).
-          $groupe->condition('nid', $this->servicesModifiables() ?: [0], 'IN');
+          // Seulement les services dont la personne est rédacteur (US-26) et
+          // leurs nouvelles.
+          $ids = array_keys($this->rubriques->servicesModifiables($this->currentUser)) ?: [0];
+          $groupe->condition('nid', $ids, 'IN');
+          $groupe->condition($query->andConditionGroup()
+            ->condition('type', Rubriques::NOUVELLE)
+            ->condition('field_snouv_service', $ids, 'IN'));
         }
         else {
           $groupe->condition('type', $this->rubriques->types($rubrique) ?: ['-'], 'IN');
@@ -133,7 +138,7 @@ class ContenusListBuilder extends NodeListBuilder {
         $rubrique = $libelles[$cle];
       }
     }
-    if ($entity->bundle() === Rubriques::TYPE) {
+    if (in_array($entity->bundle(), [Rubriques::TYPE, Rubriques::NOUVELLE], TRUE)) {
       $rubrique = $libelles['services'];
     }
     return array_slice($row, 0, 1, TRUE)
@@ -151,22 +156,6 @@ class ContenusListBuilder extends NodeListBuilder {
     $build['table']['#cache']['contexts'][] = 'url.query_args';
     $build['table']['#cache']['contexts'][] = 'user';
     return $build;
-  }
-
-  /**
-   * Services que la personne peut modifier.
-   *
-   * @return int[]
-   */
-  private function servicesModifiables(): array {
-    $ids = [];
-    $services = $this->storage->loadByProperties(['type' => Rubriques::TYPE]);
-    foreach ($services as $service) {
-      if ($this->rubriques->estRedacteur($service, $this->currentUser)) {
-        $ids[] = (int) $service->id();
-      }
-    }
-    return $ids;
   }
 
 }

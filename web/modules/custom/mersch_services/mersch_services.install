@@ -7,6 +7,7 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\Role;
@@ -33,7 +34,7 @@ function mersch_services_install(bool $is_syncing): void {
   // service (Q1) et le traduisent.
   foreach (['redacteur_rh', 'redacteur_communication'] as $id) {
     if ($role = Role::load($id)) {
-      foreach (['edit mersch service contacts', 'translate service node', 'view service revisions'] as $permission) {
+      foreach (_mersch_services_permissions_redacteurs() as $permission) {
         $role->grantPermission($permission);
       }
       $role->save();
@@ -72,4 +73,66 @@ function mersch_services_install(bool $is_syncing): void {
     }
     $service->save();
   }
+}
+
+/**
+ * Droits donnés aux rédacteurs RH et Communication sur leur service.
+ *
+ * @return string[]
+ */
+function _mersch_services_permissions_redacteurs(): array {
+  return [
+    'edit mersch service contacts',
+    'translate service node',
+    'view service revisions',
+    'translate service_nouvelle node',
+    'view service_nouvelle revisions',
+  ];
+}
+
+/**
+ * Nouvelles de service : type de contenu, champs et droits.
+ */
+function mersch_services_update_11001(): string {
+  \Drupal::service('module_installer')->install(['datetime']);
+
+  // Configuration ajoutée au module après sa première installation, créée
+  // dans l'ordre des dépendances (type, stockages, champs, affichages).
+  $source = new FileStorage(\Drupal::service('extension.list.module')->getPath('mersch_services') . '/config/install');
+  $gestionnaire = \Drupal::service('config.manager');
+  $noms = array_filter($source->listAll(), fn (string $nom) => str_contains($nom, 'service_nouvelle') || str_contains($nom, 'field_snouv_'));
+  usort($noms, function (string $a, string $b): int {
+    $ordre = fn (string $nom) => match (TRUE) {
+      str_starts_with($nom, 'node.type.') => 0,
+      str_starts_with($nom, 'field.storage.') => 1,
+      str_starts_with($nom, 'field.field.') => 2,
+      default => 3,
+    };
+    return $ordre($a) <=> $ordre($b);
+  });
+  $crees = 0;
+  foreach ($noms as $nom) {
+    if (\Drupal::configFactory()->get($nom)->isNew()) {
+      $type = $gestionnaire->getEntityTypeIdByName($nom);
+      $stockage = \Drupal::entityTypeManager()->getStorage($type);
+      $stockage->createFromStorageRecord($source->read($nom))->save();
+      $crees++;
+    }
+  }
+
+  foreach (['redacteur_rh', 'redacteur_communication'] as $id) {
+    if ($role = Role::load($id)) {
+      foreach (_mersch_services_permissions_redacteurs() as $permission) {
+        $role->grantPermission($permission);
+      }
+      $role->save();
+    }
+  }
+  if ($role = Role::load('redacteur_service')) {
+    foreach (['create service_nouvelle content', 'translate service_nouvelle node', 'view service_nouvelle revisions', 'view own unpublished content'] as $permission) {
+      $role->grantPermission($permission);
+    }
+    $role->save();
+  }
+  return "Nouvelles de service : $crees éléments de configuration créés.";
 }

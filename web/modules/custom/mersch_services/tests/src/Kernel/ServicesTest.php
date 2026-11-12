@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\mersch_services\Kernel;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\mersch_services\Controller\ServicesController;
 use Drupal\node\Entity\Node;
@@ -147,6 +148,77 @@ class ServicesTest extends KernelTestBase {
     $second = $this->service('Service État civil');
     $this->assertSame('/services/service-etat-civil', $premier->get('path')->alias);
     $this->assertSame('/services/service-etat-civil-2', $second->get('path')->alias);
+  }
+
+  /**
+   * Nouvelles d'un service : rédacteurs du service seulement, 150 mots au
+   * plus, échues et non publiées absentes de la page.
+   */
+  public function testNouvellesDuService(): void {
+    $technique = $this->service('Technesche Service');
+    $population = $this->service('Biergerservice');
+    $redacteur = $this->createUser([], NULL, FALSE, ['field_mersch_services' => [$technique->id()]]);
+    $lecteur = $this->createUser(['access content']);
+    $controle = \Drupal::entityTypeManager()->getAccessControlHandler('node');
+    $this->assertTrue($controle->createAccess('service_nouvelle', $redacteur));
+    $this->assertFalse($controle->createAccess('service_nouvelle', $lecteur));
+
+    $sienne = $this->nouvelle($technique, 'Stroossenaarbechten');
+    $autre = $this->nouvelle($population, 'Nei Dokumenter');
+    $this->assertTrue($sienne->access('update', $redacteur));
+    $this->assertFalse($sienne->access('delete', $redacteur));
+    $this->assertTrue($sienne->get('status')->access('edit', $redacteur));
+    $this->assertFalse($autre->access('update', $redacteur));
+
+    // Gabarit et service du rédacteur, contrôlés pour la personne connectée.
+    $this->setCurrentUser($redacteur);
+    $longue = $this->nouvelle($technique, 'Ze laang', implode(' ', array_fill(0, 151, 'mot')), save: FALSE);
+    $this->assertSame(['field_snouv_texte'], $this->chemins($longue));
+    $ailleurs = $this->nouvelle($population, 'Net säin', save: FALSE);
+    $this->assertSame(['field_snouv_service'], $this->chemins($ailleurs));
+
+    // Page du service : publiées, non échues, plus récentes d'abord.
+    $this->setCurrentUser($lecteur);
+    $hier = date('Y-m-d', \Drupal::time()->getRequestTime() - 86400);
+    $this->nouvelle($technique, 'Échue', fin: $hier);
+    $this->nouvelle($technique, 'Brouillon', publie: FALSE);
+    $plusRecente = $this->nouvelle($technique, 'Lescht Neiegkeet');
+    $plusRecente->setCreatedTime(\Drupal::time()->getRequestTime() + 60)->save();
+    $cache = new CacheableMetadata();
+    $titres = array_column(\Drupal::classResolver(ServicesController::class)->nouvelles($technique, $cache), 'titre');
+    $this->assertSame(['Lescht Neiegkeet', 'Stroossenaarbechten'], $titres);
+    $this->assertContains('mersch_services_jour', $cache->getCacheTags());
+  }
+
+  /**
+   * Crée une nouvelle de service.
+   */
+  private function nouvelle(NodeInterface $service, string $titre, string $texte = 'E kuerzen Text.', ?string $fin = NULL, bool $publie = TRUE, bool $save = TRUE): NodeInterface {
+    $node = Node::create([
+      'type' => 'service_nouvelle',
+      'title' => $titre,
+      'field_snouv_service' => $service->id(),
+      'field_snouv_texte' => ['value' => $texte, 'format' => 'mersch_simple'],
+      'field_snouv_fin_publication' => $fin,
+      'status' => (int) $publie,
+    ]);
+    if ($save) {
+      $node->save();
+    }
+    return $node;
+  }
+
+  /**
+   * Champs en erreur à la validation.
+   *
+   * @return string[]
+   */
+  private function chemins(NodeInterface $node): array {
+    $chemins = [];
+    foreach ($node->validate() as $violation) {
+      $chemins[] = explode('.', $violation->getPropertyPath())[0];
+    }
+    return array_values(array_unique($chemins));
   }
 
   /**

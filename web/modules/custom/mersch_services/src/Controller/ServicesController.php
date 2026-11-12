@@ -24,6 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ServicesController extends ControllerBase {
 
+  /**
+   * Nombre de nouvelles affichées sur la page d'un service.
+   */
+  public const NOUVELLES = 5;
+
   public function __construct(
     private readonly Rubriques $rubriques,
     private readonly Contacts $contacts,
@@ -120,16 +125,72 @@ class ServicesController extends ControllerBase {
       $modifier = $traduction->toUrl('edit-form')->toString();
     }
 
+    $ajouter = NULL;
+    if ($this->rubriques->estRedacteur($service, $this->currentUser())
+      && $this->entityTypeManager()->getAccessControlHandler('node')->createAccess(Rubriques::NOUVELLE)) {
+      $ajouter = Url::fromRoute('node.add', ['node_type' => Rubriques::NOUVELLE], ['query' => ['service' => $service->id()]])->toString();
+    }
+
     $build = [
       '#theme' => 'mersch_service_pied',
+      '#nouvelles' => $this->nouvelles($service, $cache),
+      '#ajouter_nouvelle' => $ajouter,
       '#liens' => $liens,
       '#general' => ($general['email'] !== '' || $general['telephone'] !== '') ? $general : NULL,
       '#contacts' => $contacts,
       '#modifier' => $modifier,
-      '#attached' => ['library' => ['mersch_services/services']],
+      '#attached' => ['library' => ['mersch_accueil/accueil', 'mersch_services/services']],
     ];
     $cache->applyTo($build);
     return $build;
+  }
+
+  /**
+   * Dernières nouvelles publiées et non échues du service, plus récentes
+   * d'abord.
+   */
+  public function nouvelles(NodeInterface $service, CacheableMetadata $cache, int $limite = self::NOUVELLES): array {
+    $cache->addCacheTags(['node_list:' . Rubriques::NOUVELLE, Rubriques::CACHE_TAG_JOUR]);
+    $aujourdhui = \Drupal::service('date.formatter')->format(\Drupal::time()->getRequestTime(), 'custom', 'Y-m-d');
+    $stockage = $this->entityTypeManager()->getStorage('node');
+    $query = $stockage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', Rubriques::NOUVELLE)
+      ->condition('field_snouv_service', $service->id())
+      ->condition('status', NodeInterface::PUBLISHED);
+    $fin = $query->orConditionGroup()
+      ->notExists('field_snouv_fin_publication')
+      ->condition('field_snouv_fin_publication', $aujourdhui, '>=');
+    $ids = $query->condition($fin)
+      ->sort('created', 'DESC')
+      ->range(0, $limite)
+      ->execute();
+
+    $langue = \Drupal::languageManager()->getCurrentLanguage(\Drupal\Core\Language\LanguageInterface::TYPE_CONTENT)->getId();
+    $nouvelles = [];
+    foreach ($stockage->loadMultiple($ids) as $node) {
+      $cache->addCacheableDependency($node);
+      $traduction = $this->entityRepository->getTranslationFromContext($node);
+      $lien = NULL;
+      if (!$traduction->get('field_snouv_lien')->isEmpty()) {
+        $item = $traduction->get('field_snouv_lien')->first();
+        $url = $item->getUrl();
+        $lien = ['url' => $url->toString(), 'titre' => $item->title ?: NULL, 'externe' => $url->isExternal()];
+      }
+      $nouvelles[] = [
+        'titre' => $traduction->label(),
+        'date' => \Drupal::service('date.formatter')->format((int) $node->getCreatedTime(), 'custom', 'd.m.Y'),
+        'texte' => [
+          '#type' => 'processed_text',
+          '#text' => (string) $traduction->get('field_snouv_texte')->value,
+          '#format' => $traduction->get('field_snouv_texte')->format ?: 'mersch_simple',
+        ],
+        'lien' => $lien,
+        'non_traduit' => $traduction->language()->getId() !== $langue,
+        'modifier' => $node->access('update') ? $traduction->toUrl('edit-form')->toString() : NULL,
+      ];
+    }
+    return $nouvelles;
   }
 
   /**

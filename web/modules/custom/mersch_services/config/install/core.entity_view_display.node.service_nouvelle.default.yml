@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.service_nouvelle.field_snouv_fin_publication
+    - field.field.node.service_nouvelle.field_snouv_lien
+    - field.field.node.service_nouvelle.field_snouv_service
+    - field.field.node.service_nouvelle.field_snouv_texte
+    - node.type.service_nouvelle
+  module:
+    - link
+    - text
+    - user
+id: node.service_nouvelle.default
+targetEntityType: node
+bundle: service_nouvelle
+mode: default
+content:
+  field_snouv_texte:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_snouv_lien:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: noopener
+      target: _blank
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_snouv_fin_publication: true
+  field_snouv_service: true
+  langcode: true
+  links: true

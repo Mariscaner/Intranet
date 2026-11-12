@@ -168,3 +168,48 @@ msgstr "Publié"
 
 msgid "Published status"
 msgstr "Statut"
+
+msgid "News"
+msgstr "Actualités"
+
+msgid "No news at the moment."
+msgstr "Aucune actualité pour le moment."
+
+msgid "Add news"
+msgstr "Ajouter une actualité"
+
+msgid "Read more"
+msgstr "En savoir plus"
+
+msgid "Translation not available"
+msgstr "Traduction non disponible"
+
+msgid "Department news"
+msgstr "Actualité de service"
+
+msgid "News published by a department on its page, for example recent IT security publications (150 words at most, D-031)."
+msgstr "Actualité publiée par un service sur sa page, par exemple les publications récentes sur la cybersécurité (150 mots au plus, D-031)."
+
+msgid "The news appears on the page of this department."
+msgstr "L'actualité s'affiche sur la page de ce service."
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "150 words at most (D-031)."
+msgstr "150 mots au plus (D-031)."
+
+msgid "Optional. Link to the full publication, for example a GOVCERT.LU alert or a document."
+msgstr "Facultatif. Lien vers la publication complète, par exemple une alerte de GOVCERT.LU ou un document."
+
+msgid "End of publication"
+msgstr "Fin de publication"
+
+msgid "Optional. From the day after this date, the news no longer appears on the department page."
+msgstr "Facultatif. À partir du lendemain de cette date, l'actualité n'apparaît plus sur la page du service."
+
+msgid "The text has @mots words; the maximum is 150 (D-031)."
+msgstr "Le texte compte @mots mots ; le maximum est 150 (D-031)."
+
+msgid "You can only publish news for the departments you edit."
+msgstr "Vous ne pouvez publier des actualités que pour les services que vous modifiez."
