@@ -29,3 +29,25 @@ MAIL_SITE=""   # adresse e-mail du service informatique (obligatoire)
 # un premier essai en HTTP seulement).
 CERTIFICAT=""
 CLE_CERTIFICAT=""
+
+# --- Connexion des agents par leur session Windows (SSO Kerberos, D-035) ---
+# Laisser "non" tant que l'intégrateur n'a pas livré le keytab
+# (lots/lot-1-sso/prerequis-integrateur.md). Guide : docs/sso-ad.md.
+# Le SSO exige que NOM_SERVEUR soit le nom complet couvert par le SPN
+# (HTTP/intranet.domain.local) ; le nom court est alors redirigé vers lui.
+SSO_ACTIF="non"
+# Domaine Kerberos (realm), en majuscules.
+SSO_REALM="DOMAIN.LOCAL"
+# Contrôleurs de domaine en LDAPS, séparés par des espaces.
+SSO_LDAP_URI="ldaps://dc1.domain.local"
+# Base de recherche des comptes d'agents.
+SSO_LDAP_BASE="DC=domain,DC=local"
+# Certificat racine de l'autorité interne (PEM, pas un secret).
+SSO_LDAP_CA="/etc/intranet-mersch/ca-ad.pem"
+# Liaison LDAP : "gssapi" (keytab, aucun mot de passe stocké) ou
+# "motdepasse" (compte ci-dessous, mot de passe dans
+# /etc/intranet-mersch/ldap.secret, déposé par l'intégrateur, jamais ici).
+SSO_LDAP_LIAISON="gssapi"
+SSO_LDAP_COMPTE=""   # par exemple svc-intranet@domain.local (liaison "motdepasse")
+# Comptes sans connexion bloqués après ce nombre de mois (US-33, 24 mois décidés par Marc).
+SSO_INACTIVITE_MOIS="24"

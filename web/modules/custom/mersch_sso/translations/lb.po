@@ -1,0 +1,61 @@
+# Traductions du module mersch_sso.
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Your Windows session could not be recognised. Open the intranet on a computer of the municipality, logged in with your own Windows account, in Edge or Chrome. If the problem persists, contact the IT helpdesk."
+msgstr "Är Windows-Sessioun gouf net erkannt. Maacht d'Intranet op engem Computer vun der Gemeng op, un deem Dir mat Ärem eegene Windows-Kont ugemellt sidd, an mat Edge oder Chrome. Wann de Problem bleift, kontaktéiert den Helpdesk IT."
+
+msgid "Login with your Windows session is not active yet."
+msgstr "D'Aloggen mat Ärer Windows-Sessioun ass nach net aktiv."
+
+msgid "Your Windows account cannot be used to log in to the intranet. Contact the IT helpdesk."
+msgstr "Äre Windows-Kont kann net fir sech am Intranet anzeloggen. Kontaktéiert den Helpdesk IT."
+
+msgid "Your intranet account is blocked. Contact an administrator of the intranet."
+msgstr "Äre Kont um Intranet ass gespaart. Kontaktéiert en Administrateur vum Intranet."
+
+msgid "The directory of the municipality does not answer. Try again in a few minutes."
+msgstr "D'Verzeechnes vun der Gemeng äntwert net. Probéiert et a e puer Minutte nach eng Kéier."
+
+msgid "Back to the home page"
+msgstr "Zréck op d'Startsäit"
+
+msgid "Emergency account of the administrators"
+msgstr "Notfallkont vun den Administrateuren"
+
+msgid "Windows login (SSO)"
+msgstr "Windows-Umeldung (SSO)"
+
+msgid "Not active"
+msgstr "Net aktiv"
+
+msgid "Set SSO_ACTIF=\"oui\" in /etc/intranet-mersch.conf once the keytab is installed, then run installer.sh again (docs/sso-ad.md)."
+msgstr "Setzt SSO_ACTIF=\"oui\" an /etc/intranet-mersch.conf, soubal de Keytab installéiert ass, a lafft dann installer.sh nach eng Kéier (docs/sso-ad.md)."
+
+msgid "PHP extension ldap missing (package php-ldap)."
+msgstr "PHP-Erweiterung ldap feelt (Package php-ldap)."
+
+msgid "Keytab not readable by the web server: @fichier."
+msgstr "De Keytab ass vum Webserver net liesbar: @fichier."
+
+msgid "Active, with problems"
+msgstr "Aktiv, mat Problemer"
+
+msgid "Active (realm @realm)"
+msgstr "Aktiv (realm @realm)"
+
+msgid "Inactive editor or administrator accounts"
+msgstr "Inaktiv Redakteren- oder Administrateurskonten"
+
+msgid "No login for @mois months. These accounts have a role and are not blocked automatically: block them or remove their role."
+msgstr "Keng Umeldung zënter @mois Méint. Dës Konten hunn eng Roll an ginn net automatesch gespaart: spierrt se oder entzitt hinnen d'Roll."
+
+msgid "This account logs in with the Windows session. Use the « Log in » link of the intranet on a computer of the municipality."
+msgstr "Dëse Kont loggt sech mat der Windows-Sessioun an. Benotzt de Link « Aloggen » vum Intranet op engem Computer vun der Gemeng."
+
+# « Aloggen » (glossaire, validé par Marc le 2026-11-12) au lieu de la traduction de Drupal.
+msgid "Log in"
+msgstr "Aloggen"

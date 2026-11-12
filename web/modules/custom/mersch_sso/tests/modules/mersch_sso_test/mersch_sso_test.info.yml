@@ -1,0 +1,5 @@
+name: 'Test SSO Mersch'
+type: module
+description: 'Route de test exigeant la connexion SSO.'
+package: Testing
+core_version_requirement: ^11
