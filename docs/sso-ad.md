@@ -152,7 +152,17 @@ sudo tail /var/log/apache2/intranet-mersch-error.log
 ssh -t BEMA@intranet "drush-intranet watchdog:show --type=mersch_sso"
 ```
 
-## 9. Revenir en arrière
+## 9. Sécurité : limites connues
+
+| Point | Ce qu'il faut savoir | Que faire |
+|---|---|---|
+| Liaison LDAP par keytab (GSSAPI) | Elle ne marche que si l'UPN du compte de service est le SPN `HTTP/intranet.domain.local`. C'est le comportement par défaut de `ktpass -mapuser`. **Non testé sur un AD réel.** | Si le test 5.1 échoue, passer en `SSO_LDAP_LIAISON="motdepasse"`, avec `ldap.secret` déposé par l'intégrateur. |
+| Keytab lisible par PHP | Apache et PHP tournent sous `www-data`, qui doit lire le keytab. Une exécution de code dans Drupal permettrait de forger des tickets pour l'intranet (risque accepté). | Mettre Drupal à jour régulièrement et passer en HTTPS avant la mise en service. |
+| Rattachement par e-mail | Il fait confiance à l'attribut `mail` de l'AD. Une personne qui peut modifier cet attribut dans l'AD peut reprendre un compte local pas encore rattaché, y compris un compte admin. | Le jour de la mise en service, faire connecter tout de suite les 8 comptes existants. Vérifier ensuite le journal : `drush-intranet watchdog:show --type=mersch_sso`, messages « rattaché ». |
+| Comptes AD désactivés | Ils sont refusés à la connexion, même avec un ticket Kerberos encore valable. | Rien à faire. |
+| Adresses LDAP | Seules les adresses `ldaps://` sont acceptées. `installer.sh` et le module refusent `ldap://`. | Rien à faire. |
+
+## 10. Revenir en arrière
 
 ```bash
 sudo nano /etc/intranet-mersch.conf     # SSO_ACTIF="non"

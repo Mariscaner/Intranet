@@ -38,7 +38,9 @@ class LdapAnnuaire implements AnnuaireInterface {
     $ldap = $this->connecter();
     try {
       $filtre = sprintf(
-        '(&(objectCategory=person)(objectClass=user)(sAMAccountName=%s))',
+        // Comptes AD désactivés exclus : un ticket déjà émis reste valable des
+        // heures après la désactivation.
+        '(&(objectCategory=person)(objectClass=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2))(sAMAccountName=%s))',
         ldap_escape($identifiant, '', LDAP_ESCAPE_FILTER),
       );
       $resultat = @ldap_search($ldap, (string) $this->reglages->get('ldap_base'), $filtre, self::ATTRIBUTS, 0, 2, 10);
@@ -69,6 +71,11 @@ class LdapAnnuaire implements AnnuaireInterface {
    *   La connexion liée.
    */
   private function connecter(): \LDAP\Connection {
+    // LDAPS seulement : sur ldap://, un mot de passe partirait en clair.
+    $uris = preg_split('/\s+/', trim((string) $this->reglages->get('ldap_uri')), -1, PREG_SPLIT_NO_EMPTY);
+    if (!$uris || array_filter($uris, fn (string $uri): bool => !str_starts_with(strtolower($uri), 'ldaps://'))) {
+      throw new AnnuaireIndisponible('Chaque URI LDAP doit commencer par ldaps://.');
+    }
     $ca = (string) $this->reglages->get('ldap_ca');
     if ($ca !== '') {
       ldap_set_option(NULL, LDAP_OPT_X_TLS_CACERTFILE, $ca);
@@ -101,9 +108,8 @@ class LdapAnnuaire implements AnnuaireInterface {
       if (defined('LDAP_OPT_X_SASL_NOCANON')) {
         ldap_set_option($ldap, LDAP_OPT_X_SASL_NOCANON, TRUE);
       }
-      // Sur LDAPS, TLS chiffre déjà : l'AD refuse une seconde couche SASL.
-      $tls = str_starts_with(strtolower((string) $this->reglages->get('ldap_uri')), 'ldaps://');
-      $lie = @ldap_sasl_bind($ldap, NULL, NULL, 'GSSAPI', NULL, NULL, NULL, $tls ? 'maxssf=0' : NULL);
+      // TLS chiffre déjà : l'AD refuse une seconde couche SASL sur LDAPS.
+      $lie = @ldap_sasl_bind($ldap, NULL, NULL, 'GSSAPI', NULL, NULL, NULL, 'maxssf=0');
     }
     if (!$lie) {
       $erreur = ldap_error($ldap);

@@ -44,6 +44,9 @@ if [[ $SSO_ACTIF == oui ]]; then
     [[ -n ${!variable:-} ]] || erreur "$variable est vide dans $CONF (SSO_ACTIF=oui)."
   done
   [[ $NOM_SERVEUR == *.* ]] || erreur "SSO : NOM_SERVEUR doit être le nom complet couvert par le SPN (ex. intranet.domain.local)."
+  for uri in $SSO_LDAP_URI; do
+    [[ $uri == ldaps://* ]] || erreur "SSO : $uri doit commencer par ldaps:// (sinon le mot de passe LDAP passerait en clair)."
+  done
   [[ -s $KEYTAB ]] || erreur "SSO : keytab absent ($KEYTAB). Laisser SSO_ACTIF=non tant que l'intégrateur ne l'a pas livré."
   [[ -z ${SSO_LDAP_CA:-} || -r $SSO_LDAP_CA ]] || erreur "SSO : certificat de l'autorité interne illisible : $SSO_LDAP_CA."
   if [[ ${SSO_LDAP_LIAISON:-gssapi} == motdepasse ]]; then
@@ -186,7 +189,10 @@ if [[ $SSO_ACTIF == oui ]]; then
   chmod 640 /etc/intranet-mersch/http.keytab
   [[ -f /etc/intranet-mersch/ldap.secret ]] && chown root:www-data /etc/intranet-mersch/ldap.secret && chmod 640 /etc/intranet-mersch/ldap.secret
   # Client Kerberos : contrôleurs trouvés par le DNS, pas de nom inversé.
-  if [[ ! -s /etc/krb5.conf ]] || ! grep -q "default_realm" /etc/krb5.conf; then
+  # Le paquet krb5-user peut poser un krb5.conf d'exemple (ATHENA.MIT.EDU) :
+  # remplacé, avec une sauvegarde, s'il ne nomme pas le realm de l'AD.
+  if ! grep -Eq "^[[:space:]]*default_realm[[:space:]]*=[[:space:]]*$SSO_REALM[[:space:]]*\$" /etc/krb5.conf 2>/dev/null; then
+    [[ -f /etc/krb5.conf ]] && cp -p /etc/krb5.conf "/etc/krb5.conf.avant-intranet.$(date +%Y%m%d%H%M%S)"
     cat > /etc/krb5.conf <<KRB5
 # Écrit par scripts/serveur/installer.sh (SSO de l'intranet).
 [libdefaults]
@@ -253,7 +259,7 @@ if [[ $SSO_ACTIF == oui ]]; then
   # internes, que Require valid-user remplacerait sinon.
   SSO_APACHE="
   # SSO Kerberos (module mersch_sso, docs/sso-ad.md).
-  <Location /sso/connexion>
+  <LocationMatch \"^/([a-z]{2}/)?sso/connexion\$\">
     AuthType GSSAPI
     AuthName \"Intranet Mersch\"
     GssapiCredStore keytab:$KEYTAB
@@ -267,7 +273,7 @@ if [[ $SSO_ACTIF == oui ]]; then
       Require valid-user
     </RequireAll>
     ErrorDocument 401 /sso/echec
-  </Location>
+  </LocationMatch>
   # Le ticket Kerberos ne vaut que pour le nom complet : nom court et adresse
   # IP sont renvoyés vers lui (la session y est la même pour toutes les pages).
   RewriteEngine On

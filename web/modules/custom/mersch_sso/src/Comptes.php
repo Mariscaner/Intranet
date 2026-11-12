@@ -108,8 +108,10 @@ class Comptes {
     if (!$compte) {
       $compte = $stockage->create([
         'name' => $this->nomLibre($identifiant),
-        'mail' => $agent->mail ?: NULL,
-        'init' => $agent->mail ?: NULL,
+        // E-mail déjà pris (compte de secours, plusieurs comptes) : compte
+        // créé sans e-mail plutôt qu'avec un doublon.
+        'mail' => $mail = ($agent->mail !== '' && !$this->mailPris($agent->mail, 0) ? $agent->mail : NULL),
+        'init' => $mail,
         'status' => 1,
       ]);
       $this->logger->notice('Compte créé pour l\'identifiant AD @id.', ['@id' => $identifiant]);

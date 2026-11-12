@@ -151,6 +151,25 @@ class ConnexionSsoTest extends KernelTestBase {
   }
 
   /**
+   * E-mail AD déjà pris (secours, ou deux comptes) : compte créé sans e-mail.
+   */
+  public function testCreationSansEmailEnDoublon(): void {
+    User::load(1)->setEmail('Anne.Becker@domain.local')->save();
+    $this->assertSame(302, $this->connecter()->getStatusCode());
+    $this->assertNull(User::load((int) \Drupal::currentUser()->id())->getEmail());
+
+    // Deux comptes locaux au même e-mail : aucun rattachement, pas de doublon.
+    FauxAnnuaire::$agents['efgh'] = new Agent('efgh', 'Eva Gh', 'eva@domain.local');
+    foreach (['eva1', 'eva2'] as $nom) {
+      User::create(['name' => $nom, 'mail' => 'eva@domain.local', 'status' => 1])->save();
+    }
+    $this->assertSame(302, $this->connecter('efgh@DOMAIN.LOCAL')->getStatusCode());
+    $compte = User::load((int) \Drupal::currentUser()->id());
+    $this->assertSame('efgh', $compte->getAccountName());
+    $this->assertNull($compte->getEmail());
+  }
+
+  /**
    * Realm refusé, principal sans realm, principal de service, en-tête HTTP.
    */
   public function testPrincipauxRefuses(): void {
