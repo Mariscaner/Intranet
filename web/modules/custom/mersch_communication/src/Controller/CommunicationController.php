@@ -69,8 +69,8 @@ class CommunicationController extends ControllerBase {
   private function liens(array $urls): array {
     $liens = [
       'nik' => [
-        // Nom propre du Gemengebuet, invariable (glossaire).
-        'titre' => 'Nik',
+        // Nom propre du Gemengebuet, invariable dans les trois langues.
+        'titre' => 'De Nik',
         'texte' => $this->t('All issues of the Gemengebuet.'),
       ],
       'agenda' => [
