@@ -1,0 +1,113 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.service.field_service_contacts
+    - field.field.node.service.field_service_email
+    - field.field.node.service.field_service_liens
+    - field.field.node.service.field_service_poids
+    - field.field.node.service.field_service_rubrique
+    - field.field.node.service.field_service_telephone
+    - field.field.node.service.field_service_texte
+    - node.type.service
+  module:
+    - content_translation
+    - link
+    - mersch_services
+    - options
+    - path
+    - text
+id: node.service.default
+targetEntityType: node
+bundle: service
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_texte:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 6
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_liens:
+    type: link_default
+    weight: 2
+    region: content
+    settings:
+      placeholder_url: 'https://'
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_service_email:
+    type: email_default
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_telephone:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 20
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_contacts:
+    type: mersch_contact_annuaire
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_service_poids:
+    type: number
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_service_rubrique:
+    type: options_select
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 9
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 11
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true

@@ -1,0 +1,61 @@
+{#
+/**
+ * @file
+ * Bas de page d'un service : liens (US-24) puis contacts (US-23).
+ *
+ * Variables :
+ * - liens : liste de { titre, url, externe }.
+ * - general : { email, telephone, tel_lien } ou NULL (contact du service).
+ * - contacts : liste de { nom, prenom, role, service, batiment, telephone,
+ *   tel_lien, gsm, gsm_lien, email } (fiches de l'annuaire, D-026).
+ * - modifier : adresse du formulaire pour les rédacteurs du service, ou NULL.
+ */
+#}
+<div class="mersch-service-pied">
+  {% if liens %}
+    <section class="mersch-bloc mersch-service-pied__liens" aria-labelledby="mersch-service-liens">
+      <h2 id="mersch-service-liens">{{ 'Links'|t }}</h2>
+      <ul>
+        {% for lien in liens %}
+          <li>
+            <a href="{{ lien.url }}"{% if lien.externe %} target="_blank" rel="noopener"{% endif %}>{{ lien.titre }}</a>
+            {% if lien.externe %}<span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if general or contacts %}
+    <section class="mersch-bloc mersch-service-pied__contacts" aria-labelledby="mersch-service-contacts">
+      <h2 id="mersch-service-contacts">{{ 'Contacts'|t }}</h2>
+      {% if general %}
+        <p class="mersch-service-pied__general">
+          {% if general.telephone %}<a href="{{ general.tel_lien }}">{{ general.telephone }}</a>{% endif %}
+          {% if general.telephone and general.email %} · {% endif %}
+          {% if general.email %}<a href="mailto:{{ general.email }}">{{ general.email }}</a>{% endif %}
+        </p>
+      {% endif %}
+      {% if contacts %}
+        <ul class="mersch-service-pied__cartes">
+          {% for contact in contacts %}
+            <li class="mersch-service-pied__carte">
+              <b>{{ contact.nom }} {{ contact.prenom }}</b>
+              {% if contact.role %}<span class="mersch-service-pied__role">{{ contact.role }}</span>{% endif %}
+              <dl>
+                {% if contact.telephone %}<dt>{{ 'Phone'|t }}</dt><dd><a href="{{ contact.tel_lien }}">{{ contact.telephone }}</a></dd>{% endif %}
+                {% if contact.gsm %}<dt>{{ 'Mobile'|t }}</dt><dd><a href="{{ contact.gsm_lien }}">{{ contact.gsm }}</a></dd>{% endif %}
+                {% if contact.email %}<dt>{{ 'E-mail'|t }}</dt><dd><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></dd>{% endif %}
+                {% if contact.batiment %}<dt>{{ 'Building'|t }}</dt><dd>{{ contact.batiment }}</dd>{% endif %}
+              </dl>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  {% endif %}
+
+  {% if modifier %}
+    <p class="mersch-service-pied__modifier"><a href="{{ modifier }}">{{ 'Edit links and contacts'|t }}</a></p>
+  {% endif %}
+</div>

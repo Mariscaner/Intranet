@@ -12,6 +12,7 @@ Correspondance entre les user stories du MVP (cahier des charges 01 v3) et le tr
 | 6. RH | US-12 à US-14 | Module `mersch_rh` : organigramme structuré (services + personnes avec photo, sans grade ni ancienneté) tenu par les rédacteurs RH, recherche et impression ; nouvelles (150 mots au plus, case « accord écrit », « Nei Gesiichter » / « Merci! ») ; communications RH avec PDF ; rôle Rédacteur RH |
 | 7. Communication | US-15 à US-18 | Module `mersch_communication` : tuiles Nik, agenda et albums vers mersch.lu (adresses modifiables par un admin) ; nouvelles (150 mots au plus, case « accord écrit » pour une photo, fin de publication) ; rôle Rédacteur Communication |
 | 8. Guides IT | US-19 à US-21 | Module `mersch_guides` : type de contenu Guide IT (texte, captures ou PDF, date de mise à jour), 5 catégories, recherche LU/DE/FR sans accents, lien Helpdesk ; reprise des 6 guides existants (`drush mersch:guides-import`, PDF corrigés) ; admins seulement (D-007) |
+| 10. Pages des services | US-22 à US-28 | Module `mersch_services` : une page par service (présentation, liens, contacts tirés de l'annuaire), services ajoutés par les admins, rédacteurs par service cochés sur leur compte, liens et contacts en bas des pages RH, Communication et Guides IT ; filtre par rubrique de la liste des contenus |
 | Serveur de test | — | Installation sur un serveur Linux interne : `scripts/serveur/installer.sh`, imports, comptes ([guide](installation-serveur-test.md)) |
 | 9. Exploitation | — | Historique des révisions 12 mois (D-021), sauvegarde quotidienne, journaux limités |
 
@@ -29,3 +30,4 @@ Correspondance entre les user stories du MVP (cahier des charges 01 v3) et le tr
 - Relecture par Marc des textes LU de l'accueil (`mersch_accueil/translations/lb.po`).
 - Relecture par Marc des textes LU de la page Guides IT (`mersch_guides/translations/lb.po`) et des titres et résumés LU des 6 guides (`guides-it/intranet/guides.json` dans le dossier du projet).
 - Validation par Marc des PDF corrigés des guides (https://apps, noms masqués) avant la reprise.
+- Relecture par Marc des textes LU des pages des services (`mersch_services/translations/lb.po`).

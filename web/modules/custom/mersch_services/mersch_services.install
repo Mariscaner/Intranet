@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * Installation : services des rubriques existantes, champ du compte, droits.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\node\Entity\Node;
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function mersch_services_install(bool $is_syncing): void {
+  if ($is_syncing) {
+    return;
+  }
+
+  // Case « Services modifiés » sur le formulaire du compte (US-26).
+  $affichage = EntityFormDisplay::load('user.user.default');
+  if ($affichage) {
+    $affichage->setComponent('field_mersch_services', [
+      'type' => 'options_buttons',
+      'weight' => 20,
+      'region' => 'content',
+    ])->save();
+  }
+
+  // Les rédacteurs RH et Communication tiennent les liens et contacts de leur
+  // service (Q1) et le traduisent.
+  foreach (['redacteur_rh', 'redacteur_communication'] as $id) {
+    if ($role = Role::load($id)) {
+      foreach (['edit mersch service contacts', 'translate service node', 'view service revisions'] as $permission) {
+        $role->grantPermission($permission);
+      }
+      $role->save();
+    }
+  }
+
+  // Services des trois rubriques existantes, noms repris du menu (Q1).
+  $rubriques = [
+    'rh' => ['lb' => 'Personalservice', 'de' => 'Personalabteilung', 'fr' => 'Ressources humaines', 'poids' => 10],
+    'communication' => ['lb' => 'Kommunikatiounsservice', 'de' => 'Kommunikationsabteilung', 'fr' => 'Communication', 'poids' => 20],
+    'guides_it' => ['lb' => 'IT-Uleedungen', 'de' => 'IT-Anleitungen', 'fr' => 'Guides informatiques', 'poids' => 30],
+  ];
+  $langues = \Drupal::languageManager()->getLanguages();
+  foreach ($rubriques as $cle => $noms) {
+    $existe = \Drupal::entityQuery('node')->accessCheck(FALSE)
+      ->condition('type', 'service')
+      ->condition('field_service_rubrique', $cle)
+      ->count()->execute();
+    if ($existe) {
+      continue;
+    }
+    $langue = isset($langues['lb']) ? 'lb' : \Drupal::languageManager()->getDefaultLanguage()->getId();
+    $service = Node::create([
+      'type' => 'service',
+      'langcode' => $langue,
+      'title' => $langue === 'lb' ? $noms['lb'] : $noms['fr'],
+      'field_service_rubrique' => $cle,
+      'field_service_poids' => $noms['poids'],
+      'status' => 1,
+      'uid' => 1,
+    ]);
+    foreach (['de', 'fr'] as $code) {
+      if ($langue === 'lb' && isset($langues[$code])) {
+        $service->addTranslation($code, ['title' => $noms[$code], 'status' => 1]);
+      }
+    }
+    $service->save();
+  }
+}

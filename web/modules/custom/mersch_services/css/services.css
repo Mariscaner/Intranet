@@ -1,0 +1,162 @@
+/*
+ * Pages des services (US-22 à US-24) : liste, liens et contacts en bas de
+ * page. Couleurs du thème mersch (variables --mersch-*), avec repli.
+ */
+.mersch-menu a[aria-current="page"][data-rubrique="services"] {
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+/* Liste des services */
+.mersch-services__liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Couleur de domaine en filet, jamais en texte sur blanc (contraste < 3:1). */
+.mersch-services__service {
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-left: 6px solid var(--mersch-bleu, #26336a);
+  border-radius: 4px;
+  background: var(--mersch-blanc, #fff);
+}
+
+.mersch-services__service[data-rubrique="rh"] {
+  border-left-color: var(--mersch-rh, #c1ad76);
+}
+
+.mersch-services__service[data-rubrique="communication"] {
+  border-left-color: var(--mersch-communication, #f08372);
+}
+
+.mersch-services__service[data-rubrique="guides-it"] {
+  border-left-color: var(--mersch-guides-it, #00aba0);
+}
+
+.mersch-services__service a {
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  color: var(--mersch-bleu, #26336a);
+  text-decoration: none;
+}
+
+.mersch-services__service a:hover {
+  background: var(--mersch-fond-2, #f3f4f8);
+}
+
+.mersch-services__service b {
+  display: block;
+  font-size: 16px;
+}
+
+.mersch-services__resume {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-services__statut {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--mersch-fond-2, #f3f4f8);
+  font-size: 12px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-services__vide {
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+/* Bas de page : liens puis contacts */
+.mersch-service-pied {
+  clear: both;
+  margin-top: 32px;
+}
+
+.mersch-service-pied .mersch-bloc {
+  margin-bottom: 24px;
+}
+
+.mersch-service-pied__liens ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-service-pied__liens a {
+  display: inline-block;
+  padding: 7px 13px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 4px;
+  background: var(--mersch-blanc, #fff);
+  color: var(--mersch-bleu, #26336a);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.mersch-service-pied__liens a:hover {
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-service-pied__general {
+  margin: 0 0 14px;
+  font-weight: bold;
+}
+
+.mersch-service-pied__cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-service-pied__carte {
+  padding: 12px 14px;
+  background: var(--mersch-fond-2, #f3f4f8);
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+
+.mersch-service-pied__carte b {
+  display: block;
+  color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-service-pied__role {
+  display: block;
+  font-size: 14px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-service-pied__carte dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 10px;
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.mersch-service-pied__carte dt {
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-service-pied__carte dd {
+  margin: 0;
+}
+
+.mersch-service-pied__modifier {
+  font-size: 14px;
+}

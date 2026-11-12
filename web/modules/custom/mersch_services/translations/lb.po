@@ -1,0 +1,171 @@
+# Traductions du module mersch_services.
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Departments"
+msgstr "Servicer"
+
+msgid "Department pages"
+msgstr "Säite vun de Servicer"
+
+msgid "Department page"
+msgstr "Säit vun engem Service"
+
+msgid "Department editor"
+msgstr "Redakter vun engem Service"
+
+msgid "Add a department"
+msgstr "E Service derbäisetzen"
+
+msgid "Pages of the departments: presentation, links, contacts and editors."
+msgstr "Säite vun de Servicer: Presentatioun, Linken, Kontakter a Redakteren."
+
+msgid "Each department presents its work, its tools and the colleagues to contact."
+msgstr "All Service stellt hei seng Aarbecht, seng Tools an d'Kolleegen vir, déi een uruffe kann."
+
+msgid "Not published"
+msgstr "Net publizéiert"
+
+msgid "No department page yet."
+msgstr "Nach keng Säit vun engem Service."
+
+msgid "Links"
+msgstr "Linken"
+
+msgid "Contacts"
+msgstr "Kontakter"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Mobile"
+msgstr "GSM"
+
+msgid "E-mail"
+msgstr "E-Mail"
+
+msgid "Building"
+msgstr "Gebai"
+
+msgid "(opens in a new tab)"
+msgstr "(geet an engem neien Tab op)"
+
+msgid "Edit links and contacts"
+msgstr "Linken a Kontakter änneren"
+
+msgid "Links and contacts"
+msgstr "Linken a Kontakter"
+
+msgid "Own page"
+msgstr "Eege Säit"
+
+msgid "Department"
+msgstr "Service"
+
+msgid "Page"
+msgstr "Säit"
+
+msgid "Editors"
+msgstr "Redakteren"
+
+msgid "No department yet."
+msgstr "Nach kee Service."
+
+msgid "Each department has a page with its presentation, links and contacts. To choose the editors of a department, tick it on their account (People, Edit, “Departments edited”)."
+msgstr "All Service huet eng Säit mat senger Presentatioun, senge Linken a senge Kontakter. Fir d'Redakteren vun engem Service ze bestëmmen, kräizt de Service op hirem Kont un (Benotzer, Änneren, „Servicer, déi een ännert“)."
+
+msgid "The departments you can edit: presentation, links and contacts."
+msgstr "D'Servicer, déi Dir ännere kënnt: Presentatioun, Linken a Kontakter."
+
+msgid "Section"
+msgstr "Rubrik"
+
+msgid "You can change the presentation, the links and the contacts. The name, the address and the order of the department are set by an administrator."
+msgstr "Dir kënnt d'Presentatioun, d'Linken an d'Kontakter änneren. Den Numm, d'Adress an d'Reiefolleg vum Service setzt en Administrateur fest."
+
+msgid "Contact not found in the staff directory: not shown on the page. Choose another colleague or empty the field."
+msgstr "Kontakt net am Personalverzeechnes fonnt: e gëtt net op der Säit gewisen. Wielt en anere Kolleeg oder maacht d'Feld eidel."
+
+msgid "Colleague"
+msgstr "Kolleeg"
+
+msgid "Role (optional)"
+msgstr "Roll (fräiwëlleg)"
+
+msgid "e.g. Head of department"
+msgstr "z. B. Chef de service"
+
+msgid "Choose the colleague in the list that appears while you type."
+msgstr "Wielt de Kolleeg an der Lëscht, déi beim Tippen opgeet."
+
+msgid "Presentation"
+msgstr "Presentatioun"
+
+msgid "What the department does and how it can help colleagues."
+msgstr "Wat de Service mécht a wéi en de Kolleegen hëllefe kann."
+
+msgid "Tools, documents and websites of the department. Drag the lines to change the order."
+msgstr "Tools, Dokumenter a Websäite vum Service. Zitt d'Zeilen, fir d'Reiefolleg z'änneren."
+
+msgid "Type a name and choose the colleague in the staff directory list. The phone numbers and e-mail come from the directory."
+msgstr "Tippt en Numm a wielt de Kolleeg an der Lëscht vum Personalverzeechnes. Telefonsnummeren an E-Mail kommen aus dem Verzeechnes."
+
+msgid "Department e-mail"
+msgstr "E-Mail vum Service"
+
+msgid "Shared mailbox of the department, shown above the contacts."
+msgstr "Gemeinsam Mailbox vum Service, iwwer de Kontakter gewisen."
+
+msgid "Department phone"
+msgstr "Telefon vum Service"
+
+msgid "Main number of the department, shown above the contacts."
+msgstr "Haaptnummer vum Service, iwwer de Kontakter gewisen."
+
+msgid "Existing section"
+msgstr "Bestoend Rubrik"
+
+msgid "Only for Human resources, Communication and IT guides: the links and contacts are shown at the bottom of that page."
+msgstr "Nëmme fir Personalservice, Kommunikatiounsservice an IT-Uleedungen: d'Linken an d'Kontakter ginn ënnen op där Säit gewisen."
+
+msgid "Order"
+msgstr "Reiefolleg"
+
+msgid "Position in the list of departments: smaller numbers come first."
+msgstr "Plaz an der Lëscht vun de Servicer: déi kleng Zuelen kommen als éischt."
+
+msgid "Departments edited"
+msgstr "Servicer, déi een ännert"
+
+msgid "The person can edit the presentation, links and contacts of these departments only (D-007). Set by an administrator."
+msgstr "D'Persoun kann d'Presentatioun, d'Linken an d'Kontakter nëmme vun dëse Servicer änneren (D-007). Gëtt vun engem Administrateur festgeluecht."
+
+msgid "Page of a department: presentation, links and contacts (US-22 to US-28)."
+msgstr "Säit vun engem Service: Presentatioun, Linken a Kontakter (US-22 bis US-28)."
+
+msgid "- All my sections -"
+msgstr "- All meng Rubriken -"
+
+msgid "Title contains"
+msgstr "Titel enthält"
+
+msgid "Filter"
+msgstr "Filteren"
+
+msgid "Reset"
+msgstr "Zrécksetzen"
+
+msgid "No content matches these filters."
+msgstr "Keen Inhalt entsprécht dëse Filteren."
+
+msgid "Unpublished"
+msgstr "Net publizéiert"
+
+msgid "Published"
+msgstr "Publizéiert"
+
+msgid "Published status"
+msgstr "Status"

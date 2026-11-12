@@ -1,0 +1,18 @@
+name: 'Services Mersch'
+type: module
+description: 'Pages des services : présentation, liens et contacts tirés de l''annuaire, rédacteurs par service, filtre par rubrique dans l''administration (US-22 à US-28).'
+package: Mersch
+core_version_requirement: ^11
+dependencies:
+  - drupal:content_translation
+  - drupal:filter
+  - drupal:link
+  - drupal:node
+  - drupal:options
+  - drupal:path
+  - drupal:text
+  - drupal:user
+  - mersch_accueil:mersch_accueil
+  - mersch_annuaire:mersch_annuaire
+'interface translation project': mersch_services
+'interface translation server pattern': modules/custom/mersch_services/translations/%language.po

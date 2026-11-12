@@ -1,0 +1,24 @@
+mersch_services.liste:
+  path: '/services'
+  defaults:
+    _controller: '\Drupal\mersch_services\Controller\ServicesController::liste'
+    _title: 'Departments'
+  requirements:
+    _permission: 'access content'
+
+mersch_services.admin:
+  path: '/admin/content/services'
+  defaults:
+    _controller: '\Drupal\mersch_services\Controller\ServicesController::admin'
+    _title: 'Departments'
+  requirements:
+    _custom_access: '\Drupal\mersch_services\Controller\ServicesController::accesAdmin'
+  options:
+    _admin_route: true
+
+mersch_services.agents:
+  path: '/mersch-services/agents'
+  defaults:
+    _controller: '\Drupal\mersch_services\Controller\ServicesController::agents'
+  requirements:
+    _permission: 'edit mersch service contacts'

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_texte
+    - filter.format.mersch_simple
+    - node.type.service
+  module:
+    - text
+id: node.service.field_service_texte
+field_name: field_service_texte
+entity_type: node
+bundle: service
+label: Presentation
+description: 'What the department does and how it can help colleagues.'
+required: false
+translatable: true
+default_value: []
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - mersch_simple
+field_type: text_long

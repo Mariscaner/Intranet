@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.mersch_simple
+    - node.type.service
+  module:
+    - content_translation
+    - filter
+    - mersch_services
+    - node
+    - system
+id: redacteur_service
+label: 'Department editor'
+weight: 5
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access content overview'
+  - 'create content translations'
+  - 'edit mersch service contacts'
+  - 'translate service node'
+  - 'update content translations'
+  - 'use text format mersch_simple'
+  - 'view service revisions'
+  - 'view the administration theme'

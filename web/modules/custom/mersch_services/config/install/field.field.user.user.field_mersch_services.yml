@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_mersch_services
+    - node.type.service
+  module:
+    - user
+id: user.user.field_mersch_services
+field_name: field_mersch_services
+entity_type: user
+bundle: user
+label: 'Departments edited'
+description: 'The person can edit the presentation, links and contacts of these departments only (D-007). Set by an administrator.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      service: service
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

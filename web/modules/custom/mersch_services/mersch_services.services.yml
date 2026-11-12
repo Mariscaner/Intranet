@@ -1,0 +1,14 @@
+services:
+  mersch_services.contacts:
+    class: Drupal\mersch_services\Contacts
+    arguments: ['@entity_type.manager', '@mersch_annuaire.parser']
+  Drupal\mersch_services\Contacts: '@mersch_services.contacts'
+  mersch_services.rubriques:
+    class: Drupal\mersch_services\Rubriques
+    arguments: ['@entity_type.manager']
+  Drupal\mersch_services\Rubriques: '@mersch_services.rubriques'
+  mersch_services.redirection:
+    class: Drupal\mersch_services\EventSubscriber\Redirection
+    arguments: ['@current_route_match', '@mersch_services.rubriques']
+    tags:
+      - { name: event_subscriber }

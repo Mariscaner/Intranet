@@ -1,0 +1,5 @@
+mersch_services.admin:
+  title: 'Departments'
+  route_name: mersch_services.admin
+  base_route: system.admin_content
+  weight: 5

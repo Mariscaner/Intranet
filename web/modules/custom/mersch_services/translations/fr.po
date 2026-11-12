@@ -1,0 +1,170 @@
+# Traductions du module mersch_services (FR).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Departments"
+msgstr "Services"
+
+msgid "Department pages"
+msgstr "Pages des services"
+
+msgid "Department page"
+msgstr "Page de service"
+
+msgid "Department editor"
+msgstr "Rédacteur de service"
+
+msgid "Add a department"
+msgstr "Ajouter un service"
+
+msgid "Pages of the departments: presentation, links, contacts and editors."
+msgstr "Pages des services : présentation, liens, contacts et rédacteurs."
+
+msgid "Each department presents its work, its tools and the colleagues to contact."
+msgstr "Chaque service présente ici son travail, ses outils et les collègues à contacter."
+
+msgid "Not published"
+msgstr "Non publié"
+
+msgid "No department page yet."
+msgstr "Aucune page de service pour l'instant."
+
+msgid "Links"
+msgstr "Liens"
+
+msgid "Contacts"
+msgstr "Contacts"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "Mobile"
+msgstr "GSM"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "Building"
+msgstr "Bâtiment"
+
+msgid "(opens in a new tab)"
+msgstr "(s'ouvre dans un nouvel onglet)"
+
+msgid "Edit links and contacts"
+msgstr "Modifier les liens et les contacts"
+
+msgid "Links and contacts"
+msgstr "Liens et contacts"
+
+msgid "Own page"
+msgstr "Page propre"
+
+msgid "Department"
+msgstr "Service"
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Editors"
+msgstr "Rédacteurs"
+
+msgid "No department yet."
+msgstr "Aucun service pour l'instant."
+
+msgid "Each department has a page with its presentation, links and contacts. To choose the editors of a department, tick it on their account (People, Edit, “Departments edited”)."
+msgstr "Chaque service a une page avec sa présentation, ses liens et ses contacts. Pour choisir les rédacteurs d'un service, cochez-le sur leur compte (Personnes, Modifier, « Services modifiés »)."
+
+msgid "The departments you can edit: presentation, links and contacts."
+msgstr "Les services que vous pouvez modifier : présentation, liens et contacts."
+
+msgid "Section"
+msgstr "Rubrique"
+
+msgid "You can change the presentation, the links and the contacts. The name, the address and the order of the department are set by an administrator."
+msgstr "Vous pouvez modifier la présentation, les liens et les contacts. Le nom, l'adresse et l'ordre du service sont fixés par un administrateur."
+
+msgid "Contact not found in the staff directory: not shown on the page. Choose another colleague or empty the field."
+msgstr "Contact introuvable dans l'annuaire : il n'est pas affiché sur la page. Choisissez un autre collègue ou videz le champ."
+
+msgid "Colleague"
+msgstr "Collègue"
+
+msgid "Role (optional)"
+msgstr "Rôle (facultatif)"
+
+msgid "e.g. Head of department"
+msgstr "ex. Chef de service"
+
+msgid "Choose the colleague in the list that appears while you type."
+msgstr "Choisissez le collègue dans la liste qui s'affiche pendant la saisie."
+
+msgid "Presentation"
+msgstr "Présentation"
+
+msgid "What the department does and how it can help colleagues."
+msgstr "Ce que fait le service et comment il peut aider les collègues."
+
+msgid "Tools, documents and websites of the department. Drag the lines to change the order."
+msgstr "Outils, documents et sites du service. Faites glisser les lignes pour changer l'ordre."
+
+msgid "Type a name and choose the colleague in the staff directory list. The phone numbers and e-mail come from the directory."
+msgstr "Tapez un nom et choisissez le collègue dans la liste de l'annuaire. Les numéros et l'e-mail viennent de l'annuaire."
+
+msgid "Department e-mail"
+msgstr "E-mail du service"
+
+msgid "Shared mailbox of the department, shown above the contacts."
+msgstr "Boîte partagée du service, affichée au-dessus des contacts."
+
+msgid "Department phone"
+msgstr "Téléphone du service"
+
+msgid "Main number of the department, shown above the contacts."
+msgstr "Numéro principal du service, affiché au-dessus des contacts."
+
+msgid "Existing section"
+msgstr "Rubrique existante"
+
+msgid "Only for Human resources, Communication and IT guides: the links and contacts are shown at the bottom of that page."
+msgstr "Seulement pour Ressources humaines, Communication et Guides informatiques : liens et contacts s'affichent en bas de cette page."
+
+msgid "Order"
+msgstr "Ordre"
+
+msgid "Position in the list of departments: smaller numbers come first."
+msgstr "Position dans la liste des services : les petits nombres d'abord."
+
+msgid "Departments edited"
+msgstr "Services modifiés"
+
+msgid "The person can edit the presentation, links and contacts of these departments only (D-007). Set by an administrator."
+msgstr "La personne ne peut modifier la présentation, les liens et les contacts que de ces services (D-007). Fixé par un administrateur."
+
+msgid "Page of a department: presentation, links and contacts (US-22 to US-28)."
+msgstr "Page d'un service : présentation, liens et contacts (US-22 à US-28)."
+
+msgid "- All my sections -"
+msgstr "- Toutes mes rubriques -"
+
+msgid "Title contains"
+msgstr "Le titre contient"
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "No content matches these filters."
+msgstr "Aucun contenu ne correspond à ces filtres."
+
+msgid "Unpublished"
+msgstr "Non publié"
+
+msgid "Published"
+msgstr "Publié"
+
+msgid "Published status"
+msgstr "Statut"

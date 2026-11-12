@@ -1,0 +1,198 @@
+<?php
+
+/**
+ * @file
+ * Pages des services : présentation, liens, contacts de l'annuaire,
+ * rédacteurs par service, filtre par rubrique (US-22 à US-28).
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\mersch_services\ContenusListBuilder;
+use Drupal\mersch_services\Controller\ServicesController;
+use Drupal\mersch_services\Rubriques;
+use Drupal\node\NodeInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_services_theme(): array {
+  return [
+    'mersch_services' => [
+      'variables' => ['services' => []],
+    ],
+    'mersch_service_pied' => [
+      'variables' => [
+        'liens' => [],
+        'general' => NULL,
+        'contacts' => [],
+        'modifier' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function mersch_services_entity_extra_field_info(): array {
+  $champs['node'][Rubriques::TYPE]['display']['mersch_service_pied'] = [
+    'label' => t('Links and contacts'),
+    'weight' => 10,
+  ];
+  return $champs;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for node.
+ */
+function mersch_services_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, string $view_mode): void {
+  if ($node->bundle() === Rubriques::TYPE && $display->getComponent('mersch_service_pied')) {
+    $build['mersch_service_pied'] = \Drupal::classResolver(ServicesController::class)->pied($node);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.
+ *
+ * Bas des pages RH, Communication et Guides IT : liens et contacts de leur
+ * service (Q1).
+ */
+function mersch_services_preprocess_page(array &$variables): void {
+  $route = \Drupal::routeMatch()->getRouteName();
+  foreach (Rubriques::EXISTANTES as $cle => $rubrique) {
+    if ($rubrique['route'] !== $route) {
+      continue;
+    }
+    $variables['page']['content']['#cache']['tags'][] = 'node_list:' . Rubriques::TYPE;
+    $service = \Drupal::service('mersch_services.rubriques')->servicePourRubrique($cle);
+    if ($service && $service->access('view')) {
+      $variables['page']['content']['mersch_service_pied'] = \Drupal::classResolver(ServicesController::class)->pied($service) + ['#weight' => 1000];
+    }
+    return;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_access() for node.
+ *
+ * Les rédacteurs d'un service modifient sa page, et la voient avant sa
+ * publication ; seuls les admins créent et suppriment (US-25, US-26).
+ */
+function mersch_services_node_access(NodeInterface $node, string $operation, AccountInterface $account): AccessResultInterface {
+  if ($node->bundle() !== Rubriques::TYPE || !in_array($operation, ['update', 'view'], TRUE)) {
+    return AccessResult::neutral();
+  }
+  if ($operation === 'view' && $node->isPublished()) {
+    return AccessResult::neutral();
+  }
+  return AccessResult::allowedIf(\Drupal::service('mersch_services.rubriques')->estRedacteur($node, $account))
+    ->cachePerUser()
+    ->addCacheableDependency($node);
+}
+
+/**
+ * Implements hook_entity_field_access().
+ */
+function mersch_services_entity_field_access(string $operation, FieldDefinitionInterface $field_definition, AccountInterface $account, ?FieldItemListInterface $items = NULL): AccessResultInterface {
+  $type = $field_definition->getTargetEntityTypeId();
+  $nom = $field_definition->getName();
+
+  // Services cochés sur un compte : vus et modifiés par les admins seulement.
+  if ($type === 'user' && $nom === 'field_mersch_services') {
+    return AccessResult::forbiddenIf(!$account->hasPermission('administer users'))->cachePerPermissions();
+  }
+
+  // Nom, adresse, ordre, publication : réservés aux admins (Q5).
+  if ($type === 'node' && $operation === 'edit' && in_array($nom, Rubriques::CHAMPS_ADMIN, TRUE)) {
+    $entite = $items?->getEntity();
+    // Champs de base : pas de bundle sur la définition, on le lit sur le
+    // contenu. À la création, seul un admin a accès au formulaire.
+    if ($entite && $entite->bundle() === Rubriques::TYPE && !$entite->isNew()) {
+      return AccessResult::forbiddenIf(!$account->hasPermission('administer mersch services'))->cachePerPermissions();
+    }
+  }
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for node.
+ *
+ * Adresse courte /services/<nom> quand l'admin n'en saisit pas (US-25).
+ */
+function mersch_services_node_presave(NodeInterface $node): void {
+  if ($node->bundle() !== Rubriques::TYPE || !$node->hasField('path')) {
+    return;
+  }
+  foreach ($node->getTranslationLanguages() as $langue) {
+    $traduction = $node->getTranslation($langue->getId());
+    if (trim((string) $traduction->get('path')->alias) !== '' || $traduction->get('field_service_rubrique')->value) {
+      continue;
+    }
+    $traduction->get('path')->alias = _mersch_services_alias($traduction);
+  }
+}
+
+/**
+ * Adresse libre /services/<nom-du-service>, suffixée si déjà prise.
+ */
+function _mersch_services_alias(NodeInterface $node): string {
+  $nom = \Drupal::service('transliteration')->transliterate((string) $node->label(), $node->language()->getId());
+  $nom = trim(preg_replace('/[^a-z0-9]+/', '-', mb_strtolower($nom)), '-') ?: 'service';
+  $repository = \Drupal::service('path_alias.repository');
+  $alias = '/services/' . $nom;
+  $suffixe = 1;
+  $chemin = $node->isNew() ? NULL : '/node/' . $node->id();
+  while (($existant = $repository->lookupByAlias($alias, $node->language()->getId())) && $existant['path'] !== $chemin) {
+    $alias = '/services/' . $nom . '-' . ++$suffixe;
+  }
+  return $alias;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for user.
+ *
+ * Un compte qui a des services cochés reçoit le rôle Rédacteur de service
+ * (administration, traductions) ; il le perd quand plus rien n'est coché.
+ */
+function mersch_services_user_presave(UserInterface $user): void {
+  if (!$user->hasField('field_mersch_services') || !\Drupal::entityTypeManager()->getStorage('user_role')->load('redacteur_service')) {
+    return;
+  }
+  if ($user->get('field_mersch_services')->isEmpty()) {
+    $user->removeRole('redacteur_service');
+  }
+  else {
+    $user->addRole('redacteur_service');
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_service_edit_form.
+ */
+function mersch_services_form_node_service_edit_form_alter(array &$form, FormStateInterface $form_state): void {
+  if (!\Drupal::currentUser()->hasPermission('administer mersch services')) {
+    $form['mersch_aide'] = [
+      '#markup' => '<p>' . t('You can change the presentation, the links and the contacts. The name, the address and the order of the department are set by an administrator.') . '</p>',
+      '#weight' => -100,
+    ];
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ *
+ * Liste des contenus de l'administration (/admin/content) avec un filtre
+ * par rubrique, titre et statut (US-27).
+ */
+function mersch_services_entity_type_alter(array &$entity_types): void {
+  $entity_types['node']->setListBuilderClass(ContenusListBuilder::class);
+}
