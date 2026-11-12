@@ -101,6 +101,7 @@ class PageCommunicationTest extends KernelTestBase {
     $this->assertSame(['nik', 'agenda', 'albums'], array_keys($page['#liens']));
     $this->assertSame('https://www.mersch.lu/agenda', $page['#liens']['agenda']['url']);
     $this->assertSame('mersch.lu/mediatheque', $page['#liens']['nik']['adresse']);
+    $this->assertSame('De Nik', $page['#liens']['nik']['titre']);
     $this->assertSame(['Récente', 'Ancienne'], array_column($page['#nouvelles'], 'titre'));
     $this->assertNull($page['#nouvelles'][0]['modifier']);
     $this->assertContains('node_list:comm_nouvelle', $page['#cache']['tags']);
