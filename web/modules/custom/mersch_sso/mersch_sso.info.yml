@@ -1,0 +1,9 @@
+name: 'Connexion SSO Mersch'
+type: module
+description: 'Connexion des agents par leur session Windows (Kerberos, AD local), comptes rattachés, compte de secours, comptes inactifs bloqués (US-29 à US-33).'
+package: Mersch
+core_version_requirement: ^11
+dependencies:
+  - drupal:user
+'interface translation project': mersch_sso
+'interface translation server pattern': modules/custom/mersch_sso/translations/%language.po

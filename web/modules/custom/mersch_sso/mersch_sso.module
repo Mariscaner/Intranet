@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Connexion SSO : lien d'en-tête, nom affiché, connexion locale refusée aux
+ * comptes rattachés (sauf compte de secours), comptes inactifs (US-29 à US-33).
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\mersch_sso\Comptes;
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Remplace le lien de connexion du thème quand le SSO est actif.
+ */
+function mersch_sso_preprocess_page(array &$variables): void {
+  if (!\Drupal::service('mersch_sso.reglages')->actif()) {
+    return;
+  }
+  $variables['page']['connexion'] = [
+    '#lazy_builder' => ['mersch_sso.lien:construire', []],
+    '#create_placeholder' => TRUE,
+  ];
+}
+
+/**
+ * Implements hook_user_format_name_alter().
+ *
+ * Nom affiché lu dans l'AD (les identifiants AD sont des codes courts).
+ */
+function mersch_sso_user_format_name_alter(string &$name, AccountInterface $account): void {
+  if ($account->isAuthenticated() && ($nom = \Drupal::service('mersch_sso.comptes')->nomDe((int) $account->id()))) {
+    $name = $nom;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for user_login_form.
+ */
+function mersch_sso_form_user_login_form_alter(array &$form, FormStateInterface $form_state): void {
+  // Après la vérification du mot de passe, avant la connexion (US-31).
+  $position = array_search('::validateFinal', $form['#validate'], TRUE);
+  array_splice($form['#validate'], $position === FALSE ? count($form['#validate']) : $position, 0, ['mersch_sso_refuser_connexion_locale']);
+}
+
+/**
+ * Refuse identifiant et mot de passe pour un compte rattaché au SSO.
+ */
+function mersch_sso_refuser_connexion_locale(array &$form, FormStateInterface $form_state): void {
+  $uid = (int) $form_state->get('uid');
+  if ($uid && $uid !== Comptes::COMPTE_SECOURS && \Drupal::service('mersch_sso.comptes')->identifiantDe($uid)) {
+    $form_state->set('uid', FALSE);
+    $form_state->setErrorByName('name', t('This account logs in with the Windows session. Use the « Log in » link of the intranet on a computer of the municipality.'));
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for user_pass.
+ */
+function mersch_sso_form_user_pass_alter(array &$form, FormStateInterface $form_state): void {
+  $form['#validate'][] = 'mersch_sso_refuser_reinitialisation';
+}
+
+/**
+ * Pas de lien de réinitialisation pour un compte rattaché au SSO.
+ *
+ * Le message du cœur reste le même : rien ne dit si le compte existe.
+ */
+function mersch_sso_refuser_reinitialisation(array &$form, FormStateInterface $form_state): void {
+  $compte = $form_state->getValue('account');
+  if ($compte instanceof AccountInterface && (int) $compte->id() !== Comptes::COMPTE_SECOURS
+    && \Drupal::service('mersch_sso.comptes')->identifiantDe((int) $compte->id())) {
+    $form_state->setValue('account', NULL);
+  }
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * US-33 : une fois par jour, bloque les comptes SSO inactifs.
+ */
+function mersch_sso_cron(): void {
+  $state = \Drupal::state();
+  $maintenant = \Drupal::time()->getRequestTime();
+  if ($maintenant - (int) $state->get('mersch_sso.cron', 0) < 86400) {
+    return;
+  }
+  $state->set('mersch_sso.a_signaler', \Drupal::service('mersch_sso.comptes')->bloquerInactifs());
+  $state->set('mersch_sso.cron', $maintenant);
+}

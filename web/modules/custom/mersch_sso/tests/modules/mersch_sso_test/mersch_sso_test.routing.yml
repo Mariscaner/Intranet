@@ -1,0 +1,8 @@
+mersch_sso_test.protegee:
+  path: '/mersch-sso-test/protegee'
+  defaults:
+    _controller: '\Drupal\mersch_sso_test\Controller\PageController::contenu'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  options:
+    _mersch_sso: TRUE

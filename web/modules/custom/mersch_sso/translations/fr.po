@@ -1,0 +1,56 @@
+# Traductions du module mersch_sso (FR).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Your Windows session could not be recognised. Open the intranet on a computer of the municipality, logged in with your own Windows account, in Edge or Chrome. If the problem persists, contact the IT helpdesk."
+msgstr "Votre session Windows n'a pas pu être reconnue. Ouvrez l'intranet sur un ordinateur de la commune, connecté avec votre propre compte Windows, dans Edge ou Chrome. Si le problème persiste, contactez le helpdesk IT."
+
+msgid "Login with your Windows session is not active yet."
+msgstr "La connexion avec votre session Windows n'est pas encore active."
+
+msgid "Your Windows account cannot be used to log in to the intranet. Contact the IT helpdesk."
+msgstr "Votre compte Windows ne peut pas être utilisé pour vous connecter à l'intranet. Contactez le helpdesk IT."
+
+msgid "Your intranet account is blocked. Contact an administrator of the intranet."
+msgstr "Votre compte intranet est bloqué. Contactez un administrateur de l'intranet."
+
+msgid "The directory of the municipality does not answer. Try again in a few minutes."
+msgstr "L'annuaire de la commune ne répond pas. Réessayez dans quelques minutes."
+
+msgid "Back to the home page"
+msgstr "Retour à l'accueil"
+
+msgid "Emergency account of the administrators"
+msgstr "Compte d'urgence des administrateurs"
+
+msgid "Windows login (SSO)"
+msgstr "Connexion Windows (SSO)"
+
+msgid "Not active"
+msgstr "Non actif"
+
+msgid "Set SSO_ACTIF=\"oui\" in /etc/intranet-mersch.conf once the keytab is installed, then run installer.sh again (docs/sso-ad.md)."
+msgstr "Définissez SSO_ACTIF=\"oui\" dans /etc/intranet-mersch.conf une fois le keytab installé, puis relancez installer.sh (docs/sso-ad.md)."
+
+msgid "PHP extension ldap missing (package php-ldap)."
+msgstr "Extension PHP ldap absente (paquet php-ldap)."
+
+msgid "Keytab not readable by the web server: @fichier."
+msgstr "Le keytab n'est pas lisible par le serveur web : @fichier."
+
+msgid "Active, with problems"
+msgstr "Actif, avec des problèmes"
+
+msgid "Active (realm @realm)"
+msgstr "Actif (realm @realm)"
+
+msgid "Inactive editor or administrator accounts"
+msgstr "Comptes de rédacteur ou d'administrateur inactifs"
+
+msgid "No login for @mois months. These accounts have a role and are not blocked automatically: block them or remove their role."
+msgstr "Aucune connexion depuis @mois mois. Ces comptes ont un rôle et ne sont pas bloqués automatiquement : bloquez-les ou retirez-leur le rôle."
+
+msgid "This account logs in with the Windows session. Use the « Log in » link of the intranet on a computer of the municipality."
+msgstr "Ce compte se connecte avec la session Windows. Utilisez le lien « Se connecter » de l'intranet sur un ordinateur de la commune."

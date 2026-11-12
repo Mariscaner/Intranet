@@ -163,6 +163,20 @@ Mise en service sur un intranet déjà installé : après le `git pull`, `drush-
 
 Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_services` (avec `drupal/core-dev` installé).
 
+## Connexion par la session Windows (SSO)
+
+Le module `mersch_sso` connecte les agents à l'intranet par leur session Windows (Kerberos, AD local `domain.local`), sans nouveau mot de passe (D-035, US-29 à US-33) :
+
+- **Kerberos dans Apache** (`mod_auth_gssapi`) sur la seule adresse `/sso/connexion` : toutes les autres pages restent lisibles sans connexion et ne négocient rien (US-30). Le module lit `REMOTE_USER` posé par Apache (jamais un en-tête HTTP), vérifie le realm, trouve ou crée le compte puis revient à la page demandée (chemin interne seulement).
+- **Nom et e-mail** lus dans l'AD par LDAPS à chaque connexion (sAMAccountName, displayName, mail, rien d'autre), liaison par le keytab du serveur sans mot de passe stocké.
+- **Comptes existants** rattachés par leur e-mail, rôles et services gardés ; identifiant et mot de passe ensuite refusés, sauf pour le compte n° 1 de secours (US-31, US-32).
+- **Comptes inactifs** : bloqués par le cron après 12 mois sans connexion (réglable) ; ceux d'un rédacteur ou d'un admin sont signalés dans le rapport d'état plutôt que bloqués (US-33).
+- **En-tête** : lien « Umellen » vers le nom complet du serveur, puis nom de l'agent et « Ofmellen ». Pour les lots suivants, une route avec l'option `_mersch_sso: TRUE` et `_user_is_logged_in` renvoie un anonyme vers la connexion SSO.
+
+Le SSO est désactivé par défaut (`SSO_ACTIF="non"` dans `/etc/intranet-mersch.conf`). Mise en service et dépannage : [docs/sso-ad.md](docs/sso-ad.md).
+
+Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_sso` (avec `drupal/core-dev` installé).
+
 ## Règles du dépôt
 
 - Aucune donnée personnelle dans le dépôt : ni annuaire, ni export de base, ni fichier déposé. Le `.gitignore` bloque déjà `*.sql`, `*.csv`, `*.xlsx` et `web/sites/*/files/`.
