@@ -112,6 +112,8 @@ SQL
 ];
 \$settings['config_sync_directory'] = '../config/sync';
 \$settings['trusted_host_patterns'] = ['$HOTE_REGEX', '^localhost\$'];
+// Validation HTML5 des formulaires gardée (Drupal 12 la désactivera par défaut).
+\$settings['enable_html5_validation'] = TRUE;
 PHP
   umask 022
   unset MDP_BASE
