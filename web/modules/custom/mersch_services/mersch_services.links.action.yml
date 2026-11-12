@@ -1,0 +1,8 @@
+mersch_services.ajouter:
+  route_name: node.add
+  route_parameters:
+    node_type: service
+  title: 'Add a department'
+  appears_on:
+    - mersch_services.admin
+    - mersch_services.liste

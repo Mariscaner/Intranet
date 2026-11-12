@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_poids
+    - node.type.service
+id: node.service.field_service_poids
+field_name: field_service_poids
+entity_type: node
+bundle: service
+label: Order
+description: 'Position in the list of departments: smaller numbers come first.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

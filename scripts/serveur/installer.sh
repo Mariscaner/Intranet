@@ -145,7 +145,7 @@ etape "6/8 Thème, modules mersch_* et rôle Administrateur"
 drush theme:enable mersch claro
 drush config:set system.theme default mersch --yes
 drush config:set system.theme admin claro --yes
-drush pm:install admin_toolbar mersch_accueil mersch_annuaire mersch_rh mersch_communication mersch_guides --yes
+drush pm:install admin_toolbar mersch_accueil mersch_annuaire mersch_rh mersch_communication mersch_guides mersch_services --yes
 # Personne ne crée son compte : les admins créent les 8 comptes (04, D-028).
 drush config:set user.settings register admin_only --yes
 # shellcheck disable=SC2016

@@ -1,0 +1,7 @@
+administer mersch services:
+  title: 'Administer departments'
+  description: 'Create, rename, reorder, hide and delete departments, and choose their editors (US-25, US-26). Administrators only.'
+  restrict access: true
+edit mersch service contacts:
+  title: 'Search the staff directory to choose contacts'
+  description: 'Needed by the editors of a department to pick its contacts (US-23).'

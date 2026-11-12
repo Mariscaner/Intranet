@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Liste des services (US-22).
+ *
+ * Variables :
+ * - services : liste de { titre, url, resume, rubrique, non_publie }.
+ */
+#}
+<div class="mersch-services" data-rubrique="services">
+  <p class="mersch-accueil__chapo">{{ 'Each department presents its work, its tools and the colleagues to contact.'|t }}</p>
+  {% if services %}
+    <ul class="mersch-services__liste">
+      {% for service in services %}
+        <li class="mersch-services__service" data-rubrique="{{ service.rubrique }}">
+          <a href="{{ service.url }}">
+            <b>{{ service.titre }}</b>
+            {% if service.non_publie %}<span class="mersch-services__statut">{{ 'Not published'|t }}</span>{% endif %}
+            {% if service.resume %}<span class="mersch-services__resume">{{ service.resume }}</span>{% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="mersch-services__vide">{{ 'No department page yet.'|t }}</p>
+  {% endif %}
+</div>

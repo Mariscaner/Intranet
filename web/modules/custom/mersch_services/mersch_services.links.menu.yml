@@ -1,0 +1,16 @@
+# Entrée « Services » du menu principal (US-22), après Guides IT.
+mersch_services.menu.services:
+  title: 'Departments'
+  route_name: mersch_services.liste
+  menu_name: main
+  weight: 40
+  options:
+    attributes:
+      data-rubrique: services
+
+mersch_services.admin:
+  title: 'Departments'
+  description: 'Pages of the departments: presentation, links, contacts and editors.'
+  route_name: mersch_services.admin
+  parent: system.admin_content
+  weight: 5

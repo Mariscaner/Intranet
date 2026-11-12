@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_service_contacts
+    - node.type.service
+  module:
+    - mersch_services
+id: node.service.field_service_contacts
+field_name: field_service_contacts
+entity_type: node
+bundle: service
+label: Contacts
+description: 'Type a name and choose the colleague in the staff directory list. The phone numbers and e-mail come from the directory.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {  }
+field_type: mersch_contact

@@ -1,0 +1,170 @@
+# Traductions du module mersch_services (DE).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Departments"
+msgstr "Abteilungen"
+
+msgid "Department pages"
+msgstr "Abteilungsseiten"
+
+msgid "Department page"
+msgstr "Abteilungsseite"
+
+msgid "Department editor"
+msgstr "Redakteur einer Abteilung"
+
+msgid "Add a department"
+msgstr "Abteilung hinzufügen"
+
+msgid "Pages of the departments: presentation, links, contacts and editors."
+msgstr "Seiten der Abteilungen: Vorstellung, Links, Kontakte und Redakteure."
+
+msgid "Each department presents its work, its tools and the colleagues to contact."
+msgstr "Jede Abteilung stellt hier ihre Arbeit, ihre Werkzeuge und ihre Ansprechpartner vor."
+
+msgid "Not published"
+msgstr "Nicht veröffentlicht"
+
+msgid "No department page yet."
+msgstr "Noch keine Abteilungsseite."
+
+msgid "Links"
+msgstr "Links"
+
+msgid "Contacts"
+msgstr "Kontakte"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Mobile"
+msgstr "Handy"
+
+msgid "E-mail"
+msgstr "E-Mail"
+
+msgid "Building"
+msgstr "Gebäude"
+
+msgid "(opens in a new tab)"
+msgstr "(öffnet in einem neuen Tab)"
+
+msgid "Edit links and contacts"
+msgstr "Links und Kontakte bearbeiten"
+
+msgid "Links and contacts"
+msgstr "Links und Kontakte"
+
+msgid "Own page"
+msgstr "Eigene Seite"
+
+msgid "Department"
+msgstr "Abteilung"
+
+msgid "Page"
+msgstr "Seite"
+
+msgid "Editors"
+msgstr "Redakteure"
+
+msgid "No department yet."
+msgstr "Noch keine Abteilung."
+
+msgid "Each department has a page with its presentation, links and contacts. To choose the editors of a department, tick it on their account (People, Edit, “Departments edited”)."
+msgstr "Jede Abteilung hat eine Seite mit Vorstellung, Links und Kontakten. Um die Redakteure einer Abteilung festzulegen, kreuzen Sie die Abteilung in deren Konto an (Benutzer, Bearbeiten, „Bearbeitete Abteilungen“)."
+
+msgid "The departments you can edit: presentation, links and contacts."
+msgstr "Die Abteilungen, die Sie bearbeiten können: Vorstellung, Links und Kontakte."
+
+msgid "Section"
+msgstr "Rubrik"
+
+msgid "You can change the presentation, the links and the contacts. The name, the address and the order of the department are set by an administrator."
+msgstr "Sie können Vorstellung, Links und Kontakte ändern. Name, Adresse und Reihenfolge der Abteilung legt ein Administrator fest."
+
+msgid "Contact not found in the staff directory: not shown on the page. Choose another colleague or empty the field."
+msgstr "Kontakt nicht im Mitarbeiterverzeichnis gefunden: er wird nicht angezeigt. Wählen Sie einen anderen Kollegen oder leeren Sie das Feld."
+
+msgid "Colleague"
+msgstr "Kollege"
+
+msgid "Role (optional)"
+msgstr "Rolle (freiwillig)"
+
+msgid "e.g. Head of department"
+msgstr "z. B. Abteilungsleiter"
+
+msgid "Choose the colleague in the list that appears while you type."
+msgstr "Wählen Sie den Kollegen in der Liste, die beim Tippen erscheint."
+
+msgid "Presentation"
+msgstr "Vorstellung"
+
+msgid "What the department does and how it can help colleagues."
+msgstr "Was die Abteilung macht und wie sie den Kollegen helfen kann."
+
+msgid "Tools, documents and websites of the department. Drag the lines to change the order."
+msgstr "Werkzeuge, Dokumente und Webseiten der Abteilung. Ziehen Sie die Zeilen, um die Reihenfolge zu ändern."
+
+msgid "Type a name and choose the colleague in the staff directory list. The phone numbers and e-mail come from the directory."
+msgstr "Geben Sie einen Namen ein und wählen Sie den Kollegen aus dem Mitarbeiterverzeichnis. Telefonnummern und E-Mail stammen aus dem Verzeichnis."
+
+msgid "Department e-mail"
+msgstr "E-Mail der Abteilung"
+
+msgid "Shared mailbox of the department, shown above the contacts."
+msgstr "Gemeinsames Postfach der Abteilung, über den Kontakten angezeigt."
+
+msgid "Department phone"
+msgstr "Telefon der Abteilung"
+
+msgid "Main number of the department, shown above the contacts."
+msgstr "Hauptnummer der Abteilung, über den Kontakten angezeigt."
+
+msgid "Existing section"
+msgstr "Bestehende Rubrik"
+
+msgid "Only for Human resources, Communication and IT guides: the links and contacts are shown at the bottom of that page."
+msgstr "Nur für Personalabteilung, Kommunikationsabteilung und IT-Anleitungen: Links und Kontakte erscheinen unten auf dieser Seite."
+
+msgid "Order"
+msgstr "Reihenfolge"
+
+msgid "Position in the list of departments: smaller numbers come first."
+msgstr "Position in der Abteilungsliste: kleinere Zahlen zuerst."
+
+msgid "Departments edited"
+msgstr "Bearbeitete Abteilungen"
+
+msgid "The person can edit the presentation, links and contacts of these departments only (D-007). Set by an administrator."
+msgstr "Die Person kann Vorstellung, Links und Kontakte nur dieser Abteilungen bearbeiten (D-007). Wird von einem Administrator festgelegt."
+
+msgid "Page of a department: presentation, links and contacts (US-22 to US-28)."
+msgstr "Seite einer Abteilung: Vorstellung, Links und Kontakte (US-22 bis US-28)."
+
+msgid "- All my sections -"
+msgstr "- Alle meine Rubriken -"
+
+msgid "Title contains"
+msgstr "Titel enthält"
+
+msgid "Filter"
+msgstr "Filtern"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "No content matches these filters."
+msgstr "Kein Inhalt entspricht diesen Filtern."
+
+msgid "Unpublished"
+msgstr "Nicht veröffentlicht"
+
+msgid "Published"
+msgstr "Veröffentlicht"
+
+msgid "Published status"
+msgstr "Status"

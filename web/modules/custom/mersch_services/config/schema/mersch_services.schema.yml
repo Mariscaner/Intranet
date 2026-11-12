@@ -1,0 +1,25 @@
+field.storage_settings.mersch_contact:
+  type: mapping
+  label: 'Contact settings'
+field.field_settings.mersch_contact:
+  type: mapping
+  label: 'Contact settings'
+field.value.mersch_contact:
+  type: mapping
+  label: 'Default value'
+  mapping:
+    nom:
+      type: string
+      label: 'Last name'
+    prenom:
+      type: string
+      label: 'First name'
+    email:
+      type: string
+      label: 'E-mail'
+    role:
+      type: label
+      label: 'Role'
+field.widget.settings.mersch_contact_annuaire:
+  type: mapping
+  label: 'Contact widget settings'

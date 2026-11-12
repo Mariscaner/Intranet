@@ -24,7 +24,7 @@ config/sync/              Configuration Drupal exportée (drush cex)
 docs/                     Feuille de route technique, guide d'installation sur le serveur de test
 scripts/serveur/          Scripts d'installation du serveur Linux et de création des comptes
 web/themes/custom/mersch/ Thème de l'intranet
-web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication, mersch_guides)
+web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication, mersch_guides, mersch_services)
 ```
 
 ## Installer sur le serveur de test
@@ -49,7 +49,7 @@ ddev composer install
 ddev drush site:install minimal --locale=lb --site-name="Intranet Mersch"
 ddev drush theme:enable mersch
 ddev drush config:set system.theme default mersch -y
-ddev drush pm:install mersch_accueil mersch_annuaire mersch_rh mersch_communication mersch_guides -y
+ddev drush pm:install mersch_accueil mersch_annuaire mersch_rh mersch_communication mersch_guides mersch_services -y
 ddev drush theme:enable claro
 ddev drush config:set system.theme admin claro -y
 ddev launch
@@ -146,6 +146,21 @@ Droits : **administrateurs seulement** (D-007) ; aucun rôle de rédacteur n'a d
 À régler sur le serveur : taille maximale d'envoi PHP d'au moins 20 Mo (PDF des guides, comme pour la page RH).
 
 Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_guides` (avec `drupal/core-dev` installé).
+
+## Pages des services
+
+Le module `mersch_services` donne une page à chaque service (US-22 à US-28) :
+
+- **Menu « Servicer »** (`/services`) : les services publiés, dans l'ordre fixé par l'admin. RH, Communication et Guides IT y figurent et mènent à leur page habituelle.
+- **Page d'un service** (`/services/<nom>`, adresse donnée automatiquement) : présentation, liens, puis contacts en bas de page. Sur les pages RH, Communication et Guides IT, les liens et contacts de leur service s'affichent en bas.
+- **Contacts** : choisis dans l'annuaire au fil de la frappe, avec un rôle facultatif (« Chef de service »), plus l'e-mail et le téléphone du service. Seules les données de l'annuaire sont affichées (D-026) ; elles sont relues à chaque import, par e-mail puis par nom et prénom, car l'import recrée toutes les fiches. Un agent retiré de la liste Excel disparaît de la page et le formulaire le signale au rédacteur.
+- **Liens** : libellé et adresse (site web ou page de l'intranet), réordonnables ; traduisibles en DE et FR avec la page.
+- **Rédacteurs** : un admin coche les services sur le compte de la personne (« Services modifiés ») ; elle reçoit le rôle « Rédacteur de service » et modifie la présentation, les liens et les contacts de ces services seulement (D-007). Les rédacteurs RH et Communication tiennent ceux de leur rubrique. Nom, adresse, ordre, publication et suppression restent aux admins (D-019).
+- **Administration** : onglet « Servicer » à côté de « Content » (`/admin/content/services`) avec rédacteurs, nombre de contacts et de liens ; la liste des contenus (`/admin/content`) se filtre par rubrique, titre et statut, et un rédacteur n'y voit que ses rubriques (US-27).
+
+Mise en service sur un intranet déjà installé : après le `git pull`, `drush-intranet pm:install mersch_services` puis `drush-intranet locale:check && drush-intranet locale:update`.
+
+Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_services` (avec `drupal/core-dev` installé).
 
 ## Règles du dépôt
 
