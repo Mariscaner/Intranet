@@ -11,7 +11,7 @@ use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Lien « Umellen » / nom de l'agent et « Ofmellen » de l'en-tête, et adresse
+ * Lien « Aloggen » / nom de l'agent et déconnexion de l'en-tête, et adresse
  * de connexion réutilisable par les lots 2 et 3.
  */
 class Lien implements TrustedCallbackInterface {

@@ -9,10 +9,10 @@ msgid "Your Windows session could not be recognised. Open the intranet on a comp
 msgstr "Är Windows-Sessioun gouf net erkannt. Maacht d'Intranet op engem Computer vun der Gemeng op, un deem Dir mat Ärem eegene Windows-Kont ugemellt sidd, an mat Edge oder Chrome. Wann de Problem bleift, kontaktéiert den Helpdesk IT."
 
 msgid "Login with your Windows session is not active yet."
-msgstr "D'Umellen mat Ärer Windows-Sessioun ass nach net aktiv."
+msgstr "D'Aloggen mat Ärer Windows-Sessioun ass nach net aktiv."
 
 msgid "Your Windows account cannot be used to log in to the intranet. Contact the IT helpdesk."
-msgstr "Äre Windows-Kont kann net fir sech op den Intranet ze umellen. Kontaktéiert den Helpdesk IT."
+msgstr "Äre Windows-Kont kann net fir sech am Intranet anzeloggen. Kontaktéiert den Helpdesk IT."
 
 msgid "Your intranet account is blocked. Contact an administrator of the intranet."
 msgstr "Äre Kont um Intranet ass gespaart. Kontaktéiert en Administrateur vum Intranet."
@@ -54,4 +54,8 @@ msgid "No login for @mois months. These accounts have a role and are not blocked
 msgstr "Keng Umeldung zënter @mois Méint. Dës Konten hunn eng Roll an ginn net automatesch gespaart: spierrt se oder entzitt hinnen d'Roll."
 
 msgid "This account logs in with the Windows session. Use the « Log in » link of the intranet on a computer of the municipality."
-msgstr "Dëse Kont mellt sech mat der Windows-Sessioun un. Benotzt de Link « Umellen » vum Intranet op engem Computer vun der Gemeng."
+msgstr "Dëse Kont loggt sech mat der Windows-Sessioun an. Benotzt de Link « Aloggen » vum Intranet op engem Computer vun der Gemeng."
+
+# « Aloggen » (glossaire, validé par Marc le 2026-11-12) au lieu de la traduction de Drupal.
+msgid "Log in"
+msgstr "Aloggen"

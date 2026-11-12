@@ -49,5 +49,5 @@ SSO_LDAP_CA="/etc/intranet-mersch/ca-ad.pem"
 # /etc/intranet-mersch/ldap.secret, déposé par l'intégrateur, jamais ici).
 SSO_LDAP_LIAISON="gssapi"
 SSO_LDAP_COMPTE=""   # par exemple svc-intranet@domain.local (liaison "motdepasse")
-# Comptes sans connexion bloqués après ce nombre de mois (US-33, à confirmer).
-SSO_INACTIVITE_MOIS="12"
+# Comptes sans connexion bloqués après ce nombre de mois (US-33, 24 mois décidés par Marc).
+SSO_INACTIVITE_MOIS="24"

@@ -168,7 +168,7 @@ cat > "$SETTINGS_SSO" <<PHP
   'ldap_fichier_mdp' => '/etc/intranet-mersch/ldap.secret',
   'ldap_ca' => $(php_texte "${SSO_LDAP_CA:-}"),
   'keytab' => '$KEYTAB',
-  'inactivite_mois' => $(( ${SSO_INACTIVITE_MOIS:-12} )),
+  'inactivite_mois' => $(( ${SSO_INACTIVITE_MOIS:-24} )),
 ];
 PHP
 chown root:www-data "$SETTINGS_SSO"

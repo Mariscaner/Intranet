@@ -33,8 +33,8 @@ class Reglages {
     'ldap_fichier_mdp' => '/etc/intranet-mersch/ldap.secret',
     'ldap_ca' => '',
     'keytab' => '/etc/intranet-mersch/http.keytab',
-    // US-33 : durée à confirmer par Marc.
-    'inactivite_mois' => 12,
+    // US-33 : 24 mois (Marc, 2026-11-12).
+    'inactivite_mois' => 24,
   ];
 
   /**

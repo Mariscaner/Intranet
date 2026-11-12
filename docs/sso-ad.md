@@ -58,7 +58,7 @@ sudo nano /etc/intranet-mersch.conf
 | `SSO_LDAP_CA` | `"/etc/intranet-mersch/ca-ad.pem"` | Certificat racine |
 | `SSO_LDAP_LIAISON` | `"gssapi"` | `"motdepasse"` en repli (voir section 8) |
 | `SSO_LDAP_COMPTE` | `""` | Par exemple `svc-intranet@domain.local`, seulement pour « motdepasse » |
-| `SSO_INACTIVITE_MOIS` | `"12"` | Valeur à confirmer par Marc (US-33) |
+| `SSO_INACTIVITE_MOIS` | `"24"` | Décidé par Marc le 2026-11-12 (US-33) |
 
 Aucun mot de passe dans ce fichier.
 
@@ -102,7 +102,7 @@ Ouvrir `/admin/reports/status` : la ligne « Windows login (SSO) » doit affiche
 
 1. Ouvrir Edge.
 2. Aller sur `http://intranet.domain.local` (ou `https://` si le certificat est en place).
-3. Cliquer « Umellen » dans l'en-tête.
+3. Cliquer « Aloggen » dans l'en-tête.
 4. Résultat attendu : connexion sans saisie, le nom de l'agent s'affiche en haut.
 
 Test fait en développement : un Kerberos local avec Apache et mod_auth_gssapi a validé la connexion de bout en bout (l'identifiant arrive bien à PHP-FPM). La lecture LDAP réelle et le navigateur Windows restent à tester sur la VM : ce sont les points 5.1 et 5.3.
@@ -126,7 +126,7 @@ Après le rattachement, l'identifiant et le mot de passe sont refusés, sauf pou
 
 ## 7. Comptes inactifs
 
-Le cron bloque un compte sans connexion après `SSO_INACTIVITE_MOIS` mois (12, à confirmer par Marc). Exception : les comptes qui ont un rôle (rédacteur, admin). Ils ne sont pas bloqués ; ils sont listés dans le rapport d'état (« Inactive editor or administrator accounts »). Marc les bloque ou retire leur rôle à la main.
+Le cron bloque un compte sans connexion après `SSO_INACTIVITE_MOIS` mois (24, décidé par Marc le 2026-11-12). Exception : les comptes qui ont un rôle (rédacteur, admin). Ils ne sont pas bloqués ; ils sont listés dans le rapport d'état (« Inactive editor or administrator accounts »). Marc les bloque ou retire leur rôle à la main.
 
 ## 8. Dépannage
 
