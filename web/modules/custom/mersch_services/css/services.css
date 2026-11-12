@@ -160,3 +160,37 @@
 .mersch-service-pied__modifier {
   font-size: 14px;
 }
+
+/* Nouvelles du service */
+.mersch-service-pied__liste-nouvelles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mersch-service-pied__liste-nouvelles li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--mersch-ligne, #d9dce8);
+}
+
+.mersch-service-pied__liste-nouvelles li:first-child {
+  padding-top: 0;
+}
+
+.mersch-service-pied__liste-nouvelles h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-service-pied__texte p {
+  margin: 0 0 6px;
+}
+
+.mersch-service-pied__meta,
+.mersch-service-pied__vide,
+.mersch-service-pied__non-traduit {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+}

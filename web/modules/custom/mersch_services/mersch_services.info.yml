@@ -5,6 +5,7 @@ package: Mersch
 core_version_requirement: ^11
 dependencies:
   - drupal:content_translation
+  - drupal:datetime
   - drupal:filter
   - drupal:link
   - drupal:node

@@ -1,0 +1,79 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.service_nouvelle.field_snouv_fin_publication
+    - field.field.node.service_nouvelle.field_snouv_lien
+    - field.field.node.service_nouvelle.field_snouv_service
+    - field.field.node.service_nouvelle.field_snouv_texte
+    - node.type.service_nouvelle
+  module:
+    - content_translation
+    - datetime
+    - link
+    - text
+id: node.service_nouvelle.default
+targetEntityType: node
+bundle: service_nouvelle
+mode: default
+content:
+  field_snouv_service:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_snouv_texte:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 6
+      placeholder: ''
+    third_party_settings: {  }
+  field_snouv_lien:
+    type: link_default
+    weight: 3
+    region: content
+    settings:
+      placeholder_url: 'https://'
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_snouv_fin_publication:
+    type: datetime_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 5
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  translation:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  promote: true
+  sticky: true
+  uid: true

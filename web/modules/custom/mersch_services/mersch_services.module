@@ -31,6 +31,8 @@ function mersch_services_theme(): array {
     ],
     'mersch_service_pied' => [
       'variables' => [
+        'nouvelles' => [],
+        'ajouter_nouvelle' => NULL,
         'liens' => [],
         'general' => NULL,
         'contacts' => [],
@@ -88,15 +90,53 @@ function mersch_services_preprocess_page(array &$variables): void {
  * publication ; seuls les admins créent et suppriment (US-25, US-26).
  */
 function mersch_services_node_access(NodeInterface $node, string $operation, AccountInterface $account): AccessResultInterface {
-  if ($node->bundle() !== Rubriques::TYPE || !in_array($operation, ['update', 'view'], TRUE)) {
+  if (!in_array($node->bundle(), [Rubriques::TYPE, Rubriques::NOUVELLE], TRUE) || !in_array($operation, ['update', 'view'], TRUE)) {
     return AccessResult::neutral();
   }
   if ($operation === 'view' && $node->isPublished()) {
     return AccessResult::neutral();
   }
-  return AccessResult::allowedIf(\Drupal::service('mersch_services.rubriques')->estRedacteur($node, $account))
+  $rubriques = \Drupal::service('mersch_services.rubriques');
+  // Une nouvelle se modifie par les rédacteurs de son service (D-007) ;
+  // la supprimer reste aux admins (D-019).
+  $service = $node->bundle() === Rubriques::NOUVELLE ? $rubriques->serviceDe($node) : $node;
+  $acces = AccessResult::allowedIf($service && $rubriques->estRedacteur($service, $account))
     ->cachePerUser()
     ->addCacheableDependency($node);
+  return $service ? $acces->addCacheableDependency($service) : $acces;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_create_access() for node.
+ *
+ * Une nouvelle de service se crée par un rédacteur d'au moins un service.
+ */
+function mersch_services_node_create_access(AccountInterface $account, array $context, ?string $entity_bundle): AccessResultInterface {
+  if ($entity_bundle !== Rubriques::NOUVELLE) {
+    return AccessResult::neutral();
+  }
+  return AccessResult::allowedIf((bool) \Drupal::service('mersch_services.rubriques')->servicesModifiables($account))
+    ->cachePerUser()
+    ->addCacheTags(['node_list:' . Rubriques::TYPE]);
+}
+
+/**
+ * Implements hook_entity_field_access_alter().
+ *
+ * Un rédacteur du service peut dépublier une de ses nouvelles (D-019) : le
+ * cœur réserve la case « Publié » à « administer nodes ».
+ */
+function mersch_services_entity_field_access_alter(array &$grants, array $context): void {
+  $items = $context['items'];
+  if ($context['operation'] !== 'edit' || $context['field_definition']->getName() !== 'status' || !$items) {
+    return;
+  }
+  $entity = $items->getEntity();
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === Rubriques::NOUVELLE) {
+    $rubriques = \Drupal::service('mersch_services.rubriques');
+    $service = $rubriques->serviceDe($entity);
+    $grants[':default'] = AccessResult::allowedIf($entity->isNew() || ($service && $rubriques->estRedacteur($service, $context['account'])))->cachePerUser();
+  }
 }
 
 /**
@@ -195,4 +235,69 @@ function mersch_services_form_node_service_edit_form_alter(array &$form, FormSta
  */
 function mersch_services_entity_type_alter(array &$entity_types): void {
   $entity_types['node']->setListBuilderClass(ContenusListBuilder::class);
+  // Nouvelles de service : 150 mots au plus (D-031), service du rédacteur.
+  $entity_types['node']->addConstraint('MerschNouvelleService');
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for node_form.
+ *
+ * Formulaire de nouvelle : seuls les services de la personne sont proposés,
+ * et celui de la page d'où elle vient est présélectionné (?service=…).
+ */
+function mersch_services_form_node_form_alter(array &$form, FormStateInterface $form_state): void {
+  $node = $form_state->getFormObject()->getEntity();
+  if ($node->bundle() !== Rubriques::NOUVELLE || !isset($form['field_snouv_service']['widget'])) {
+    return;
+  }
+  $rubriques = \Drupal::service('mersch_services.rubriques');
+  $services = $rubriques->servicesModifiables(\Drupal::currentUser());
+  $widget = &$form['field_snouv_service']['widget'];
+  $options = [];
+  foreach ($services as $id => $service) {
+    $options[$id] = \Drupal::service('entity.repository')->getTranslationFromContext($service)->label();
+  }
+  // Un service déjà choisi reste visible, même si la personne n'en est plus
+  // rédacteur (la validation refusera l'enregistrement).
+  $actuel = $node->get('field_snouv_service')->target_id;
+  if ($actuel && !isset($options[$actuel]) && isset($widget['#options'][$actuel])) {
+    $options[$actuel] = $widget['#options'][$actuel];
+  }
+  $widget['#options'] = (count($options) > 1 ? ['_none' => t('- Select -')] : []) + $options;
+  $demande = (int) \Drupal::request()->query->get('service');
+  if ($node->isNew() && isset($options[$demande])) {
+    $widget['#default_value'] = [$demande];
+  }
+  elseif ($node->isNew() && count($options) === 1) {
+    $widget['#default_value'] = [array_key_first($options)];
+  }
+  $form['#cache']['contexts'][] = 'user';
+  $form['#cache']['contexts'][] = 'url.query_args:service';
+  // Après l'enregistrement, retour à la page du service.
+  $form['actions']['submit']['#submit'][] = '_mersch_services_nouvelle_redirection';
+}
+
+/**
+ * Renvoie vers la page du service après l'enregistrement d'une nouvelle.
+ */
+function _mersch_services_nouvelle_redirection(array $form, FormStateInterface $form_state): void {
+  $service = \Drupal::service('mersch_services.rubriques')->serviceDe($form_state->getFormObject()->getEntity());
+  if ($service && !\Drupal::request()->query->has('destination')) {
+    $form_state->setRedirectUrl(\Drupal::classResolver(ServicesController::class)->url($service));
+  }
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Une fois par jour, vide le cache des pages des services : les nouvelles
+ * échues disparaissent, y compris pour les lecteurs anonymes.
+ */
+function mersch_services_cron(): void {
+  $jour = \Drupal::service('date.formatter')->format(\Drupal::time()->getRequestTime(), 'custom', 'Y-m-d');
+  $state = \Drupal::state();
+  if ($state->get('mersch_services.jour') !== $jour) {
+    \Drupal::service('cache_tags.invalidator')->invalidateTags([Rubriques::CACHE_TAG_JOUR]);
+    $state->set('mersch_services.jour', $jour);
+  }
 }

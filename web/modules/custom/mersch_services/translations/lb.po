@@ -169,3 +169,48 @@ msgstr "Publizéiert"
 
 msgid "Published status"
 msgstr "Status"
+
+msgid "News"
+msgstr "Neiegkeeten"
+
+msgid "No news at the moment."
+msgstr "Am Moment keng Neiegkeeten."
+
+msgid "Add news"
+msgstr "Eng Neiegkeet derbäisetzen"
+
+msgid "Read more"
+msgstr "Méi liesen"
+
+msgid "Translation not available"
+msgstr "Iwwersetzung net disponibel"
+
+msgid "Department news"
+msgstr "Neiegkeet vun engem Service"
+
+msgid "News published by a department on its page, for example recent IT security publications (150 words at most, D-031)."
+msgstr "Neiegkeet, déi e Service op senger Säit publizéiert, zum Beispill rezent Publikatiounen iwwer IT-Sécherheet (maximal 150 Wierder, D-031)."
+
+msgid "The news appears on the page of this department."
+msgstr "D'Neiegkeet gëtt op der Säit vun dësem Service gewisen."
+
+msgid "Text"
+msgstr "Text"
+
+msgid "150 words at most (D-031)."
+msgstr "Maximal 150 Wierder (D-031)."
+
+msgid "Optional. Link to the full publication, for example a GOVCERT.LU alert or a document."
+msgstr "Fräiwëlleg. Link op déi ganz Publikatioun, zum Beispill eng Alerte vu GOVCERT.LU oder en Dokument."
+
+msgid "End of publication"
+msgstr "Enn vun der Publikatioun"
+
+msgid "Optional. From the day after this date, the news no longer appears on the department page."
+msgstr "Fräiwëlleg. Vum Dag no dësem Datum un gëtt d'Neiegkeet net méi op der Säit vum Service gewisen."
+
+msgid "The text has @mots words; the maximum is 150 (D-031)."
+msgstr "Den Text huet @mots Wierder; de Maximum ass 150 (D-031)."
+
+msgid "You can only publish news for the departments you edit."
+msgstr "Dir kënnt nëmme Neiegkeete fir d'Servicer publizéieren, déi Dir ännert."

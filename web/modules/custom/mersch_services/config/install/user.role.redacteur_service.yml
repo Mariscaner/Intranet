@@ -4,6 +4,7 @@ dependencies:
   config:
     - filter.format.mersch_simple
     - node.type.service
+    - node.type.service_nouvelle
   module:
     - content_translation
     - filter
@@ -18,9 +19,13 @@ permissions:
   - 'access content'
   - 'access content overview'
   - 'create content translations'
+  - 'create service_nouvelle content'
   - 'edit mersch service contacts'
   - 'translate service node'
+  - 'translate service_nouvelle node'
   - 'update content translations'
   - 'use text format mersch_simple'
+  - 'view own unpublished content'
   - 'view service revisions'
+  - 'view service_nouvelle revisions'
   - 'view the administration theme'

@@ -26,6 +26,16 @@ class Rubriques {
   public const TYPE = 'service';
 
   /**
+   * Type de contenu des nouvelles d'un service.
+   */
+  public const NOUVELLE = 'service_nouvelle';
+
+  /**
+   * Étiquette de cache vidée chaque jour par le cron (fin de publication).
+   */
+  public const CACHE_TAG_JOUR = 'mersch_services_jour';
+
+  /**
    * Rubriques existantes : route de leur page, permission qui désigne leurs
    * rédacteurs (04_roles-et-droits) et types de contenu.
    */
@@ -78,7 +88,7 @@ class Rubriques {
    */
   public function types(string $rubrique): array {
     if ($rubrique === 'services') {
-      return [self::TYPE];
+      return [self::TYPE, self::NOUVELLE];
     }
     return self::EXISTANTES[$rubrique]['types'] ?? [];
   }
@@ -136,6 +146,30 @@ class Rubriques {
     }
     $rubrique = $this->rubrique($service);
     return $rubrique && $account->hasPermission(self::EXISTANTES[$rubrique]['permission']);
+  }
+
+  /**
+   * Service d'une nouvelle de service, ou NULL.
+   */
+  public function serviceDe(NodeInterface $nouvelle): ?NodeInterface {
+    $service = $nouvelle->hasField('field_snouv_service') ? $nouvelle->get('field_snouv_service')->entity : NULL;
+    return $service instanceof NodeInterface ? $service : NULL;
+  }
+
+  /**
+   * Services que la personne peut modifier, triés par ordre puis par nom.
+   *
+   * @return \Drupal\node\NodeInterface[]
+   */
+  public function servicesModifiables(AccountInterface $account): array {
+    $stockage = $this->entityTypeManager->getStorage('node');
+    $ids = $stockage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('type', self::TYPE)
+      ->sort('field_service_poids')
+      ->sort('title')
+      ->execute();
+    return array_filter($stockage->loadMultiple($ids), fn (NodeInterface $service) => $this->estRedacteur($service, $account));
   }
 
   /**

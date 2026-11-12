@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Department news'
+type: service_nouvelle
+description: 'News published by a department on its page, for example recent IT security publications (150 words at most, D-031).'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false
