@@ -72,6 +72,10 @@ class Client {
         return trim($brut);
       }
       $type = $reponse->getHeaderLine('Content-Type') ?: '?';
+      if (str_contains($type, 'html')) {
+        // Page HTML (accueil ou erreur du serveur) : l'appel n'existe pas ici.
+        throw new AppelAbsent("appel absent de DSK-API (page HTML) : $modele");
+      }
       // Le journal ne garde que le type et la taille, jamais le contenu.
       $this->logger->error('Réponse DSKnet illisible (@chemin) : @type, @taille octets.', ['@chemin' => $modele, '@type' => $type, '@taille' => strlen($brut)]);
       $e = new DsknetIndisponible("réponse illisible ($modele) : $type, " . strlen($brut) . ' octets');
@@ -82,25 +86,34 @@ class Client {
   }
 
   /**
-   * Code HTTP d'un appel, sans lire la réponse (diagnostic).
+   * Code HTTP, type de contenu et titre HTML d'un appel (diagnostic).
    *
-   * @return int
-   *   Code HTTP, ou 0 si DSKnet est injoignable ou le jeton illisible.
+   * Aucune donnée de la réponse n'est retournée, sauf le titre d'une page
+   * HTML (page d'erreur ou d'accueil).
+   *
+   * @return array{0: int, 1: string, 2: string}
+   *   Code (0 si injoignable), type de contenu, titre HTML ou ''.
    */
-  public function statut(string $chemin, array $requete = []): int {
+  public function sonde(string $chemin, array $requete = []): array {
     try {
-      return $this->http->request('GET', $this->reglages->base() . $chemin, [
+      $reponse = $this->http->request('GET', $this->reglages->base() . $chemin, [
         'query' => $requete,
         'headers' => ['Authorization' => 'Bearer ' . $this->jeton(), 'Accept' => 'application/json'],
         'timeout' => (float) $this->reglages->get('delai'),
         'connect_timeout' => 3,
         'http_errors' => FALSE,
         'allow_redirects' => FALSE,
-      ])->getStatusCode();
+      ]);
     }
     catch (GuzzleException | DsknetIndisponible) {
-      return 0;
+      return [0, '', ''];
     }
+    $type = $reponse->getHeaderLine('Content-Type');
+    $titre = '';
+    if (str_contains($type, 'html') && preg_match('#<title[^>]*>(.*?)</title>#is', (string) $reponse->getBody(), $m)) {
+      $titre = mb_substr(trim(html_entity_decode(strip_tags($m[1]))), 0, 80);
+    }
+    return [$reponse->getStatusCode(), $type, $titre];
   }
 
   /**
