@@ -1,0 +1,106 @@
+{#
+/**
+ * @file
+ * Page « Mes données DSKNet » : état, solde d'heures, compteurs, absences
+ * accordées de l'agent connecté (lot 4, D-038). Lecture seule.
+ *
+ * Variables : statut (ok, non_relie, indisponible), donnees, lien_dsknet.
+ */
+#}
+{% macro erreur(bloc) %}
+  {% if bloc.erreur == 'absent' %}
+    <p class="mersch-dsknet__vide">{{ 'Not available in the installed version of DSKNet.'|t }}</p>
+  {% else %}
+    <p class="mersch-dsknet__vide">{{ 'DSKNet does not answer. Try again later.'|t }}</p>
+  {% endif %}
+{% endmacro %}
+
+<div class="mersch-dsknet">
+  {% if statut == 'non_relie' %}
+    <p class="mersch-dsknet__message">{{ 'Your intranet account is not linked to DSKNet yet. Contact an administrator of the intranet.'|t }}</p>
+  {% elseif statut == 'indisponible' %}
+    <p class="mersch-dsknet__message">{{ 'DSKNet does not answer. Try again later.'|t }}</p>
+  {% else %}
+    {% set etat = donnees.etat %}
+    {% set solde = donnees.solde %}
+    <div class="mersch-dsknet__cartes">
+      <section class="mersch-dsknet__carte mersch-dsknet__etat mersch-dsknet__etat--{{ etat.code|default('erreur') }}">
+        <h2>{{ 'Last clocking'|t }}</h2>
+        {% if etat.erreur is defined %}
+          {{ _self.erreur(etat) }}
+        {% elseif etat.code == 'aucun' %}
+          <p class="mersch-dsknet__valeur">{{ 'No clocking today'|t }}</p>
+        {% else %}
+          <p class="mersch-dsknet__libelle">
+            {% if etat.code == 'entree' %}{{ 'In'|t }}
+            {% elseif etat.code == 'sortie' %}{{ 'Out'|t }}
+            {% elseif etat.code == 'deplacement' %}{{ 'Business trip'|t }}
+            {% else %}{{ 'Clocking'|t }}{% endif %}
+          </p>
+          {% if etat.heure %}<p class="mersch-dsknet__valeur">{{ etat.heure }}</p>{% endif %}
+        {% endif %}
+      </section>
+
+      <section class="mersch-dsknet__carte">
+        <h2>{{ 'Hours balance'|t }}</h2>
+        {% if solde.erreur is defined %}
+          {{ _self.erreur(solde) }}
+        {% elseif solde.valeur %}
+          <p class="mersch-dsknet__libelle">{{ 'This month'|t }}</p>
+          <p class="mersch-dsknet__valeur{{ solde.negatif ? ' mersch-dsknet__valeur--negatif' }}">{{ solde.valeur }}</p>
+        {% else %}
+          <p class="mersch-dsknet__vide">{{ 'No balance in DSKNet.'|t }}</p>
+        {% endif %}
+      </section>
+
+      {% if donnees.compteurs.erreur is defined %}
+        <section class="mersch-dsknet__carte">
+          <h2>{{ 'Leave'|t }}</h2>
+          {{ _self.erreur(donnees.compteurs) }}
+        </section>
+      {% else %}
+        {% for compteur in donnees.compteurs %}
+          <section class="mersch-dsknet__carte">
+            <h2>{{ compteur.libelle ?: 'Counter'|t }}</h2>
+            <p class="mersch-dsknet__libelle">{{ 'Remaining'|t }}</p>
+            <p class="mersch-dsknet__valeur{{ compteur.negatif ? ' mersch-dsknet__valeur--negatif' }}">
+              {{ compteur.valeur }} {{ compteur.unite == 'j' ? 'days'|t : 'h' }}
+            </p>
+          </section>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <section class="mersch-dsknet__absences">
+      <h2>{{ 'Approved absences'|t }}</h2>
+      {% if donnees.absences.erreur is defined %}
+        {{ _self.erreur(donnees.absences) }}
+      {% elseif donnees.absences is empty %}
+        <p class="mersch-dsknet__vide">{{ 'No approved absence from today.'|t }}</p>
+      {% else %}
+        <ul>
+          {% for absence in donnees.absences %}
+            <li>
+              <span class="mersch-dsknet__dates">
+                {% if absence.debut == absence.fin %}
+                  {{ absence.debut|date('d/m/Y') }}
+                  {% if absence.moment == 'M' %}({{ 'morning'|t }}){% elseif absence.moment == 'A' %}({{ 'afternoon'|t }}){% endif %}
+                {% else %}
+                  {{ absence.debut|date('d/m/Y') }} – {{ absence.fin|date('d/m/Y') }}
+                {% endif %}
+              </span>
+              {% if absence.libelle %}<span class="mersch-dsknet__type">{{ absence.libelle }}</span>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  {% endif %}
+
+  <p class="mersch-dsknet__note">
+    {{ 'Data read live from DSKNet, visible only to you. Nothing is stored in the intranet.'|t }}
+    {% if lien_dsknet %}
+      <a href="{{ lien_dsknet }}">{{ 'Request an absence in DSKNet'|t }}</a>
+    {% endif %}
+  </p>
+</div>

@@ -183,6 +183,16 @@ Le SSO est désactivé par défaut (`SSO_ACTIF="non"` dans `/etc/intranet-mersch
 
 Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit -c web/core web/modules/custom/mersch_sso` (avec `drupal/core-dev` installé).
 
+### Lot 4 · Données DSKNet de l'agent (`mersch_dsknet`)
+
+- Page **Mäin DSKNet** (`/dsknet`, menu principal, agents connectés seulement) : dernier pointage (Entrée / Sortie / Déplacement et heure), solde d'heures du mois, compteurs restants du tableau de bord DSK (congé, CET si l'agent en a un), absences accordées des 12 prochains mois. Lecture seule ; demande d'absence dans DSKNet (lien).
+- DSK-API en GET seulement (`http://APPS/API`, chemins sans `/dsknet/v2`), jeton Bearer lu dans `/etc/intranet/dsknet.env`, jamais stocké ni journalisé. Chaque bloc échoue seul si un appel manque dans la version installée (1.6).
+- Agent ↔ DSK : login DSK = identifiant AD (DSKNet s'authentifie par LDAP, clé samAccountName), relié chaque nuit (`drush-intranet mersch:dsknet-relier`) ; sinon n° DSK saisi par un admin sur le compte.
+- RGPD : l'agent ne voit que ses données ; seul son n° DSK est enregistré (cache d'un jour pour les seuls libellés des types d'absence).
+- Diagnostic : `drush-intranet mersch:dsknet-verifier <identifiant>`. Guide : [docs/dsknet.md](docs/dsknet.md).
+
+Tests : `ddev exec vendor/bin/phpunit -c web/core web/modules/custom/mersch_dsknet` (avec `drupal/core-dev` installé).
+
 ## Règles du dépôt
 
 - Aucune donnée personnelle dans le dépôt : ni annuaire, ni export de base, ni fichier déposé. Le `.gitignore` bloque déjà `*.sql`, `*.csv`, `*.xlsx` et `web/sites/*/files/`.

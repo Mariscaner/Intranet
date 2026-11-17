@@ -1,0 +1,31 @@
+/* Page « Mes données DSKnet » (charte : bleu Mersch, couleurs des domaines). */
+.mersch-dsknet__cartes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.mersch-dsknet__carte,
+.mersch-dsknet__absences {
+  background: var(--mersch-fond-2, #f3f4f8);
+  border-top: 4px solid var(--mersch-bleu, #26336a);
+  padding: 1rem;
+}
+.mersch-dsknet h2 {
+  font-size: 1rem;
+  margin: 0 0 .5rem;
+  text-transform: uppercase;
+  color: var(--mersch-bleu, #26336a);
+}
+.mersch-dsknet__libelle { margin: 0; color: var(--mersch-texte-2, #4a5480); }
+.mersch-dsknet__valeur { margin: .25rem 0 0; font-size: 2rem; font-weight: bold; color: var(--mersch-bleu, #26336a); }
+.mersch-dsknet__valeur--negatif { color: #b3261e; }
+.mersch-dsknet__etat--entree { border-top-color: #4f8a2b; }
+.mersch-dsknet__etat--sortie { border-top-color: #b3261e; }
+.mersch-dsknet__etat--deplacement { border-top-color: var(--mersch-guides-it, #00aba0); }
+.mersch-dsknet__absences ul { list-style: none; margin: 0; padding: 0; }
+.mersch-dsknet__absences li { padding: .4rem 0; border-bottom: 1px solid var(--mersch-ligne, #d9dce8); }
+.mersch-dsknet__dates { font-weight: bold; margin-right: .75rem; }
+.mersch-dsknet__vide, .mersch-dsknet__note { color: var(--mersch-texte-2, #4a5480); }
+.mersch-dsknet__note { font-size: .9rem; margin-top: 1.5rem; }
+.mersch-dsknet__message { padding: 1rem; background: var(--mersch-fond-2, #f3f4f8); }

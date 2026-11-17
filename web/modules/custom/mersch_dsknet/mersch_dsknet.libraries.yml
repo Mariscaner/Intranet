@@ -1,0 +1,5 @@
+dsknet:
+  version: VERSION
+  css:
+    component:
+      css/dsknet.css: {}

@@ -1,0 +1,19 @@
+services:
+  mersch_dsknet.reglages:
+    class: Drupal\mersch_dsknet\Reglages
+  Drupal\mersch_dsknet\Reglages: '@mersch_dsknet.reglages'
+  mersch_dsknet.client:
+    class: Drupal\mersch_dsknet\Client
+    arguments: ['@http_client', '@mersch_dsknet.reglages', '@logger.channel.mersch_dsknet']
+  Drupal\mersch_dsknet\Client: '@mersch_dsknet.client'
+  mersch_dsknet.correspondance:
+    class: Drupal\mersch_dsknet\Correspondance
+    arguments: ['@mersch_dsknet.client', '@mersch_dsknet.reglages', '@user.data', '@mersch_sso.comptes', '@logger.channel.mersch_dsknet', '@datetime.time', '@state']
+  Drupal\mersch_dsknet\Correspondance: '@mersch_dsknet.correspondance'
+  mersch_dsknet.donnees:
+    class: Drupal\mersch_dsknet\Donnees
+    arguments: ['@mersch_dsknet.client', '@mersch_dsknet.reglages', '@cache.default', '@datetime.time']
+  Drupal\mersch_dsknet\Donnees: '@mersch_dsknet.donnees'
+  logger.channel.mersch_dsknet:
+    parent: logger.channel_base
+    arguments: ['mersch_dsknet']

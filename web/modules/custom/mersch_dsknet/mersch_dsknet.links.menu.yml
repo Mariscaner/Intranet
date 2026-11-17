@@ -1,0 +1,9 @@
+# Visible seulement par les agents connectés (accès de la route).
+mersch_dsknet.menu.mes_donnees:
+  title: 'My DSKNet'
+  route_name: mersch_dsknet.mes_donnees
+  menu_name: main
+  weight: 40
+  options:
+    attributes:
+      data-rubrique: dsknet
