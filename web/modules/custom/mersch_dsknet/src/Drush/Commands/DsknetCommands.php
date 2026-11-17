@@ -50,6 +50,9 @@ final class DsknetCommands extends DrushCommands {
         $ok = FALSE;
       }
     }
+    if ($ok) {
+      $this->sonder();
+    }
     if (!$ok || ($identifiant === '' && !$options['nopers'])) {
       return $ok ? self::EXIT_SUCCESS : self::EXIT_FAILURE;
     }
@@ -58,10 +61,14 @@ final class DsknetCommands extends DrushCommands {
     if (!$noPers) {
       $identifiant = strtolower($identifiant);
       try {
-        $jour = date('Y-m-d');
-        $parLogin = Correspondance::logins($this->client->get('/listAll/details', ['dateFrom' => $jour, 'dateTo' => $jour]));
-        $noPers = (int) ($parLogin[$identifiant] ?? 0);
-        $this->io()->writeln(sprintf('%s /listAll/details : %d logins DSK lus, « %s » %s', $noPers ? 'OK     ' : 'NON    ', count($parLogin), $identifiant, $noPers ? "→ n° DSK $noPers" : 'absent'));
+        try {
+          $parLogin = $this->correspondance->paires();
+          $noPers = (int) ($parLogin[$identifiant] ?? 0);
+          $this->io()->writeln(sprintf('%s login : %d logins DSK lus, « %s » %s', $noPers ? 'OK     ' : 'NON    ', count($parLogin), $identifiant, $noPers ? "→ n° DSK $noPers" : 'absent'));
+        }
+        catch (DsknetIndisponible $e) {
+          $this->io()->writeln('NON     login : ' . $e->getMessage());
+        }
         if (!$noPers) {
           $noPers = (int) $this->correspondance->parCode($identifiant);
           $this->io()->writeln(sprintf('%s /listAll/id (code personnel) : %s', $noPers ? 'OK     ' : 'NON    ', $noPers ? "→ n° DSK $noPers" : 'absent'));
@@ -95,6 +102,48 @@ final class DsknetCommands extends DrushCommands {
       }
     }
     return $ok ? self::EXIT_SUCCESS : self::EXIT_FAILURE;
+  }
+
+  /**
+   * Codes HTTP des appels utiles (aucune donnée affichée).
+   */
+  private function sonder(): void {
+    $jour = date('Y-m-d');
+    $periode = ['dateFrom' => $jour, 'dateTo' => $jour];
+    $exemple = 0;
+    foreach (['/listAll/id', '/listAll'] as $chemin) {
+      try {
+        $exemple = Correspondance::numeros($this->client->get($chemin, $periode))[0] ?? 0;
+        if ($exemple) {
+          break;
+        }
+      }
+      catch (DsknetIndisponible) {
+      }
+    }
+    $appels = [
+      ['/listAll/details', $periode],
+      ['/listAll/id', $periode],
+      ['/listAll', $periode],
+      ['/trombinoscope', ['count' => 1]],
+      ['/presAbs', ['count' => 1]],
+    ];
+    if ($exemple) {
+      foreach (['', '/details', '/dayBookings', '/solde', '/counters', '/absences', '/absenceList', '/accounts/sum'] as $suite) {
+        $requete = match ($suite) {
+          '/solde' => ['previousMonth' => $jour],
+          '/counters' => ['refYear' => date('Y')],
+          '/absences', '/absenceList', '/accounts/sum' => $periode,
+          '/dayBookings' => ['theDate' => $jour],
+          default => [],
+        };
+        $appels[] = ["/pers/{n}$suite", $requete, "/pers/$exemple$suite"];
+      }
+    }
+    $this->io()->writeln('Appels présents dans la version installée (code HTTP seulement, 200 = présent, 404 = absent) :');
+    foreach ($appels as $appel) {
+      $this->io()->writeln(sprintf('        %3d  %s', $this->client->statut($appel[2] ?? $appel[0], $appel[1]), $appel[0]));
+    }
   }
 
   /**

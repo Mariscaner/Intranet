@@ -82,6 +82,28 @@ class Client {
   }
 
   /**
+   * Code HTTP d'un appel, sans lire la réponse (diagnostic).
+   *
+   * @return int
+   *   Code HTTP, ou 0 si DSKnet est injoignable ou le jeton illisible.
+   */
+  public function statut(string $chemin, array $requete = []): int {
+    try {
+      return $this->http->request('GET', $this->reglages->base() . $chemin, [
+        'query' => $requete,
+        'headers' => ['Authorization' => 'Bearer ' . $this->jeton(), 'Accept' => 'application/json'],
+        'timeout' => (float) $this->reglages->get('delai'),
+        'connect_timeout' => 3,
+        'http_errors' => FALSE,
+        'allow_redirects' => FALSE,
+      ])->getStatusCode();
+    }
+    catch (GuzzleException | DsknetIndisponible) {
+      return 0;
+    }
+  }
+
+  /**
    * Le fichier du jeton est-il lisible par le serveur web ?
    */
   public function jetonLisible(): bool {

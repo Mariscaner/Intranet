@@ -63,8 +63,7 @@ class Correspondance {
    */
   public function relierTous(): array {
     $this->state->set('mersch_dsknet.relie', $this->time->getRequestTime());
-    $jour = date('Y-m-d', $this->time->getRequestTime());
-    $logins = self::logins($this->client->get('/listAll/details', ['dateFrom' => $jour, 'dateTo' => $jour]));
+    $logins = $this->paires();
     $relies = 0;
     $sansDsk = [];
     foreach ($this->userData->get('mersch_sso', NULL, 'identifiant') as $uid => $identifiant) {
@@ -79,6 +78,50 @@ class Correspondance {
       }
     }
     return ['relies' => $relies, 'sans_dsk' => $sansDsk];
+  }
+
+  /**
+   * Paires login → n° DSK des agents DSK actifs aujourd'hui.
+   *
+   * /listAll/details d'abord ; s'il manque (DSK-API 1.6), liste des n° par
+   * /listAll/id puis /pers/{n}/details agent par agent. Seuls le login et
+   * le n° sont gardés, le reste de chaque fiche est jeté aussitôt.
+   *
+   * @return array<string, int>
+   *
+   * @throws \Drupal\mersch_dsknet\DsknetIndisponible
+   */
+  public function paires(): array {
+    $jour = date('Y-m-d', $this->time->getRequestTime());
+    $periode = ['dateFrom' => $jour, 'dateTo' => $jour];
+    try {
+      return self::logins($this->client->get('/listAll/details', $periode));
+    }
+    catch (AppelAbsent) {
+      // Repli agent par agent ci-dessous.
+    }
+    try {
+      $numeros = self::numeros($this->client->get('/listAll/id', $periode));
+    }
+    catch (AppelAbsent) {
+      $numeros = self::numeros($this->client->get('/listAll', $periode));
+    }
+    $fiches = [];
+    foreach ($numeros as $noPers) {
+      try {
+        $fiche = $this->client->get("/pers/$noPers/details");
+      }
+      catch (AppelAbsent $e) {
+        // Fiche d'un agent introuvable : on passe ; appel absent : on arrête.
+        if (!$fiches) {
+          throw $e;
+        }
+        continue;
+      }
+      $pers = is_array($fiche) ? ($fiche['pers'] ?? $fiche) : [];
+      $fiches[] = ['pers' => ['noPers' => $pers['noPers'] ?? $noPers, 'login' => $pers['login'] ?? '']];
+    }
+    return self::logins($fiches);
   }
 
   /**
