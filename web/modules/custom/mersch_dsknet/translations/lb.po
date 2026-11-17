@@ -1,0 +1,102 @@
+# Traductions du module mersch_dsknet.
+# LU : propositions à relire par Marc (D-005, D-022, glossaire-lu-de-fr.md).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "My DSKNet"
+msgstr "Mäin DSKNet"
+
+msgid "Last clocking"
+msgstr "Leschte Pointage"
+
+msgid "In"
+msgstr "Entrée"
+
+msgid "Out"
+msgstr "Sortie"
+
+msgid "Business trip"
+msgstr "Déplacement"
+
+msgid "Clocking"
+msgstr "Pointage"
+
+msgid "No clocking today"
+msgstr "Haut nach kee Pointage"
+
+msgid "Hours balance"
+msgstr "Stonnesaldo"
+
+msgid "This month"
+msgstr "Dëse Mount"
+
+msgid "No balance in DSKNet."
+msgstr "Keen Saldo am DSKNet."
+
+msgid "Leave"
+msgstr "Congé"
+
+msgid "Counter"
+msgstr "Compteur"
+
+msgid "Remaining"
+msgstr "Bleift"
+
+msgid "days"
+msgstr "Deeg"
+
+msgid "Approved absences"
+msgstr "Accordéiert Absencen"
+
+msgid "No approved absence from today."
+msgstr "Keng accordéiert Absence vun haut un."
+
+msgid "morning"
+msgstr "moies"
+
+msgid "afternoon"
+msgstr "mëttes"
+
+msgid "Not available in the installed version of DSKNet."
+msgstr "An der installéierter Versioun vum DSKNet net disponibel."
+
+msgid "DSKNet does not answer. Try again later."
+msgstr "DSKNet äntwert net. Probéiert et méi spéit nach eng Kéier."
+
+msgid "Your intranet account is not linked to DSKNet yet. Contact an administrator of the intranet."
+msgstr "Äre Kont um Intranet ass nach net mam DSKNet verbonnen. Kontaktéiert en Administrateur vum Intranet."
+
+msgid "Data read live from DSKNet, visible only to you. Nothing is stored in the intranet."
+msgstr "Donnéeën direkt aus dem DSKNet gelies, nëmme fir Iech siichtbar. Am Intranet gëtt näischt gespäichert."
+
+msgid "Request an absence in DSKNet"
+msgstr "Eng Absence am DSKNet ufroen"
+
+msgid "DSKNet"
+msgstr "DSKNet"
+
+msgid "DSK staff number (noPers)"
+msgstr "DSK-Personalnummer (noPers)"
+
+msgid "Leave empty: the intranet finds the staff member in DSKNet by their Windows login. Fill in only if this does not work."
+msgstr "Eidel loossen: d'Intranet fënnt den Agent am DSKNet iwwer säi Windows-Login. Nëmmen ausfëllen, wann dat net geet."
+
+msgid "Number of this staff member in DSKNet. Without it, the staff member does not see their DSKNet data."
+msgstr "Nummer vun dësem Agent am DSKNet. Ouni se gesäit den Agent seng DSKNet-Donnéeën net."
+
+msgid "Token not readable"
+msgstr "Token net liesbar"
+
+msgid "The web server cannot read the line DSKNET_TOKEN= in @fichier (docs/dsknet.md)."
+msgstr "De Webserver kann d'Zeil DSKNET_TOKEN= an @fichier net liesen (docs/dsknet.md)."
+
+msgid "No answer"
+msgstr "Keng Äntwert"
+
+msgid "@base/test does not answer with the token. See the log: drush-intranet watchdog:show --type=mersch_dsknet"
+msgstr "@base/test äntwert net mam Token. Kuckt de Journal: drush-intranet watchdog:show --type=mersch_dsknet"
+
+msgid "Connected (@base)"
+msgstr "Verbonnen (@base)"

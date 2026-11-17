@@ -1,0 +1,12 @@
+# Page personnelle : l'agent ne voit que ses propres données (aucun paramètre
+# d'agent dans l'URL). Anonyme : renvoyé vers la connexion SSO (_mersch_sso).
+mersch_dsknet.mes_donnees:
+  path: '/dsknet'
+  defaults:
+    _controller: '\Drupal\mersch_dsknet\Controller\MesDonneesController::page'
+    _title: 'My DSKNet'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: TRUE
+    _mersch_sso: TRUE

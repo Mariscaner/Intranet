@@ -1,0 +1,101 @@
+# Traductions du module mersch_dsknet.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "My DSKNet"
+msgstr "Mon DSKNet"
+
+msgid "Last clocking"
+msgstr "Dernier pointage"
+
+msgid "In"
+msgstr "Entrée"
+
+msgid "Out"
+msgstr "Sortie"
+
+msgid "Business trip"
+msgstr "Déplacement"
+
+msgid "Clocking"
+msgstr "Pointage"
+
+msgid "No clocking today"
+msgstr "Aucun pointage aujourd'hui"
+
+msgid "Hours balance"
+msgstr "Solde d'heures"
+
+msgid "This month"
+msgstr "Ce mois"
+
+msgid "No balance in DSKNet."
+msgstr "Aucun solde dans DSKNet."
+
+msgid "Leave"
+msgstr "Congé"
+
+msgid "Counter"
+msgstr "Compteur"
+
+msgid "Remaining"
+msgstr "Restant"
+
+msgid "days"
+msgstr "j"
+
+msgid "Approved absences"
+msgstr "Absences accordées"
+
+msgid "No approved absence from today."
+msgstr "Aucune absence accordée à partir d'aujourd'hui."
+
+msgid "morning"
+msgstr "matin"
+
+msgid "afternoon"
+msgstr "après-midi"
+
+msgid "Not available in the installed version of DSKNet."
+msgstr "Non disponible dans la version installée de DSKNet."
+
+msgid "DSKNet does not answer. Try again later."
+msgstr "DSKNet ne répond pas. Réessayez plus tard."
+
+msgid "Your intranet account is not linked to DSKNet yet. Contact an administrator of the intranet."
+msgstr "Votre compte intranet n'est pas encore relié à DSKNet. Contactez un administrateur de l'intranet."
+
+msgid "Data read live from DSKNet, visible only to you. Nothing is stored in the intranet."
+msgstr "Données lues en direct dans DSKNet, visibles par vous seul. Rien n'est enregistré dans l'intranet."
+
+msgid "Request an absence in DSKNet"
+msgstr "Demander une absence dans DSKNet"
+
+msgid "DSKNet"
+msgstr "DSKNet"
+
+msgid "DSK staff number (noPers)"
+msgstr "N° DSK de l'agent (noPers)"
+
+msgid "Leave empty: the intranet finds the staff member in DSKNet by their Windows login. Fill in only if this does not work."
+msgstr "Laisser vide : l'intranet trouve l'agent dans DSKNet par son identifiant Windows. À remplir seulement si cela ne fonctionne pas."
+
+msgid "Number of this staff member in DSKNet. Without it, the staff member does not see their DSKNet data."
+msgstr "Numéro de cet agent dans DSKNet. Sans lui, l'agent ne voit pas ses données DSKNet."
+
+msgid "Token not readable"
+msgstr "Jeton illisible"
+
+msgid "The web server cannot read the line DSKNET_TOKEN= in @fichier (docs/dsknet.md)."
+msgstr "Le serveur web ne peut pas lire la ligne DSKNET_TOKEN= dans @fichier (docs/dsknet.md)."
+
+msgid "No answer"
+msgstr "Pas de réponse"
+
+msgid "@base/test does not answer with the token. See the log: drush-intranet watchdog:show --type=mersch_dsknet"
+msgstr "@base/test ne répond pas avec le jeton. Voir le journal : drush-intranet watchdog:show --type=mersch_dsknet"
+
+msgid "Connected (@base)"
+msgstr "Connecté (@base)"
