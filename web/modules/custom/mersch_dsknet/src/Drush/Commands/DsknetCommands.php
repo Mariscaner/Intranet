@@ -110,18 +110,14 @@ final class DsknetCommands extends DrushCommands {
   private function sonder(): void {
     $jour = date('Y-m-d');
     $periode = ['dateFrom' => $jour, 'dateTo' => $jour];
-    $exemple = 0;
-    foreach (['/listAll/id', '/listAll'] as $chemin) {
-      try {
-        $exemple = Correspondance::numeros($this->client->get($chemin, $periode))[0] ?? 0;
-        if ($exemple) {
-          break;
-        }
-      }
-      catch (DsknetIndisponible) {
-      }
+    try {
+      $exemple = $this->correspondance->numerosVisibles()[0] ?? 0;
+    }
+    catch (DsknetIndisponible) {
+      $exemple = 0;
     }
     $appels = [
+      ['/swagger.json', []], ['/openapi.json', []], ['/docs', []], ['/swagger', []],
       ['/listAll/details', $periode],
       ['/listAll/id', $periode],
       ['/listAll', $periode],
@@ -140,9 +136,13 @@ final class DsknetCommands extends DrushCommands {
         $appels[] = ["/pers/{n}$suite", $requete, "/pers/$exemple$suite"];
       }
     }
-    $this->io()->writeln('Appels présents dans la version installée (code HTTP seulement, 200 = présent, 404 = absent) :');
+    else {
+      $this->io()->writeln('        (aucun n° d\'agent trouvé : appels /pers/{n}/… non testés ; relancer avec --nopers=<n°>)');
+    }
+    $this->io()->writeln('Appels (code HTTP, type de contenu, paramètres ; JSON = présent, HTML ou 404 = absent) :');
     foreach ($appels as $appel) {
-      $this->io()->writeln(sprintf('        %3d  %s', $this->client->statut($appel[2] ?? $appel[0], $appel[1]), $appel[0]));
+      [$code, $type, $titre] = $this->client->sonde($appel[2] ?? $appel[0], $appel[1]);
+      $this->io()->writeln(sprintf('        %3d  %-28s %-32s %s%s', $code, strtok($type, ';') ?: '-', $appel[0], $appel[1] ? '?' . http_build_query($appel[1]) : '', $titre !== '' ? "  [titre : $titre]" : ''));
     }
   }
 

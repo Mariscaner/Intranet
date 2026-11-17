@@ -100,12 +100,7 @@ class Correspondance {
     catch (AppelAbsent) {
       // Repli agent par agent ci-dessous.
     }
-    try {
-      $numeros = self::numeros($this->client->get('/listAll/id', $periode));
-    }
-    catch (AppelAbsent) {
-      $numeros = self::numeros($this->client->get('/listAll', $periode));
-    }
+    $numeros = $this->numerosVisibles();
     $fiches = [];
     foreach ($numeros as $noPers) {
       try {
@@ -122,6 +117,38 @@ class Correspondance {
       $fiches[] = ['pers' => ['noPers' => $pers['noPers'] ?? $noPers, 'login' => $pers['login'] ?? '']];
     }
     return self::logins($fiches);
+  }
+
+  /**
+   * N° des agents visibles par le compte technique, par le premier appel
+   * présent dans la version installée.
+   *
+   * @return int[]
+   *
+   * @throws \Drupal\mersch_dsknet\DsknetIndisponible
+   */
+  public function numerosVisibles(): array {
+    $jour = date('Y-m-d', $this->time->getRequestTime());
+    $periode = ['dateFrom' => $jour, 'dateTo' => $jour];
+    $appels = [
+      ['/listAll/id', $periode],
+      ['/listAll', $periode],
+      ['/presAbs', ['count' => 1000]],
+      ['/trombinoscope', ['count' => 1000]],
+    ];
+    $derniere = NULL;
+    foreach ($appels as [$chemin, $requete]) {
+      try {
+        $numeros = self::numeros($this->client->get($chemin, $requete));
+        if ($numeros) {
+          return $numeros;
+        }
+      }
+      catch (AppelAbsent $e) {
+        $derniere = $e;
+      }
+    }
+    throw $derniere ?? new AppelAbsent('aucune liste d\'agents');
   }
 
   /**
@@ -218,11 +245,18 @@ class Correspondance {
   public function parCode(string $identifiant): ?int {
     $jour = date('Y-m-d', $this->time->getRequestTime());
     foreach (array_unique([$identifiant, strtoupper($identifiant)]) as $code) {
-      $numeros = self::numeros($this->client->get('/listAll/id', [
-        'dateFrom' => $jour,
-        'dateTo' => $jour,
-        'codePers' => $code,
-      ]));
+      $requete = ['dateFrom' => $jour, 'dateTo' => $jour, 'codePers' => $code];
+      try {
+        $numeros = self::numeros($this->client->get('/listAll/id', $requete));
+      }
+      catch (AppelAbsent) {
+        try {
+          $numeros = self::numeros($this->client->get('/listAll', $requete));
+        }
+        catch (AppelAbsent) {
+          return NULL;
+        }
+      }
       if (count($numeros) === 1) {
         return $numeros[0];
       }
