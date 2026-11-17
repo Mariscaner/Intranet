@@ -1,0 +1,24 @@
+services:
+  mersch_sso.reglages:
+    class: Drupal\mersch_sso\Reglages
+  Drupal\mersch_sso\Reglages: '@mersch_sso.reglages'
+  mersch_sso.annuaire:
+    class: Drupal\mersch_sso\Annuaire\LdapAnnuaire
+    arguments: ['@mersch_sso.reglages', '@logger.channel.mersch_sso']
+  Drupal\mersch_sso\Annuaire\AnnuaireInterface: '@mersch_sso.annuaire'
+  mersch_sso.comptes:
+    class: Drupal\mersch_sso\Comptes
+    arguments: ['@entity_type.manager', '@user.data', '@mersch_sso.annuaire', '@mersch_sso.reglages', '@logger.channel.mersch_sso', '@datetime.time']
+  Drupal\mersch_sso\Comptes: '@mersch_sso.comptes'
+  mersch_sso.lien:
+    class: Drupal\mersch_sso\Lien
+    arguments: ['@mersch_sso.reglages', '@current_user', '@request_stack']
+  Drupal\mersch_sso\Lien: '@mersch_sso.lien'
+  mersch_sso.connexion_exigee:
+    class: Drupal\mersch_sso\EventSubscriber\ConnexionExigee
+    arguments: ['@mersch_sso.lien', '@current_user']
+    tags:
+      - { name: event_subscriber }
+  logger.channel.mersch_sso:
+    parent: logger.channel_base
+    arguments: ['mersch_sso']

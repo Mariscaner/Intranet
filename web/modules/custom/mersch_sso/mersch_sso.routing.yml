@@ -1,0 +1,21 @@
+# Seule URL protégée par Kerberos dans Apache (<Location /sso/connexion>) :
+# Apache n'y laisse passer que les agents reconnus et transmet REMOTE_USER.
+mersch_sso.connexion:
+  path: '/sso/connexion'
+  defaults:
+    _controller: '\Drupal\mersch_sso\Controller\ConnexionController::connexion'
+  requirements:
+    _access: 'TRUE'
+  options:
+    no_cache: TRUE
+
+# Page d'erreur (ErrorDocument 401 d'Apache, ou échec dans Drupal).
+mersch_sso.echec:
+  path: '/sso/echec'
+  defaults:
+    _controller: '\Drupal\mersch_sso\Controller\ConnexionController::echec'
+    _title: 'Log in'
+  requirements:
+    _access: 'TRUE'
+  options:
+    no_cache: TRUE

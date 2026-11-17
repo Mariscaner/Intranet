@@ -1,0 +1,56 @@
+# Traductions du module mersch_sso (DE).
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Your Windows session could not be recognised. Open the intranet on a computer of the municipality, logged in with your own Windows account, in Edge or Chrome. If the problem persists, contact the IT helpdesk."
+msgstr "Ihre Windows-Sitzung konnte nicht erkannt werden. Öffnen Sie das Intranet auf einem Computer der Gemeinde, auf dem Sie mit Ihrem eigenen Windows-Konto angemeldet sind, in Edge oder Chrome. Besteht das Problem weiter, wenden Sie sich an den IT-Helpdesk."
+
+msgid "Login with your Windows session is not active yet."
+msgstr "Die Anmeldung mit Ihrer Windows-Sitzung ist noch nicht aktiv."
+
+msgid "Your Windows account cannot be used to log in to the intranet. Contact the IT helpdesk."
+msgstr "Ihr Windows-Konto kann nicht für die Anmeldung im Intranet verwendet werden. Wenden Sie sich an den IT-Helpdesk."
+
+msgid "Your intranet account is blocked. Contact an administrator of the intranet."
+msgstr "Ihr Intranet-Konto ist gesperrt. Wenden Sie sich an einen Administrator des Intranets."
+
+msgid "The directory of the municipality does not answer. Try again in a few minutes."
+msgstr "Das Verzeichnis der Gemeinde antwortet nicht. Versuchen Sie es in einigen Minuten erneut."
+
+msgid "Back to the home page"
+msgstr "Zurück zur Startseite"
+
+msgid "Emergency account of the administrators"
+msgstr "Notfallkonto der Administratoren"
+
+msgid "Windows login (SSO)"
+msgstr "Windows-Anmeldung (SSO)"
+
+msgid "Not active"
+msgstr "Nicht aktiv"
+
+msgid "Set SSO_ACTIF=\"oui\" in /etc/intranet-mersch.conf once the keytab is installed, then run installer.sh again (docs/sso-ad.md)."
+msgstr "Setzen Sie SSO_ACTIF=\"oui\" in /etc/intranet-mersch.conf, sobald das Keytab installiert ist, und führen Sie danach installer.sh erneut aus (docs/sso-ad.md)."
+
+msgid "PHP extension ldap missing (package php-ldap)."
+msgstr "PHP-Erweiterung ldap fehlt (Paket php-ldap)."
+
+msgid "Keytab not readable by the web server: @fichier."
+msgstr "Das Keytab ist für den Webserver nicht lesbar: @fichier."
+
+msgid "Active, with problems"
+msgstr "Aktiv, mit Problemen"
+
+msgid "Active (realm @realm)"
+msgstr "Aktiv (realm @realm)"
+
+msgid "Inactive editor or administrator accounts"
+msgstr "Inaktive Redakteurs- oder Administratorenkonten"
+
+msgid "No login for @mois months. These accounts have a role and are not blocked automatically: block them or remove their role."
+msgstr "Seit @mois Monaten keine Anmeldung. Diese Konten haben eine Rolle und werden nicht automatisch gesperrt: Sperren Sie sie oder entziehen Sie ihnen die Rolle."
+
+msgid "This account logs in with the Windows session. Use the « Log in » link of the intranet on a computer of the municipality."
+msgstr "Dieses Konto meldet sich über die Windows-Sitzung an. Verwenden Sie den Link « Anmelden » des Intranets auf einem Computer der Gemeinde."
