@@ -15,7 +15,7 @@ msgid "Communication"
 msgstr "Kommunikatiounsservice"
 
 msgid "IT guides"
-msgstr "IT-Uleedungen"
+msgstr "IT-Service"
 
 msgid "Moien!"
 msgstr "Moien!"
@@ -24,7 +24,7 @@ msgid "The intranet of the Commune of Mersch: your colleagues, your tools and ne
 msgstr "Den Intranet vun der Gemeng Miersch: Är Kolleegen, Är Tools an d'Neiegkeeten aus der Gemeng."
 
 msgid "Quick links"
-msgstr "Séier Linken"
+msgstr "Shortcuts"
 
 msgid "(opens in a new tab)"
 msgstr "(geet an engem neien Tab op)"
@@ -72,10 +72,10 @@ msgid "Intranet – only reachable on the communal network"
 msgstr "Intranet – nëmmen am Gemengennetz erreechbar"
 
 msgid "Quick link"
-msgstr "Séier Link"
+msgstr "Shortcut"
 
 msgid "Add quick link"
-msgstr "Séier Link derbäisetzen"
+msgstr "Shortcut derbäisetzen"
 
 msgid "Links to the tools shown on the home page."
 msgstr "Linken op d'Tools, déi op der Startsäit ugewise ginn."
@@ -138,10 +138,59 @@ msgid "The URL %url is not valid. Enter a full address starting with https:// or
 msgstr "D'URL %url ass net valabel. Gitt eng komplett Adress mat https:// oder http:// am Ufank an."
 
 msgid "The quick link %label has been saved."
-msgstr "De Séier Link %label gouf gespäichert."
+msgstr "De Shortcut %label gouf gespäichert."
 
 msgid "Latest news"
 msgstr "Lescht Neiegkeeten"
 
 msgid "No news at the moment."
 msgstr "Momentan keng Neiegkeeten."
+
+# Boîte à idées
+
+msgid "Ideas box"
+msgstr "Iddiënkëscht"
+
+msgid "Idea"
+msgstr "Iddi"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Former user"
+msgstr "Fréiere Benotzer"
+
+msgid "Your idea to improve the intranet"
+msgstr "Är Iddi fir den Intranet ze verbesseren"
+
+msgid "Only the administrators read the ideas. Your name and the date are kept with your idea."
+msgstr "Nëmmen d'Administrateure liesen d'Iddiën. Ären Numm an den Datum ginn zesumme mat Ärer Iddi gespäichert."
+
+msgid "Send my idea"
+msgstr "Meng Iddi schécken"
+
+msgid "Please write your idea."
+msgstr "Schreift w.e.g. Är Iddi."
+
+msgid "Your idea is too long (@max characters at most)."
+msgstr "Är Iddi ass ze laang (maximal @max Zeechen)."
+
+msgid "Thank you! Your idea has been sent to the administrators."
+msgstr "Merci! Är Iddi gouf un d'Administrateure geschéckt."
+
+msgid "Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept."
+msgstr "Iddiën, déi d'Personal vun der Startsäit aus geschéckt huet. Läscht eng Iddi, soubal se behandelt ass: nëmmen den Auteur, den Datum an den Text gi gespäichert."
+
+msgid "No ideas yet."
+msgstr "Nach keng Iddiën."
+
+msgid "Ideas sent by staff to improve the intranet."
+msgstr "Iddiën vum Personal fir den Intranet ze verbesseren."
+
+msgid "See the idea received (1)"
+msgid_plural "See the ideas received (@count)"
+msgstr[0] "Déi Iddi gesinn (1)"
+msgstr[1] "D'Iddiën gesinn (@count)"

@@ -59,12 +59,18 @@ Le premier `composer install` crée `composer.lock` : il faut le committer.
 
 ## Page d'accueil
 
-Le module `mersch_accueil` fournit la page d'accueil (`/accueil`, déclarée page d'accueil du site à l'installation), d'après la maquette validée :
-- liens rapides DSKNet, GESCOM, Helpdesk et mersch.lu, ouverts dans un nouvel onglet (US-10) ;
-- recherche dans l'annuaire, qui ouvre `/annuaire?q=…` avec le champ déjà rempli, et lien vers l'annuaire complet (affichés seulement si `mersch_annuaire` est installé) ;
-- « Dernières nouvelles » : les 3 nouvelles les plus récentes des rubriques RH et Communication, avec leur date et leur rubrique (chaque module de rubrique les fournit par `hook_mersch_accueil_nouvelles()`, voir `mersch_accueil.api.php`) ;
-- accès aux rubriques RH, Communication et Guides IT, aussi présentes dans le menu principal (US-03) ; `/rh`, `/communication` et `/guides-it` affichent une page d'attente tant que le module de la rubrique n'est pas installé ;
-- boutons LU / DE / FR en haut à droite (US-02) : le module crée les trois langues, met le luxembourgeois par défaut (adresses sans préfixe, `/de/…` et `/fr/…` pour les traductions).
+Le module `mersch_accueil` fournit la page d'accueil (`/accueil`, déclarée page d'accueil du site à l'installation). Colonne principale, de haut en bas :
+- « Dernières nouvelles » en tête de page : les 3 nouvelles les plus récentes des rubriques RH et Communication, avec leur date et leur rubrique (chaque module de rubrique les fournit par `hook_mersch_accueil_nouvelles()`, voir `mersch_accueil.api.php`) ;
+- « Shortcuts » juste en dessous : DSKNet, GESCOM, Helpdesk et mersch.lu, ouverts dans un nouvel onglet (US-10) ;
+- accès aux rubriques RH, Communication et IT-Service, aussi présentes dans le menu principal (US-03) ; `/rh`, `/communication` et `/guides-it` affichent une page d'attente tant que le module de la rubrique n'est pas installé.
+
+Colonne latérale (sous la colonne principale sur mobile) :
+- recherche dans l'annuaire du personnel, qui ouvre `/annuaire?q=…` avec le champ déjà rempli, et lien vers l'annuaire complet (affichés seulement si `mersch_annuaire` est installé) ;
+- « Boîte à idées », pour les agents connectés seulement (permission « Send ideas from the home page », donnée au rôle « Utilisateur authentifié ») : l'agent écrit une idée d'amélioration de l'intranet (2 000 caractères au plus) et l'envoie. Les idées ne partent pas par e-mail : les admins les lisent dans **Administration > Contenu > Ideas box** (`/admin/content/idees`, lien aussi affiché aux admins sur l'accueil avec le nombre d'idées reçues) et les suppriment une fois traitées. RGPD : seuls l'auteur, la date et le texte sont conservés.
+
+Les boutons LU / DE / FR en haut à droite (US-02) : le module crée les trois langues, met le luxembourgeois par défaut (adresses sans préfixe, `/de/…` et `/fr/…` pour les traductions).
+
+Mise en service de la boîte à idées sur un intranet déjà installé : après le `git pull`, `drush-intranet updatedb` (crée la table des idées, donne le droit d'envoi aux agents connectés et renomme le service « IT-Uleedungen » en « IT-Service »), puis `drush-intranet locale:check && drush-intranet locale:update`.
 
 Un admin gère les liens rapides depuis **Administration > Configuration > Quick links** (`/admin/config/mersch/liens-rapides`) : libellé et description en LU, DE et FR (une langue vide reprend le LU), URL en `https://` ou `http://` (une autre adresse est refusée), icône, affichage, ordre par glisser-déposer (US-11). Seuls les admins ont la permission « Administer quick links ».
 

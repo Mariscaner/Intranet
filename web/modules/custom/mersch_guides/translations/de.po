@@ -8,7 +8,7 @@ msgid "Solve a problem yourself, or ask IT Hëllef vu Miersch."
 msgstr "Lösen Sie ein Problem selbst oder fragen Sie IT Hëllef vu Miersch."
 
 msgid "IT guides"
-msgstr "IT-Anleitungen"
+msgstr "IT-Service"
 
 msgid "IT guide"
 msgstr "IT-Anleitung"
@@ -107,7 +107,7 @@ msgid "PDF"
 msgstr "PDF"
 
 msgid "Used to filter the guides on the IT guides page (US-19)."
-msgstr "Zum Filtern der Anleitungen auf der Seite IT-Anleitungen (US-19)."
+msgstr "Zum Filtern der Anleitungen auf der Seite IT-Service (US-19)."
 
 msgid "One sentence shown on the guide card, at most 200 characters."
 msgstr "Ein Satz auf der Karte der Anleitung, höchstens 200 Zeichen."
@@ -131,7 +131,7 @@ msgid "No password, user name or personal data in a guide or its screenshots (US
 msgstr "Keine Passwörter, Benutzernamen oder personenbezogenen Daten in einer Anleitung oder ihren Bildschirmfotos (US-20)."
 
 msgid "Screenshot (IT guides)"
-msgstr "Bildschirmfoto (IT-Anleitungen)"
+msgstr "Bildschirmfoto (IT-Service)"
 
 msgid "1 guide found"
 msgid_plural "@count guides found"

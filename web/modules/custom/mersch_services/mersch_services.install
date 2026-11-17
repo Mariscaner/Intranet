@@ -45,7 +45,7 @@ function mersch_services_install(bool $is_syncing): void {
   $rubriques = [
     'rh' => ['lb' => 'Personalservice', 'de' => 'Personalabteilung', 'fr' => 'Ressources humaines', 'poids' => 10],
     'communication' => ['lb' => 'Kommunikatiounsservice', 'de' => 'Kommunikationsabteilung', 'fr' => 'Communication', 'poids' => 20],
-    'guides_it' => ['lb' => 'IT-Uleedungen', 'de' => 'IT-Anleitungen', 'fr' => 'Guides informatiques', 'poids' => 30],
+    'guides_it' => ['lb' => 'IT-Service', 'de' => 'IT-Service', 'fr' => 'Service IT', 'poids' => 30],
   ];
   $langues = \Drupal::languageManager()->getLanguages();
   foreach ($rubriques as $cle => $noms) {
@@ -135,4 +135,29 @@ function mersch_services_update_11001(): string {
     $role->save();
   }
   return "Nouvelles de service : $crees éléments de configuration créés.";
+}
+
+/**
+ * Service de la rubrique informatique renommé « IT-Service » (LU, DE, FR).
+ */
+function mersch_services_update_11002(): string {
+  $noms = ['lb' => 'IT-Service', 'de' => 'IT-Service', 'fr' => 'Service IT'];
+  $anciens = ['IT-Uleedungen', 'IT-Anleitungen', 'Guides informatiques'];
+  $ids = \Drupal::entityQuery('node')->accessCheck(FALSE)
+    ->condition('type', 'service')
+    ->condition('field_service_rubrique', 'guides_it')
+    ->execute();
+  $renommes = 0;
+  foreach (Node::loadMultiple($ids) as $service) {
+    foreach ($service->getTranslationLanguages() as $langcode => $langue) {
+      $traduction = $service->getTranslation($langcode);
+      // Un nom déjà changé par un admin est gardé.
+      if (isset($noms[$langcode]) && in_array($traduction->getTitle(), $anciens, TRUE)) {
+        $traduction->setTitle($noms[$langcode]);
+        $renommes++;
+      }
+    }
+    $service->save();
+  }
+  return "Service informatique : $renommes nom(s) remplacé(s) par IT-Service.";
 }

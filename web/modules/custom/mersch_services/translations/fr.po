@@ -128,7 +128,7 @@ msgid "Existing section"
 msgstr "Rubrique existante"
 
 msgid "Only for Human resources, Communication and IT guides: the links and contacts are shown at the bottom of that page."
-msgstr "Seulement pour Ressources humaines, Communication et Guides informatiques : liens et contacts s'affichent en bas de cette page."
+msgstr "Seulement pour Ressources humaines, Communication et Service IT : liens et contacts s'affichent en bas de cette page."
 
 msgid "Order"
 msgstr "Ordre"

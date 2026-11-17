@@ -2,3 +2,10 @@ administer mersch liens rapides:
   title: 'Administer quick links'
   description: 'Add, edit, reorder and delete the quick links on the home page (US-11). Administrators only.'
   restrict access: true
+submit mersch idees:
+  title: 'Send ideas from the home page'
+  description: 'Shows the ideas box on the home page. Given to all logged-in staff.'
+administer mersch idees:
+  title: 'Read and delete ideas'
+  description: 'See the ideas sent by staff and delete them once handled. Administrators only.'
+  restrict access: true

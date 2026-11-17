@@ -8,7 +8,7 @@ msgid "Solve a problem yourself, or ask IT Hëllef vu Miersch."
 msgstr "Résolvez un problème vous-même, ou demandez à IT Hëllef vu Miersch."
 
 msgid "IT guides"
-msgstr "Guides informatiques"
+msgstr "Service IT"
 
 msgid "IT guide"
 msgstr "Guide informatique"
@@ -107,7 +107,7 @@ msgid "PDF"
 msgstr "PDF"
 
 msgid "Used to filter the guides on the IT guides page (US-19)."
-msgstr "Sert à filtrer les guides sur la page Guides informatiques (US-19)."
+msgstr "Sert à filtrer les guides sur la page Service IT (US-19)."
 
 msgid "One sentence shown on the guide card, at most 200 characters."
 msgstr "Une phrase affichée sur la carte du guide, 200 caractères au plus."

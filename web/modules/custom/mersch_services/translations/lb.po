@@ -129,7 +129,7 @@ msgid "Existing section"
 msgstr "Bestoend Rubrik"
 
 msgid "Only for Human resources, Communication and IT guides: the links and contacts are shown at the bottom of that page."
-msgstr "Nëmme fir Personalservice, Kommunikatiounsservice an IT-Uleedungen: d'Linken an d'Kontakter ginn ënnen op där Säit gewisen."
+msgstr "Nëmme fir Personalservice, Kommunikatiounsservice an IT-Service: d'Linken an d'Kontakter ginn ënnen op där Säit gewisen."
 
 msgid "Order"
 msgstr "Reiefolleg"

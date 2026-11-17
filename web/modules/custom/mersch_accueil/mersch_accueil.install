@@ -8,11 +8,15 @@
 declare(strict_types=1);
 
 use Drupal\language\Entity\ConfigurableLanguage;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_install().
  */
 function mersch_accueil_install(bool $is_syncing): void {
+  _mersch_accueil_droits_idees();
+
   // Sur un import de configuration, langues et page d'accueil arrivent avec
   // la configuration exportée.
   if ($is_syncing) {
@@ -53,4 +57,25 @@ function mersch_accueil_uninstall(bool $is_syncing): void {
   if (!$is_syncing && $site->get('page.front') === '/accueil') {
     $site->set('page.front', '/user/login')->save();
   }
+}
+
+/**
+ * Tous les agents connectés peuvent envoyer une idée (boîte à idées).
+ */
+function _mersch_accueil_droits_idees(): void {
+  if ($role = Role::load(RoleInterface::AUTHENTICATED_ID)) {
+    $role->grantPermission('submit mersch idees')->save();
+  }
+}
+
+/**
+ * Boîte à idées : table des idées et droit d'envoi pour les agents connectés.
+ */
+function mersch_accueil_update_11001(): string {
+  $gestionnaire = \Drupal::entityDefinitionUpdateManager();
+  if (!$gestionnaire->getEntityType('mersch_idee')) {
+    $gestionnaire->installEntityType(\Drupal::entityTypeManager()->getDefinition('mersch_idee'));
+  }
+  _mersch_accueil_droits_idees();
+  return 'Boîte à idées installée.';
 }

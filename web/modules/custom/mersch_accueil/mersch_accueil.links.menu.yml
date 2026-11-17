@@ -38,3 +38,8 @@ entity.mersch_lien_rapide.collection:
   description: 'Links to the tools shown on the home page.'
   route_name: entity.mersch_lien_rapide.collection
   parent: system.admin_config_content
+entity.mersch_idee.collection:
+  title: 'Ideas box'
+  description: 'Ideas sent by staff to improve the intranet.'
+  route_name: entity.mersch_idee.collection
+  parent: system.admin_content

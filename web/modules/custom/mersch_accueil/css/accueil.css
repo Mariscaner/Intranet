@@ -23,7 +23,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  margin: 0 0 32px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -65,10 +65,10 @@
   overflow-wrap: anywhere;
 }
 
-/* Annuaire, dernières nouvelles et rubriques */
+/* Nouvelles, shortcuts et rubriques à gauche ; annuaire et idées à droite */
 .mersch-accueil__grille {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
   gap: 32px;
   align-items: start;
 }
@@ -151,7 +151,8 @@
   border-radius: 4px;
 }
 
-.mersch-accueil__colonne {
+.mersch-accueil__colonne,
+.mersch-accueil__cote {
   display: grid;
   gap: 32px;
   min-width: 0;
@@ -189,11 +190,49 @@
   color: var(--mersch-texte-2, #4a5480);
 }
 
-@media (max-width: 860px) {
+/* Boîte à idées */
+.mersch-idees {
+  border-color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-idees textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font: 15px var(--mersch-police-texte, Arial, sans-serif);
+  padding: 8px 10px;
+  border: 1px solid var(--mersch-texte-2, #4a5480);
+  border-radius: 4px;
+}
+
+.mersch-idees label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.mersch-idees .description {
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+
+.mersch-idees .form-submit {
+  font: bold 14px var(--mersch-police-texte, Arial, sans-serif);
+  color: var(--mersch-blanc, #fff);
+  background: var(--mersch-bleu, #26336a);
+  border: 0;
+  border-radius: 4px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+/* Shortcuts : 2 colonnes à côté de la colonne latérale */
+@media (max-width: 1180px) {
   .mersch-liens {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
+@media (max-width: 860px) {
   .mersch-accueil__grille {
     grid-template-columns: minmax(0, 1fr);
   }
