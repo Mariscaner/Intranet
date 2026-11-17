@@ -125,7 +125,7 @@ class MerschDsknetHooks {
       ]];
     }
     try {
-      $this->client->get('/test');
+      $this->client->get('/test', [], TRUE);
     }
     catch (DsknetIndisponible) {
       return ['mersch_dsknet' => $exigence + [

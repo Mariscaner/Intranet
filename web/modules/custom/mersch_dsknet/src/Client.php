@@ -29,11 +29,13 @@ class Client {
    *   Chemin de l'OpenAPI sans /dsknet/v2, par exemple « /pers/12/solde ».
    * @param array $requete
    *   Paramètres de requête.
+   * @param bool $texte
+   *   Accepter une réponse en texte brut (/version et /test en DSK-API 1.6).
    *
    * @throws \Drupal\mersch_dsknet\AppelAbsent
    * @throws \Drupal\mersch_dsknet\DsknetIndisponible
    */
-  public function get(string $chemin, array $requete = []): mixed {
+  public function get(string $chemin, array $requete = [], bool $texte = FALSE): mixed {
     // Le journal ne garde que le modèle du chemin (sans n° d'agent).
     $modele = preg_replace('#/\d+(?=/|$)#', '/{n}', $chemin);
     try {
@@ -62,10 +64,19 @@ class Client {
       $this->logger->error('DSKnet a répondu @statut (@chemin).', ['@statut' => $statut, '@chemin' => $modele]);
       throw new DsknetIndisponible("DSKnet a répondu $statut ($modele)");
     }
-    $corps = json_decode((string) $reponse->getBody(), TRUE);
+    // Retire un éventuel BOM UTF-8 avant de lire le JSON.
+    $brut = preg_replace('/^\xEF\xBB\xBF/', '', (string) $reponse->getBody());
+    $corps = json_decode(trim($brut), TRUE);
     if (!is_array($corps)) {
-      $this->logger->error('Réponse DSKnet illisible (@chemin).', ['@chemin' => $modele]);
-      throw new DsknetIndisponible("réponse illisible ($modele)");
+      if ($texte) {
+        return trim($brut);
+      }
+      $type = $reponse->getHeaderLine('Content-Type') ?: '?';
+      // Le journal ne garde que le type et la taille, jamais le contenu.
+      $this->logger->error('Réponse DSKnet illisible (@chemin) : @type, @taille octets.', ['@chemin' => $modele, '@type' => $type, '@taille' => strlen($brut)]);
+      $e = new DsknetIndisponible("réponse illisible ($modele) : $type, " . strlen($brut) . ' octets');
+      $e->extrait = mb_substr(preg_replace('/\s+/', ' ', $brut), 0, 300);
+      throw $e;
     }
     return array_key_exists('data', $corps) ? $corps['data'] : $corps;
   }
