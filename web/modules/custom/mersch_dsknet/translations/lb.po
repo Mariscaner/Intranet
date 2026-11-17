@@ -59,8 +59,8 @@ msgstr "moies"
 msgid "afternoon"
 msgstr "mëttes"
 
-msgid "Not available in the installed version of DSKNet."
-msgstr "An der installéierter Versioun vum DSKNet net disponibel."
+msgid "Not available in DSKNet for now."
+msgstr "Fir de Moment am DSKNet net disponibel."
 
 msgid "DSKNet does not answer. Try again later."
 msgstr "DSKNet äntwert net. Probéiert et méi spéit nach eng Kéier."
