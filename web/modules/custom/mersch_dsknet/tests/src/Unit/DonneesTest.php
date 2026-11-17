@@ -73,6 +73,8 @@ class DonneesTest extends UnitTestCase {
     $this->assertSame('0,5', Donnees::jours(0.5));
     $this->assertSame('Congé', Donnees::libelle([['langID' => 1, 'caption' => 'Congé']], 9));
     $this->assertSame([12, 13], Correspondance::numeros([12, ['noPers' => 13], ['noPers' => 12], 'x']));
+    // DSK-API 1.6 : /listAll renvoie [{pers: {noPers}}].
+    $this->assertSame([7], Correspondance::numeros([['pers' => ['noPers' => 7, 'firstName' => 'X']]]));
   }
 
   public function testLogins(): void {

@@ -51,6 +51,13 @@ final class DsknetCommands extends DrushCommands {
       }
     }
     if ($ok) {
+      try {
+        $session = $this->client->get('/revalidateToken');
+        $this->io()->writeln('OK      session DSK prolongée, jeton valable jusqu\'au ' . (is_array($session) ? ($session['validUntil'] ?? '?') : '?'));
+      }
+      catch (DsknetIndisponible $e) {
+        $this->io()->writeln('NON     /revalidateToken : ' . $e->getMessage());
+      }
       $this->sonder();
     }
     if (!$ok || ($identifiant === '' && !$options['nopers'])) {
@@ -117,19 +124,19 @@ final class DsknetCommands extends DrushCommands {
       $exemple = 0;
     }
     $appels = [
-      ['/swagger.json', []], ['/openapi.json', []], ['/docs', []], ['/swagger', []],
-      ['/listAll/details', $periode],
+      ['/revalidateToken', []],
       ['/listAll/id', $periode],
+      ['/listVisible/id', $periode + ['onlyActivePers' => 1]],
       ['/listAll', $periode],
       ['/trombinoscope', ['count' => 1]],
       ['/presAbs', ['count' => 1]],
     ];
     if ($exemple) {
-      foreach (['', '/details', '/dayBookings', '/solde', '/counters', '/absences', '/absenceList', '/accounts/sum'] as $suite) {
+      foreach (['', '/details', '/dayBookings', '/solde', '/counters', '/absences'] as $suite) {
         $requete = match ($suite) {
           '/solde' => ['previousMonth' => $jour],
           '/counters' => ['refYear' => date('Y')],
-          '/absences', '/absenceList', '/accounts/sum' => $periode,
+          '/absences' => $periode,
           '/dayBookings' => ['theDate' => $jour],
           default => [],
         };

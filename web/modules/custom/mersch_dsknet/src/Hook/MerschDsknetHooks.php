@@ -90,6 +90,7 @@ class MerschDsknetHooks {
    */
   #[Hook('cron')]
   public function cron(): void {
+    $this->prolonger();
     if ($this->reglages->get('correspondance') !== 'login'
       || \Drupal::time()->getRequestTime() - (int) \Drupal::state()->get('mersch_dsknet.relie', 0) < 86400) {
       return;
@@ -99,6 +100,29 @@ class MerschDsknetHooks {
     }
     catch (DsknetIndisponible) {
       // Déjà journalisé par le client ; nouvel essai au prochain cron.
+    }
+  }
+
+  /**
+   * Prolonge la session DSK du jeton une fois par jour (revalidateToken).
+   *
+   * Le jeton DSK est une session qui expire ; revalidateToken double sa
+   * durée de vie. La date de fin est gardée pour le rapport d'état.
+   */
+  private function prolonger(): void {
+    $state = \Drupal::state();
+    if (\Drupal::time()->getRequestTime() - (int) $state->get('mersch_dsknet.prolonge', 0) < 86400) {
+      return;
+    }
+    $state->set('mersch_dsknet.prolonge', \Drupal::time()->getRequestTime());
+    try {
+      $session = $this->client->get('/revalidateToken');
+      if (is_array($session) && !empty($session['validUntil'])) {
+        $state->set('mersch_dsknet.valide_jusque', (string) $session['validUntil']);
+      }
+    }
+    catch (DsknetIndisponible) {
+      // Déjà journalisé par le client.
     }
   }
 
@@ -136,6 +160,7 @@ class MerschDsknetHooks {
     }
     return ['mersch_dsknet' => $exigence + [
       'value' => $this->t('Connected (@base)', ['@base' => $this->reglages->base()]),
+      'description' => \Drupal::state()->get('mersch_dsknet.valide_jusque') ? $this->t('Token valid until @date (extended every day by cron).', ['@date' => \Drupal::state()->get('mersch_dsknet.valide_jusque')]) : '',
       'severity' => RequirementSeverity::OK,
     ]];
   }

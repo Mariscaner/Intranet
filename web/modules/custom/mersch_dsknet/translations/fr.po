@@ -99,3 +99,6 @@ msgstr "@base/test ne répond pas avec le jeton. Voir le journal : drush-intrane
 
 msgid "Connected (@base)"
 msgstr "Connecté (@base)"
+
+msgid "Token valid until @date (extended every day by cron)."
+msgstr "Jeton valable jusqu'au @date (prolongé chaque jour par le cron)."

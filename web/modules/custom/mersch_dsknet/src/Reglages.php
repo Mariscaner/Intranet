@@ -17,8 +17,9 @@ class Reglages {
 
   private const DEFAUTS = [
     // Nom d'hôte, pas d'adresse IP : APPS est résolu par le DNS (ou
-    // /etc/hosts en attendant le correctif de l'intégrateur).
-    'base' => 'http://APPS/API',
+    // /etc/hosts en attendant le correctif de l'intégrateur). DSK-API 1.6 :
+    // chemins /dsknet/… (doc OpenAPI 1.6.138.43, sans v2).
+    'base' => 'http://APPS/API/dsknet',
     'fichier_jeton' => '/etc/intranet/dsknet.env',
     'delai' => 5,
     // « login » : le login DSK est l'identifiant AD (DSKNet s'authentifie par

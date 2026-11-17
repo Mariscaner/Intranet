@@ -11,8 +11,8 @@ use Psr\Log\LoggerInterface;
 /**
  * Appels en lecture seule (GET) à DSK-API.
  *
- * Les chemins s'écrivent sans /dsknet/v2 : l'instance communale répond sous
- * http://APPS/API/… (vérifié le 2026-11-17 sur DSK-API 1.6.138.43).
+ * L'adresse de base contient le préfixe (http://APPS/API/dsknet pour
+ * DSK-API 1.6.138.43) ; les chemins s'écrivent sans lui (/pers/12/solde).
  */
 class Client {
 
@@ -57,6 +57,10 @@ class Client {
     }
 
     $statut = $reponse->getStatusCode();
+    if ($statut === 401) {
+      $this->logger->error('Jeton DSKnet refusé ou expiré (@chemin) : en demander un nouveau.', ['@chemin' => $modele]);
+      throw new DsknetIndisponible("jeton refusé ou expiré ($modele)");
+    }
     if ($statut === 404) {
       throw new AppelAbsent("appel absent de DSK-API : $modele");
     }

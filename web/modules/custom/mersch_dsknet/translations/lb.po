@@ -100,3 +100,6 @@ msgstr "@base/test äntwert net mam Token. Kuckt de Journal: drush-intranet watc
 
 msgid "Connected (@base)"
 msgstr "Verbonnen (@base)"
+
+msgid "Token valid until @date (extended every day by cron)."
+msgstr "Token gëlteg bis @date (all Dag vum Cron verlängert)."
