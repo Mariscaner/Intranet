@@ -8,13 +8,15 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Routing\RouteProviderInterface;
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\Url;
 use Drupal\mersch_accueil\Entity\LienRapide;
+use Drupal\mersch_accueil\Form\IdeeForm;
 
 /**
  * Page d'accueil et pages d'attente des rubriques.
  */
-class AccueilController extends ControllerBase {
+class AccueilController extends ControllerBase implements TrustedCallbackInterface {
 
   /**
    * Route de l'annuaire, fournie par le module mersch_annuaire (D-026).
@@ -32,7 +34,8 @@ class AccueilController extends ControllerBase {
   ) {}
 
   /**
-   * Accueil : liens rapides (US-10), annuaire (US-06, US-07), rubriques (US-03).
+   * Accueil : nouvelles en tête, shortcuts (US-10), rubriques (US-03) ;
+   * annuaire (US-06, US-07) et boîte à idées en colonne latérale.
    */
   public function accueil(): array {
     $langcode = $this->languageManager()->getCurrentLanguage()->getId();
@@ -61,10 +64,49 @@ class AccueilController extends ControllerBase {
       '#annuaire' => $annuaire,
       '#rubriques' => $rubriques,
       '#nouvelles' => $this->nouvelles($rubriques, $cache),
+      '#idees' => [
+        // Construit à part : le formulaire ne rend pas l'accueil incachable.
+        '#lazy_builder' => [static::class . '::boiteIdees', []],
+        '#create_placeholder' => TRUE,
+      ],
       '#attached' => ['library' => ['mersch_accueil/accueil']],
     ];
     $cache->applyTo($build);
     return $build;
+  }
+
+  /**
+   * Boîte à idées : formulaire pour les agents connectés, lien vers les idées
+   * reçues pour les admins ; rien pour un lecteur non connecté.
+   */
+  public static function boiteIdees(): array {
+    $compte = \Drupal::currentUser();
+    $build = ['#cache' => ['contexts' => ['user.permissions'], 'tags' => ['mersch_idee_list']]];
+    if ($compte->hasPermission('submit mersch idees')) {
+      $build['formulaire'] = \Drupal::formBuilder()->getForm(IdeeForm::class);
+    }
+    if ($compte->hasPermission('administer mersch idees')) {
+      $nombre = \Drupal::entityQuery('mersch_idee')->accessCheck(FALSE)->count()->execute();
+      $build['admin'] = [
+        '#type' => 'link',
+        '#title' => \Drupal::translation()->formatPlural($nombre, 'See the idea received (1)', 'See the ideas received (@count)'),
+        '#url' => Url::fromRoute('entity.mersch_idee.collection'),
+        '#prefix' => '<p class="mersch-idees__admin">',
+        '#suffix' => '</p>',
+      ];
+    }
+    if (isset($build['formulaire']) || isset($build['admin'])) {
+      $build['#prefix'] = '<section class="mersch-bloc mersch-idees" aria-labelledby="mersch-accueil-idees"><h2 id="mersch-accueil-idees">' . t('Ideas box') . '</h2>';
+      $build['#suffix'] = '</section>';
+    }
+    return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks(): array {
+    return ['boiteIdees'];
   }
 
   /**

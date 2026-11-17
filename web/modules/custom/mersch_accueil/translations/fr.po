@@ -15,7 +15,7 @@ msgid "Communication"
 msgstr "Communication"
 
 msgid "IT guides"
-msgstr "Guides informatiques"
+msgstr "Service IT"
 
 msgid "Moien!"
 msgstr "Bonjour !"
@@ -24,7 +24,7 @@ msgid "The intranet of the Commune of Mersch: your colleagues, your tools and ne
 msgstr "L'intranet de la Commune de Mersch : vos collègues, vos outils et les nouvelles de la commune."
 
 msgid "Quick links"
-msgstr "Liens rapides"
+msgstr "Shortcuts"
 
 msgid "(opens in a new tab)"
 msgstr "(s'ouvre dans un nouvel onglet)"
@@ -72,10 +72,10 @@ msgid "Intranet – only reachable on the communal network"
 msgstr "Intranet – accessible uniquement sur le réseau communal"
 
 msgid "Quick link"
-msgstr "Lien rapide"
+msgstr "Shortcut"
 
 msgid "Add quick link"
-msgstr "Ajouter un lien rapide"
+msgstr "Ajouter un shortcut"
 
 msgid "Links to the tools shown on the home page."
 msgstr "Liens vers les outils affichés sur la page d'accueil."
@@ -138,10 +138,59 @@ msgid "The URL %url is not valid. Enter a full address starting with https:// or
 msgstr "L'URL %url n'est pas valide. Saisissez une adresse complète commençant par https:// ou http://."
 
 msgid "The quick link %label has been saved."
-msgstr "Le lien rapide %label a été enregistré."
+msgstr "Le shortcut %label a été enregistré."
 
 msgid "Latest news"
 msgstr "Dernières nouvelles"
 
 msgid "No news at the moment."
 msgstr "Aucune nouvelle pour le moment."
+
+# Boîte à idées
+
+msgid "Ideas box"
+msgstr "Boîte à idées"
+
+msgid "Idea"
+msgstr "Idée"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Former user"
+msgstr "Ancien utilisateur"
+
+msgid "Your idea to improve the intranet"
+msgstr "Votre idée pour améliorer l'intranet"
+
+msgid "Only the administrators read the ideas. Your name and the date are kept with your idea."
+msgstr "Seuls les administrateurs lisent les idées. Votre nom et la date sont conservés avec votre idée."
+
+msgid "Send my idea"
+msgstr "Envoyer mon idée"
+
+msgid "Please write your idea."
+msgstr "Veuillez écrire votre idée."
+
+msgid "Your idea is too long (@max characters at most)."
+msgstr "Votre idée est trop longue (@max caractères au maximum)."
+
+msgid "Thank you! Your idea has been sent to the administrators."
+msgstr "Merci ! Votre idée a été transmise aux administrateurs."
+
+msgid "Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept. An idea is deleted automatically after 12 months."
+msgstr "Idées envoyées par le personnel depuis la page d'accueil. Supprimez une idée une fois traitée : seuls l'auteur, la date et le texte sont conservés. Une idée est supprimée automatiquement après 12 mois."
+
+msgid "No ideas yet."
+msgstr "Aucune idée pour l'instant."
+
+msgid "Ideas sent by staff to improve the intranet."
+msgstr "Idées du personnel pour améliorer l'intranet."
+
+msgid "See the idea received (1)"
+msgid_plural "See the ideas received (@count)"
+msgstr[0] "Voir l'idée reçue (1)"
+msgstr[1] "Voir les idées reçues (@count)"

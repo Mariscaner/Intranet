@@ -2,7 +2,8 @@
 
 /**
  * @file
- * Page d'accueil de l'intranet : liens rapides, rubriques, annuaire.
+ * Page d'accueil de l'intranet : nouvelles, shortcuts, rubriques, annuaire,
+ * boîte à idées.
  */
 
 declare(strict_types=1);
@@ -13,7 +14,7 @@ declare(strict_types=1);
 function mersch_accueil_theme(): array {
   return [
     'mersch_accueil' => [
-      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => [], 'nouvelles' => []],
+      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => [], 'nouvelles' => [], 'idees' => NULL],
     ],
     'mersch_rubrique' => [
       'variables' => ['rubrique' => []],
@@ -22,4 +23,18 @@ function mersch_accueil_theme(): array {
       'variables' => ['icone' => 'lien'],
     ],
   ];
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Une idée est supprimée 12 mois après son envoi (D-041).
+ */
+function mersch_accueil_cron(): void {
+  $limite = \Drupal::time()->getRequestTime() - \Drupal\mersch_accueil\Entity\Idee::CONSERVATION;
+  $stockage = \Drupal::entityTypeManager()->getStorage('mersch_idee');
+  $ids = $stockage->getQuery()->accessCheck(FALSE)->condition('created', $limite, '<')->range(0, 200)->execute();
+  if ($ids) {
+    $stockage->delete($stockage->loadMultiple($ids));
+  }
 }
