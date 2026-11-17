@@ -80,7 +80,9 @@ class Donnees {
    * Absences accordées d'aujourd'hui à N mois, regroupées en périodes.
    */
   public function absences(int $noPers, string $langue): array {
-    $periodes = self::periodes($this->bruts('absences', $noPers));
+    $bruts = $this->bruts('absences', $noPers);
+    // DSK-API 1.6 : objet dont la liste des jours est sous « abs ».
+    $periodes = self::periodes(is_array($bruts) && isset($bruts['abs']) ? $bruts['abs'] : $bruts);
     $langId = $this->langId($langue);
     foreach ($periodes as &$periode) {
       $periode['libelle'] = $this->libelleCompte($periode['compte'], $langId);

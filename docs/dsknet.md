@@ -1,20 +1,22 @@
 # Données DSKNet de l'agent (lot 4)
 
-Mis à jour : 2026-11-17 · Décision : D-038 (et D-042, D-043 proposées)
+Mis à jour : 2026-11-17 · Décisions : D-038, D-042 · Version DSK-API : 1.6.138.43 (doc OpenAPI : lots/lot-4-dsknet/dsk-api-1.6-openapi.json)
 
 L'agent connecté ouvre **Mäin DSKNet** (menu principal, adresse `/dsknet`) et voit ses propres données, en lecture seule :
 
-| Bloc | Appel DSK-API (sans `/dsknet/v2`) | Ce qui est affiché |
+| Bloc | Appel DSK-API 1.6 (après `http://APPS/API/dsknet`) | Ce qui est affiché |
 |---|---|---|
 | Dernier pointage | `GET /pers/{noPers}/dayBookings?theDate=<aujourd'hui>` | Entrée, Sortie ou Déplacement, et l'heure |
 | Solde d'heures | `GET /pers/{noPers}/solde?previousMonth=<aujourd'hui>` | Solde du mois en cours |
 | Congé, CET… | `GET /pers/{noPers}/counters?refYear=<année>` | Valeur restante des compteurs que DSKNet montre sur son propre tableau de bord (le CET n'apparaît que si l'agent en a un) |
-| Absences accordées | `GET /pers/{noPers}/absences` (aujourd'hui → 12 mois) et `GET /account/{n}` (libellé) | Périodes et type d'absence |
-| Correspondance | `GET /listAll/details` (une fois par jour, et à la première visite d'un nouvel agent, au plus une fois par heure) | Relie chaque compte SSO à son n° DSK par le champ `login` de DSK. Seule la paire identifiant AD → n° DSK est gardée, le reste de la liste est jeté aussitôt |
+| Absences accordées | `GET /pers/{noPers}/absences` (aujourd'hui → 12 mois, liste `abs`) et `GET /account/{n}` (libellé) | Périodes et type d'absence |
+| Correspondance | `GET /listAll/id` puis `GET /pers/{n}/details` (champ `login`) (une fois par jour, et à la première visite d'un nouvel agent, au plus une fois par heure) | Relie chaque compte SSO à son n° DSK par le champ `login` de DSK. Seule la paire identifiant AD → n° DSK est gardée, le reste de la liste est jeté aussitôt |
 
 Pas de demande d'absence depuis l'intranet : un lien renvoie vers DSKNet.
 
 **RGPD** : données lues en direct à chaque affichage, visibles par l'agent seul (aucun n° d'agent dans l'adresse, aucune page pour voir un collègue, pas même pour un admin). Rien n'est enregistré dans l'intranet, sauf le n° DSK de chaque agent (relié automatiquement ou saisi par un admin). Seuls les libellés des types d'absence, communs à tous, sont gardés un jour en cache. Le journal ne contient ni jeton, ni donnée, ni n° d'agent.
+
+**Session** : le jeton DSK est une session qui expire. Le cron la prolonge chaque jour (`GET /revalidateToken`) et le rapport d'état affiche sa date de fin. S'il a expiré (erreur « jeton refusé ou expiré »), en créer un nouveau dans DSK et remplacer la ligne dans le fichier.
 
 **Jeton** : il reste dans `/etc/intranet/dsknet.env` (ligne `DSKNET_TOKEN=…`, droits `640 root:www-data`). L'intranet le relit à chaque appel et ne l'affiche jamais. Ne jamais le copier dans GitHub, un e-mail ou une conversation avec Claude.
 
@@ -75,7 +77,7 @@ Dans `web/sites/default/settings.php`, à la fin, seulement si une valeur par d�
 
 ```php
 $settings['mersch_dsknet'] = [
-  'base' => 'http://APPS/API',                 // nom d'hôte, jamais l'adresse IP
+  'base' => 'http://APPS/API/dsknet',          // nom d'hôte, jamais l'adresse IP
   'fichier_jeton' => '/etc/intranet/dsknet.env',
   'correspondance' => 'login',                 // ou 'codePers', ou 'manuel' (n° saisi par un admin)
   'absences_mois' => 12,

@@ -132,6 +132,7 @@ class Correspondance {
     $periode = ['dateFrom' => $jour, 'dateTo' => $jour];
     $appels = [
       ['/listAll/id', $periode],
+      ['/listVisible/id', $periode + ['onlyActivePers' => 1]],
       ['/listAll', $periode],
       ['/presAbs', ['count' => 1000]],
       ['/trombinoscope', ['count' => 1000]],
@@ -279,7 +280,7 @@ class Correspondance {
     }
     $numeros = [];
     foreach ($donnees as $ligne) {
-      $n = is_array($ligne) ? ($ligne['noPers'] ?? NULL) : $ligne;
+      $n = is_array($ligne) ? ($ligne['noPers'] ?? $ligne['pers']['noPers'] ?? NULL) : $ligne;
       if (is_numeric($n) && (int) $n > 0) {
         $numeros[] = (int) $n;
       }
