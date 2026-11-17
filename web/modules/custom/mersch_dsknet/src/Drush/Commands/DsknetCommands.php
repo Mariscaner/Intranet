@@ -134,7 +134,7 @@ final class DsknetCommands extends DrushCommands {
     if ($exemple) {
       foreach (['', '/details', '/dayBookings', '/solde', '/counters', '/absences'] as $suite) {
         $requete = match ($suite) {
-          '/solde' => ['previousMonth' => $jour],
+          '/solde' => ['previousMonth' => '0'],
           '/counters' => ['refYear' => date('Y')],
           '/absences' => $periode,
           '/dayBookings' => ['theDate' => $jour],
@@ -184,8 +184,8 @@ final class DsknetCommands extends DrushCommands {
     $lignes = match ($appel) {
       'dayBookings' => array_map(fn ($p) => $champs((array) $p, ['time', 'type', 'subType', 'source']), $bruts['dayBookings'] ?? []),
       'solde' => [$champs($bruts, ['timeBalance', 'timeBalanceStr', 'timeBalanceDate'])],
-      'counters' => array_map(fn ($c) => $champs((array) $c, ['noCounter', 'caption', 'inDay', 'rest', 'balance', 'visibility']), $bruts),
-      'absences' => [['jours' => count($bruts), 'types' => array_values(array_unique(array_column($bruts, 'noAccount')))]],
+      'counters' => array_map(fn ($c) => $champs((array) $c, ['noCounter', 'inDay', 'periodicity', 'right', 'defer', 'total', 'taken', 'posed', 'pending', 'balance', 'rest', 'calcPeriodEnd']), $bruts),
+      'absences' => [['jours' => count($bruts['abs'] ?? []), 'types' => array_values(array_unique(array_column($bruts['abs'] ?? [], 'noAccount'))), 'premiers' => array_map(fn ($j) => $champs((array) $j, ['theDate', 'noAccount', 'inDay', 'whenAbs', 'displayUnit']), array_slice($bruts['abs'] ?? [], 0, 3))]],
     };
     return json_encode($lignes, JSON_UNESCAPED_UNICODE);
   }

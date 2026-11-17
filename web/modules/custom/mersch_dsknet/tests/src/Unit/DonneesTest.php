@@ -26,7 +26,9 @@ class DonneesTest extends UnitTestCase {
     ];
     $this->assertSame(['code' => 'deplacement', 'heure' => '13:01'], Donnees::etatDepuis($pointages, self::TYPES));
     $this->assertSame('sortie', Donnees::etatDepuis(array_slice($pointages, 0, 2), self::TYPES)['code']);
-    $this->assertSame('inconnu', Donnees::etatDepuis([['type' => 'Z']], self::TYPES)['code']);
+    // Code générique (B1) : alternance entrée / sortie.
+    $this->assertSame('entree', Donnees::etatDepuis([['type' => 'B1', 'time' => '07:41']], self::TYPES)['code']);
+    $this->assertSame('sortie', Donnees::etatDepuis([['index' => 1, 'type' => 'B1'], ['index' => 2, 'type' => 'B1']], self::TYPES)['code']);
   }
 
   public function testSolde(): void {
@@ -38,7 +40,7 @@ class DonneesTest extends UnitTestCase {
 
   public function testCompteurs(): void {
     $conge = ['noCounter' => 1, 'orderCode' => 2, 'caption' => [['langID' => 1, 'caption' => 'Congé'], ['langID' => 2, 'caption' => 'Urlaub']], 'inDay' => TRUE, 'rest' => 1.82, 'visibility' => ['visibleDashboard' => TRUE]];
-    $cet = ['noCounter' => 2, 'orderCode' => 1, 'caption' => [['langID' => 1, 'caption' => 'CET']], 'inDay' => FALSE, 'rest' => 1.3166, 'visibility' => ['visibleDashboard' => TRUE]];
+    $cet = ['noCounter' => 2, 'orderCode' => 1, 'caption' => [['langID' => 1, 'caption' => 'CET']], 'inDay' => FALSE, 'rest' => 79, 'visibility' => ['visibleDashboard' => TRUE]];
     $cache = ['noCounter' => 3, 'caption' => [['langID' => 1, 'caption' => 'Maladie']], 'rest' => 5, 'visibility' => ['visibleDashboard' => FALSE]];
     $resultat = Donnees::compteursDepuis([$conge, $cet, $cache], 2);
     $this->assertSame([

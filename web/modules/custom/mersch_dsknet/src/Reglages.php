@@ -32,8 +32,8 @@ class Reglages {
     // Codes de pointage DSK (champ type, puis subType) → état affiché.
     // À confirmer avec drush mersch:dsknet-verifier (doc DSK sans exemple).
     'types_pointage' => [
-      'E' => 'entree', 'IN' => 'entree', 'I' => 'entree', 'C' => 'entree',
-      'S' => 'sortie', 'OUT' => 'sortie', 'O' => 'sortie', 'G' => 'sortie',
+      // B1 (pointage normal, vu le 2026-11-17) n'est pas listé : entrée ou
+      // sortie selon le nombre de pointages du jour (voir Donnees::etatDepuis).
       'D' => 'deplacement', 'M' => 'deplacement', 'DEP' => 'deplacement', 'MISSION' => 'deplacement',
     ],
     // Langue de l'interface → langID DSK des libellés (inconnu tant que le

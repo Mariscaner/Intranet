@@ -101,7 +101,8 @@ class Donnees {
     $jour = date('Y-m-d', $maintenant);
     return match ($appel) {
       'dayBookings' => $this->client->get("/pers/$noPers/dayBookings", ['theDate' => $jour]),
-      'solde' => $this->client->get("/pers/$noPers/solde", ['previousMonth' => $jour]),
+      // DSK-API 1.6 : previousMonth = « 0 » (mois en cours) ou « 1 ».
+      'solde' => $this->client->get("/pers/$noPers/solde", ['previousMonth' => '0']),
       'counters' => $this->client->get("/pers/$noPers/counters", ['refYear' => date('Y', $maintenant)]),
       'absences' => $this->client->get("/pers/$noPers/absences", [
         'dateFrom' => $jour,
@@ -156,6 +157,11 @@ class Donnees {
         break;
       }
     }
+    if ($code === 'inconnu') {
+      // Code DSK générique (B1…) : les pointages alternent entrée / sortie,
+      // un nombre impair de pointages dans la journée signifie « entré ».
+      $code = count($pointages) % 2 === 1 ? 'entree' : 'sortie';
+    }
     $heure = NULL;
     if (!empty($dernier['time'])) {
       $heure = substr((string) $dernier['time'], 0, 5);
@@ -206,7 +212,8 @@ class Donnees {
       $enJours = !empty($c['inDay']);
       $resultat[] = [
         'libelle' => self::libelle($c['caption'] ?? [], $langId),
-        'valeur' => $enJours ? self::jours((float) $reste) : self::heures((int) round((float) $reste * 60)),
+        // Compteurs en heures : valeurs DSK en minutes (comme les soldes).
+        'valeur' => $enJours ? self::jours((float) $reste) : self::heures((int) round((float) $reste)),
         'unite' => $enJours ? 'j' : 'h',
         'negatif' => (float) $reste < 0,
       ];
