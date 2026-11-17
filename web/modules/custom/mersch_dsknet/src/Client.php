@@ -61,6 +61,12 @@ class Client {
       $this->logger->error('Jeton DSKnet refusé ou expiré (@chemin) : en demander un nouveau.', ['@chemin' => $modele]);
       throw new DsknetIndisponible("jeton refusé ou expiré ($modele)");
     }
+    if ($statut === 403) {
+      // Droit manquant au compte du jeton dans DSK : le bloc concerné affiche
+      // « non disponible », les autres continuent.
+      $this->logger->warning('DSKnet refuse l\'appel @chemin (403) : droit manquant au compte du jeton.', ['@chemin' => $modele]);
+      throw new AppelAbsent("appel refusé par DSK (403, droit manquant) : $modele");
+    }
     if ($statut === 404) {
       throw new AppelAbsent("appel absent de DSK-API : $modele");
     }

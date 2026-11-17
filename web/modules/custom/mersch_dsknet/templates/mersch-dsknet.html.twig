@@ -9,7 +9,7 @@
 #}
 {% macro erreur(bloc) %}
   {% if bloc.erreur == 'absent' %}
-    <p class="mersch-dsknet__vide">{{ 'Not available in the installed version of DSKNet.'|t }}</p>
+    <p class="mersch-dsknet__vide">{{ 'Not available in DSKNet for now.'|t }}</p>
   {% else %}
     <p class="mersch-dsknet__vide">{{ 'DSKNet does not answer. Try again later.'|t }}</p>
   {% endif %}

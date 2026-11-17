@@ -58,8 +58,8 @@ msgstr "vormittags"
 msgid "afternoon"
 msgstr "nachmittags"
 
-msgid "Not available in the installed version of DSKNet."
-msgstr "In der installierten Version von DSKNet nicht verfügbar."
+msgid "Not available in DSKNet for now."
+msgstr "Derzeit in DSKNet nicht verfügbar."
 
 msgid "DSKNet does not answer. Try again later."
 msgstr "DSKNet antwortet nicht. Versuchen Sie es später noch einmal."
