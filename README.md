@@ -66,7 +66,7 @@ Le module `mersch_accueil` fournit la page d'accueil (`/accueil`, déclarée pag
 
 Colonne latérale (sous la colonne principale sur mobile) :
 - recherche dans l'annuaire du personnel, qui ouvre `/annuaire?q=…` avec le champ déjà rempli, et lien vers l'annuaire complet (affichés seulement si `mersch_annuaire` est installé) ;
-- « Boîte à idées », pour les agents connectés seulement (permission « Send ideas from the home page », donnée au rôle « Utilisateur authentifié ») : l'agent écrit une idée d'amélioration de l'intranet (2 000 caractères au plus) et l'envoie. Les idées ne partent pas par e-mail : les admins les lisent dans **Administration > Contenu > Ideas box** (`/admin/content/idees`, lien aussi affiché aux admins sur l'accueil avec le nombre d'idées reçues) et les suppriment une fois traitées. RGPD : seuls l'auteur, la date et le texte sont conservés.
+- « Boîte à idées », pour les agents connectés seulement (permission « Send ideas from the home page », donnée au rôle « Utilisateur authentifié ») : l'agent écrit une idée d'amélioration de l'intranet (2 000 caractères au plus) et l'envoie. Les idées ne partent pas par e-mail : les admins les lisent dans **Administration > Contenu > Ideas box** (`/admin/content/idees`, lien aussi affiché aux admins sur l'accueil avec le nombre d'idées reçues) et les suppriment une fois traitées. RGPD : seuls l'auteur, la date et le texte sont conservés ; une idée est supprimée automatiquement par le cron 12 mois après son envoi (D-041).
 
 Les boutons LU / DE / FR en haut à droite (US-02) : le module crée les trois langues, met le luxembourgeois par défaut (adresses sans préfixe, `/de/…` et `/fr/…` pour les traductions).
 

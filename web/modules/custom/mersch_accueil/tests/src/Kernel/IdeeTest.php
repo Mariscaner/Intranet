@@ -99,4 +99,16 @@ class IdeeTest extends KernelTestBase {
     $this->assertTrue($idee->access('delete', $admin));
   }
 
+  /**
+   * Une idée de plus de 12 mois est supprimée par le cron (D-041).
+   */
+  public function testConservation(): void {
+    $maintenant = \Drupal::time()->getRequestTime();
+    Idee::create(['uid' => 1, 'texte' => 'Al', 'created' => $maintenant - Idee::CONSERVATION - 60])->save();
+    Idee::create(['uid' => 1, 'texte' => 'Nei', 'created' => $maintenant - 86400])->save();
+    mersch_accueil_cron();
+    $textes = array_map(fn (Idee $idee) => $idee->get('texte')->value, Idee::loadMultiple());
+    $this->assertSame(['Nei'], array_values($textes));
+  }
+
 }

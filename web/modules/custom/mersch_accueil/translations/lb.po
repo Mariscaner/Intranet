@@ -181,8 +181,8 @@ msgstr "Är Iddi ass ze laang (maximal @max Zeechen)."
 msgid "Thank you! Your idea has been sent to the administrators."
 msgstr "Merci! Är Iddi gouf un d'Administrateure geschéckt."
 
-msgid "Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept."
-msgstr "Iddiën, déi d'Personal vun der Startsäit aus geschéckt huet. Läscht eng Iddi, soubal se behandelt ass: nëmmen den Auteur, den Datum an den Text gi gespäichert."
+msgid "Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept. An idea is deleted automatically after 12 months."
+msgstr "Iddiën, déi d'Personal vun der Startsäit aus geschéckt huet. Läscht eng Iddi, soubal se behandelt ass: nëmmen den Auteur, den Datum an den Text gi gespäichert. No 12 Méint gëtt eng Iddi automatesch geläscht."
 
 msgid "No ideas yet."
 msgstr "Nach keng Iddiën."

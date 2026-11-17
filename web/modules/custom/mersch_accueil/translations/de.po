@@ -181,8 +181,8 @@ msgstr "Ihre Idee ist zu lang (höchstens @max Zeichen)."
 msgid "Thank you! Your idea has been sent to the administrators."
 msgstr "Danke! Ihre Idee wurde an die Administratoren gesendet."
 
-msgid "Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept."
-msgstr "Ideen, die das Personal über die Startseite gesendet hat. Löschen Sie eine Idee, sobald sie bearbeitet ist: Gespeichert werden nur Verfasser, Datum und Text."
+msgid "Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept. An idea is deleted automatically after 12 months."
+msgstr "Ideen, die das Personal über die Startseite gesendet hat. Löschen Sie eine Idee, sobald sie bearbeitet ist: Gespeichert werden nur Verfasser, Datum und Text. Nach 12 Monaten wird eine Idee automatisch gelöscht."
 
 msgid "No ideas yet."
 msgstr "Noch keine Ideen."

@@ -17,7 +17,8 @@ use Drupal\mersch_accueil\IdeeListBuilder;
  * Idée d'amélioration de l'intranet, déposée par un agent connecté.
  *
  * RGPD : seuls l'auteur, la date et le texte sont conservés. Les idées ne
- * sont lues que par les admins, qui les suppriment une fois traitées.
+ * sont lues que par les admins, qui les suppriment une fois traitées ; une
+ * idée est de toute façon supprimée 12 mois après son envoi (D-041).
  */
 #[ContentEntityType(
   id: 'mersch_idee',
@@ -50,6 +51,11 @@ class Idee extends ContentEntityBase {
    * Longueur maximale d'une idée, en caractères.
    */
   public const LONGUEUR = 2000;
+
+  /**
+   * Durée de conservation d'une idée : 12 mois (D-041), en secondes.
+   */
+  public const CONSERVATION = 365 * 86400;
 
   /**
    * {@inheritdoc}

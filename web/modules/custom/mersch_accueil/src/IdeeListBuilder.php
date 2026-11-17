@@ -55,7 +55,7 @@ class IdeeListBuilder extends EntityListBuilder {
    */
   public function render(): array {
     $build['intro'] = [
-      '#markup' => '<p>' . $this->t('Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept.') . '</p>',
+      '#markup' => '<p>' . $this->t('Ideas sent by staff from the home page. Delete an idea once it has been handled: only the author, the date and the text are kept. An idea is deleted automatically after 12 months.') . '</p>',
     ];
     $build += parent::render();
     $build['table']['#empty'] = $this->t('No ideas yet.');
