@@ -11,4 +11,10 @@ namespace Drupal\mersch_dsknet;
  * de l'agent.
  */
 class DsknetIndisponible extends \RuntimeException {
+
+  /**
+   * Début d'une réponse illisible, pour le diagnostic drush seulement.
+   */
+  public string $extrait = '';
+
 }

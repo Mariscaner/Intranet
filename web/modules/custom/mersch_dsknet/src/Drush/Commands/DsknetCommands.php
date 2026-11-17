@@ -41,8 +41,9 @@ final class DsknetCommands extends DrushCommands {
     $ok = TRUE;
     foreach (['/version', '/test'] as $chemin) {
       try {
-        $reponse = $this->client->get($chemin);
-        $this->io()->writeln(sprintf('OK      %s %s', $chemin, $chemin === '/version' ? json_encode($reponse, JSON_UNESCAPED_UNICODE) : ''));
+        $reponse = $this->client->get($chemin, [], TRUE);
+        // /test renvoie le nom du compte technique : pas affiché.
+        $this->io()->writeln(sprintf('OK      %s %s', $chemin, $chemin === '/version' ? (is_string($reponse) ? $reponse : json_encode($reponse, JSON_UNESCAPED_UNICODE)) : ''));
       }
       catch (DsknetIndisponible $e) {
         $this->io()->writeln(sprintf('ERREUR  %s : %s', $chemin, $e->getMessage()));
@@ -68,6 +69,9 @@ final class DsknetCommands extends DrushCommands {
       }
       catch (DsknetIndisponible $e) {
         $this->io()->writeln('ERREUR  correspondance : ' . $e->getMessage());
+        if ($e->extrait !== '') {
+          $this->io()->writeln('        début de la réponse : ' . $e->extrait);
+        }
         return self::EXIT_FAILURE;
       }
       if (!$noPers) {
@@ -84,6 +88,9 @@ final class DsknetCommands extends DrushCommands {
       }
       catch (DsknetIndisponible $e) {
         $this->io()->writeln("ERREUR  $appel : " . $e->getMessage());
+        if ($e->extrait !== '') {
+          $this->io()->writeln('        début de la réponse : ' . $e->extrait);
+        }
         $ok = FALSE;
       }
     }
