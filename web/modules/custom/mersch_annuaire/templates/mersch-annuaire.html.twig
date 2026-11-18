@@ -6,7 +6,9 @@
  * Variables :
  * - services : liste de { nom, agents }, chaque agent ayant nom, prenom,
  *   service, batiment, telephone, tel_lien, gsm, gsm_lien, email,
- *   email_service, remarque et recherche (texte sans accents).
+ *   email_service, remarque, recherche (texte sans accents) et id.
+ * - presence : TRUE si l'état de présence est affiché (agent connecté,
+ *   module mersch_dsknet, D-044) ; les pastilles sont remplies par son script.
  * - nombre : nombre total d'agents.
  */
 #}
@@ -16,6 +18,9 @@
       <label for="mersch-annuaire-recherche">{{ 'Search'|t }}</label>
       <input type="search" id="mersch-annuaire-recherche" data-mersch-annuaire-recherche
         placeholder="{{ 'Name, department or number'|t }}" autocomplete="off">
+      {% if presence %}
+        <p class="mersch-annuaire__presence-avis" data-mersch-presence-avis hidden>{{ 'Presence status unavailable.'|t }}</p>
+      {% endif %}
       <p class="mersch-annuaire__compte" aria-live="polite" data-mersch-annuaire-compte
         data-total="{{ nombre }}">{{ '@count staff members'|t({'@count': nombre}) }}</p>
     </div>
@@ -38,6 +43,7 @@
               <tr data-mersch-annuaire-agent data-recherche="{{ agent.recherche }}">
                 <td>
                   <strong>{{ agent.nom }}</strong> {{ agent.prenom }}
+                  {% if presence %}<span data-mersch-presence="{{ agent.id }}" hidden></span>{% endif %}
                   {% if agent.remarque %}<span class="mersch-annuaire__remarque">{{ agent.remarque }}</span>{% endif %}
                 </td>
                 <td>{% if agent.tel_lien %}<a href="{{ agent.tel_lien }}">{{ agent.telephone }}</a>{% endif %}</td>

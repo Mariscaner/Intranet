@@ -26,7 +26,7 @@ class AnnuaireController extends ControllerBase {
 
     $services = [];
     foreach ($agents as $agent) {
-      $fiche = [];
+      $fiche = ['id' => (int) $agent->id()];
       foreach (['nom', 'prenom', 'service', 'batiment', 'telephone', 'gsm', 'email', 'email_service', 'remarque'] as $champ) {
         $fiche[$champ] = (string) $agent->get($champ)->value;
       }

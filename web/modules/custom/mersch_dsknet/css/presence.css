@@ -1,0 +1,16 @@
+/* État de présence dans l'annuaire (D-044) : pastille à côté du nom. */
+.mersch-presence {
+  display: inline-block;
+  margin-left: .5rem;
+  padding: .05rem .5rem;
+  border-radius: 1rem;
+  font-size: .8rem;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #fff;
+}
+.mersch-presence::before { content: "● "; }
+.mersch-presence--present { background: #3f7322; }
+.mersch-presence--absent { background: #6b7280; }
+.mersch-presence--deplacement { background: #00807a; }
+.mersch-annuaire__presence-avis { color: var(--mersch-texte-2, #4a5480); font-size: .9rem; }

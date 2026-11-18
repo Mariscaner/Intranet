@@ -71,6 +71,20 @@ La commande donne le nombre de comptes reliés et la liste des identifiants sans
 
 Tant que le SSO n'est pas actif, aucun compte n'a d'identifiant Windows : seul le n° saisi par un admin fonctionne (pratique pour tester avec votre compte).
 
+### Présence dans l'annuaire (D-044)
+
+Les agents connectés voient dans l'annuaire, à côté de chaque nom, **Présent**, **Absent** ou **Déplacement** (sortie de service). Jamais de motif, de date de retour ni d'heure ; les lecteurs non connectés ne voient rien. L'état est lu dans DSKNet (`/presAbs`, un seul appel pour tous) au plus une fois par minute, et la page se met à jour seule chaque minute.
+
+Chaque fiche de l'annuaire est reliée à son n° DSK chaque nuit : par l'e-mail du compte intranet relié (ci-dessus), sinon par nom et prénom s'ils sont uniques dans DSK. Pour relier tout de suite et vérifier :
+
+```bash
+drush-intranet mersch:dsknet-presence
+```
+
+La commande donne le nombre de fiches reliées, la liste des fiches sans n° DSK (pas d'état affiché), la répartition des états du moment, les champs `type`, `subType` et `index` des derniers pointages (sans n° ni nom) et l'heure de la dernière mise à jour PresAbs dans DSK. **Copiez-les à Claude** : ils servent à confirmer `types_pointage` (code de la sortie de service) et `presence_index_base` (1 si le premier pointage du jour porte l'index 1, 0 s'il porte 0).
+
+Le compte du jeton doit avoir le droit DSK `read:presAbs`.
+
 ## 4. Réglages (facultatif)
 
 Dans `web/sites/default/settings.php`, à la fin, seulement si une valeur par défaut ne convient pas :
@@ -87,6 +101,8 @@ $settings['mersch_dsknet'] = [
   'langues' => ['fr' => 1, 'de' => 2, 'lb' => 2],
   // Si DSK 1.6 ne dit pas quels compteurs vont sur son tableau de bord :
   'compteurs' => [1, 2],                       // n° noCounter (congé, CET)
+  // Annuaire : index du premier pointage du jour chez DSK (1 ou 0) :
+  'presence_index_base' => 1,
 ];
 ```
 

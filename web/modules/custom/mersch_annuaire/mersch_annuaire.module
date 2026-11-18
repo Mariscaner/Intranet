@@ -13,7 +13,7 @@ declare(strict_types=1);
 function mersch_annuaire_theme(): array {
   return [
     'mersch_annuaire' => [
-      'variables' => ['services' => [], 'nombre' => 0],
+      'variables' => ['services' => [], 'nombre' => 0, 'presence' => FALSE],
     ],
   ];
 }

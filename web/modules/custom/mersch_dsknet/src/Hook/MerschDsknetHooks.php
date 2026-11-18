@@ -12,11 +12,13 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\mersch_dsknet\Client;
 use Drupal\mersch_dsknet\Correspondance;
 use Drupal\mersch_dsknet\DsknetIndisponible;
+use Drupal\mersch_dsknet\Presence;
+use Drupal\Core\Url;
 use Drupal\mersch_dsknet\Reglages;
 use Drupal\user\UserInterface;
 
 /**
- * Thème, n° DSK sur le compte (admins), rapport d'état.
+ * Thème, n° DSK sur le compte (admins), présence dans l'annuaire, rapport d'état.
  */
 class MerschDsknetHooks {
 
@@ -27,6 +29,7 @@ class MerschDsknetHooks {
     private readonly Client $client,
     private readonly Reglages $reglages,
     private readonly AccountInterface $currentUser,
+    private readonly Presence $presence,
   ) {}
 
   /**
@@ -38,6 +41,26 @@ class MerschDsknetHooks {
       'mersch_dsknet' => [
         'variables' => ['statut' => 'ok', 'donnees' => [], 'lien_dsknet' => NULL],
       ],
+    ];
+  }
+
+  /**
+   * Implements hook_preprocess_HOOK() for mersch_annuaire.
+   *
+   * Agents connectés seulement (D-044) : emplacement des pastilles et script
+   * qui relit les états chaque minute. Lecteur anonyme : rien ne change.
+   */
+  #[Hook('preprocess_mersch_annuaire')]
+  public function annuaire(array &$variables): void {
+    $variables['#cache']['contexts'][] = 'user.roles:authenticated';
+    if (!$this->currentUser->isAuthenticated()) {
+      return;
+    }
+    $variables['presence'] = TRUE;
+    $variables['#attached']['library'][] = 'mersch_dsknet/presence';
+    $variables['#attached']['drupalSettings']['merschPresence'] = [
+      'url' => Url::fromRoute('mersch_dsknet.presence')->toString(),
+      'intervalle' => Presence::DUREE,
     ];
   }
 
@@ -86,17 +109,34 @@ class MerschDsknetHooks {
   /**
    * Implements hook_cron().
    *
-   * Relie chaque jour les comptes SSO aux agents DSK (mode « login »).
+   * Relie chaque jour les comptes SSO aux agents DSK (mode « login »), puis
+   * les fiches de l'annuaire (D-044).
    */
   #[Hook('cron')]
   public function cron(): void {
     $this->prolonger();
-    if ($this->reglages->get('correspondance') !== 'login'
-      || \Drupal::time()->getRequestTime() - (int) \Drupal::state()->get('mersch_dsknet.relie', 0) < 86400) {
+    if ($this->reglages->get('correspondance') === 'login'
+      && \Drupal::time()->getRequestTime() - (int) \Drupal::state()->get('mersch_dsknet.relie', 0) >= 86400) {
+      try {
+        $this->correspondance->relierTous();
+      }
+      catch (DsknetIndisponible) {
+        // Déjà journalisé par le client ; nouvel essai au prochain cron.
+      }
+    }
+    // Après les comptes SSO : la liaison des fiches utilise leurs n° DSK.
+    $this->relierAnnuaire();
+  }
+
+  /**
+   * Relie les fiches de l'annuaire à DSK, une fois par jour.
+   */
+  private function relierAnnuaire(): void {
+    if (\Drupal::time()->getRequestTime() - (int) \Drupal::state()->get('mersch_dsknet.presence_relie', 0) < 86400) {
       return;
     }
     try {
-      $this->correspondance->relierTous();
+      $this->presence->relierAnnuaire();
     }
     catch (DsknetIndisponible) {
       // Déjà journalisé par le client ; nouvel essai au prochain cron.

@@ -14,6 +14,10 @@ services:
     class: Drupal\mersch_dsknet\Donnees
     arguments: ['@mersch_dsknet.client', '@mersch_dsknet.reglages', '@cache.default', '@datetime.time']
   Drupal\mersch_dsknet\Donnees: '@mersch_dsknet.donnees'
+  mersch_dsknet.presence:
+    class: Drupal\mersch_dsknet\Presence
+    arguments: ['@mersch_dsknet.client', '@mersch_dsknet.reglages', '@mersch_dsknet.correspondance', '@entity_type.manager', '@mersch_annuaire.parser', '@state', '@cache.default', '@datetime.time']
+  Drupal\mersch_dsknet\Presence: '@mersch_dsknet.presence'
   logger.channel.mersch_dsknet:
     parent: logger.channel_base
     arguments: ['mersch_dsknet']

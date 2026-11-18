@@ -83,19 +83,34 @@ class Correspondance {
   /**
    * Paires login → n° DSK des agents DSK actifs aujourd'hui.
    *
-   * /listAll/details d'abord ; s'il manque (DSK-API 1.6), liste des n° par
-   * /listAll/id puis /pers/{n}/details agent par agent. Seuls le login et
-   * le n° sont gardés, le reste de chaque fiche est jeté aussitôt.
-   *
    * @return array<string, int>
    *
    * @throws \Drupal\mersch_dsknet\DsknetIndisponible
    */
   public function paires(): array {
+    return self::logins($this->fiches());
+  }
+
+  /**
+   * Fiches réduites des agents DSK actifs aujourd'hui.
+   *
+   * /listAll/details d'abord ; s'il manque (DSK-API 1.6), liste des n° par
+   * /listAll/id puis /pers/{n}/details agent par agent. Seuls le n°, le
+   * login, le nom et le prénom sont gardés, le reste est jeté aussitôt ;
+   * l'appelant ne garde lui-même que le n°.
+   *
+   * @return array
+   *   Liste de ['pers' => [noPers, login, lastName, firstName]].
+   *
+   * @throws \Drupal\mersch_dsknet\DsknetIndisponible
+   * @throws \Drupal\mersch_dsknet\AppelAbsent
+   */
+  public function fiches(): array {
     $jour = date('Y-m-d', $this->time->getRequestTime());
     $periode = ['dateFrom' => $jour, 'dateTo' => $jour];
     try {
-      return self::logins($this->client->get('/listAll/details', $periode));
+      $details = $this->client->get('/listAll/details', $periode);
+      return array_map([self::class, 'reduire'], is_array($details) ? array_values(array_filter($details, 'is_array')) : []);
     }
     catch (AppelAbsent) {
       // Repli agent par agent ci-dessous.
@@ -113,10 +128,24 @@ class Correspondance {
         }
         continue;
       }
-      $pers = is_array($fiche) ? ($fiche['pers'] ?? $fiche) : [];
-      $fiches[] = ['pers' => ['noPers' => $pers['noPers'] ?? $noPers, 'login' => $pers['login'] ?? '']];
+      $reduite = self::reduire(is_array($fiche) ? $fiche : []);
+      $reduite['pers']['noPers'] = $reduite['pers']['noPers'] ?: $noPers;
+      $fiches[] = $reduite;
     }
-    return self::logins($fiches);
+    return $fiches;
+  }
+
+  /**
+   * Ne garde d'une fiche DSK que le n°, le login, le nom et le prénom.
+   */
+  public static function reduire(array $fiche): array {
+    $pers = is_array($fiche['pers'] ?? NULL) ? $fiche['pers'] : $fiche;
+    return ['pers' => [
+      'noPers' => (int) ($pers['noPers'] ?? 0),
+      'login' => (string) ($pers['login'] ?? ''),
+      'lastName' => (string) ($pers['lastName'] ?? ''),
+      'firstName' => (string) ($pers['firstName'] ?? ''),
+    ]];
   }
 
   /**

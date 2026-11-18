@@ -102,3 +102,13 @@ msgstr "Connecté (@base)"
 
 msgid "Token valid until @date (extended every day by cron)."
 msgstr "Jeton valable jusqu'au @date (prolongé chaque jour par le cron)."
+
+# Présence dans l'annuaire (D-044).
+msgid "Present"
+msgstr "Présent"
+
+msgid "Absent"
+msgstr "Absent"
+
+msgid "Presence status unavailable."
+msgstr "État de présence indisponible."
