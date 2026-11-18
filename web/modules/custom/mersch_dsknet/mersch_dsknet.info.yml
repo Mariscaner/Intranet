@@ -1,10 +1,11 @@
 name: 'Données DSKnet de l''agent'
 type: module
-description: 'L''agent connecté voit ses propres données DSKnet en lecture seule : état, solde d''heures, compteurs (congé, CET), absences accordées (lot 4, D-038).'
+description: 'L''agent connecté voit ses propres données DSKnet en lecture seule : état, solde d''heures, compteurs (congé, CET), absences accordées (lot 4, D-038) ; état de présence dans l''annuaire (D-044).'
 package: Mersch
 core_version_requirement: ^11
 dependencies:
   - drupal:user
   - mersch_sso:mersch_sso
+  - mersch_annuaire:mersch_annuaire
 'interface translation project': mersch_dsknet
 'interface translation server pattern': modules/custom/mersch_dsknet/translations/%language.po

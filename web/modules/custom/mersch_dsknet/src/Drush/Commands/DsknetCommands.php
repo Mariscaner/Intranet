@@ -8,6 +8,8 @@ use Drupal\mersch_dsknet\Correspondance;
 use Drupal\mersch_dsknet\Donnees;
 use Drupal\mersch_dsknet\DsknetIndisponible;
 use Drupal\mersch_dsknet\Client;
+use Drupal\mersch_dsknet\AppelAbsent;
+use Drupal\mersch_dsknet\Presence;
 use Drush\Attributes as CLI;
 use Drush\Commands\AutowireTrait;
 use Drush\Commands\DrushCommands;
@@ -23,6 +25,7 @@ final class DsknetCommands extends DrushCommands {
     private readonly Client $client,
     private readonly Correspondance $correspondance,
     private readonly Donnees $donnees,
+    private readonly Presence $presence,
   ) {
     parent::__construct();
   }
@@ -171,6 +174,50 @@ final class DsknetCommands extends DrushCommands {
     $this->logger()->success(sprintf('%d comptes reliés à DSK.', $resultat['relies']));
     if ($resultat['sans_dsk']) {
       $this->logger()->warning('Sans login DSK correspondant : ' . implode(', ', $resultat['sans_dsk']));
+    }
+    return self::EXIT_SUCCESS;
+  }
+
+  /**
+   * Relie les fiches de l'annuaire à DSK et vérifie l'état de présence.
+   *
+   * Lancé aussi chaque jour par le cron. Affiche le nombre de fiches
+   * reliées, les fiches non reliées, la répartition des états et, sans
+   * aucun n° ni nom, les champs des derniers pointages (type, subType,
+   * index) pour régler types_pointage et presence_index_base.
+   */
+  #[CLI\Command(name: 'mersch:dsknet-presence', aliases: ['mdp'])]
+  #[CLI\Usage(name: 'drush mersch:dsknet-presence', description: 'Links the directory to DSKNet and checks the presence status.')]
+  public function presence(): int {
+    try {
+      $resultat = $this->presence->relierAnnuaire();
+      $this->logger()->success(sprintf('%d fiches de l\'annuaire reliées à DSK.', $resultat['relies']));
+      if ($resultat['non_relies']) {
+        $this->logger()->warning(sprintf('%d fiches sans n° DSK (pas d\'état affiché) : %s', count($resultat['non_relies']), implode(', ', $resultat['non_relies'])));
+      }
+      $lignes = $this->client->get('/presAbs', ['count' => 1000]);
+    }
+    catch (DsknetIndisponible | AppelAbsent $e) {
+      $this->logger()->error($e->getMessage());
+      return self::EXIT_FAILURE;
+    }
+    $etats = array_count_values($this->presence->etatsDsk());
+    $this->output()->writeln('États DSK du moment : ' . json_encode($etats));
+    $jour = date('Y-m-d');
+    $pointages = [];
+    foreach (is_array($lignes) ? $lignes : [] as $ligne) {
+      $p = is_array($ligne['lastBooking'] ?? NULL) ? $ligne['lastBooking'] : [];
+      if (substr((string) ($p['dateTime'] ?? $p['date'] ?? ''), 0, 10) === $jour) {
+        $pointages[] = array_intersect_key($p, array_flip(['time', 'type', 'subType', 'index', 'source']));
+      }
+    }
+    $this->output()->writeln('Derniers pointages du jour (10 au plus, sans n° ni nom) : ' . json_encode(array_slice($pointages, 0, 10)));
+    try {
+      $tache = $this->client->get('/tools/last/presabs');
+      $this->output()->writeln('Dernière mise à jour PresAbs dans DSK : ' . (is_array($tache) ? ($tache['taskLastRun'] ?? '?') : '?'));
+    }
+    catch (DsknetIndisponible | AppelAbsent) {
+      $this->output()->writeln('Dernière mise à jour PresAbs dans DSK : non disponible.');
     }
     return self::EXIT_SUCCESS;
   }

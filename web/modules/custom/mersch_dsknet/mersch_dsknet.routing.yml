@@ -10,3 +10,14 @@ mersch_dsknet.mes_donnees:
   options:
     no_cache: TRUE
     _mersch_sso: TRUE
+
+# État de présence des agents de l'annuaire (D-044) : agents connectés
+# seulement, jamais mis en cache (relu chaque minute par la page).
+mersch_dsknet.presence:
+  path: '/annuaire/presence'
+  defaults:
+    _controller: '\Drupal\mersch_dsknet\Controller\PresenceController::etats'
+  requirements:
+    _user_is_logged_in: 'TRUE'
+  options:
+    no_cache: TRUE

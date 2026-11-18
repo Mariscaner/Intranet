@@ -3,3 +3,14 @@ dsknet:
   css:
     component:
       css/dsknet.css: {}
+presence:
+  version: VERSION
+  js:
+    js/presence.js: {}
+  css:
+    component:
+      css/presence.css: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
