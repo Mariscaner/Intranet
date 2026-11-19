@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Mises à jour du module mersch_rh.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+
+/**
+ * Champ « Rédigé le » dans les formulaires des nouvelles et communications
+ * RH, pour remonter un contenu sur l'accueil ou la page RH. Drupal ne le
+ * montre qu'avec « administer nodes » (admins) : les rédacteurs ne le voient
+ * pas.
+ */
+function mersch_rh_update_11001(): string {
+  foreach (['rh_nouvelle', 'rh_communication'] as $type) {
+    $affichage = EntityFormDisplay::load("node.$type.default");
+    if ($affichage && !$affichage->getComponent('created')) {
+      $affichage->setComponent('created', ['type' => 'datetime_timestamp', 'weight' => 20])->save();
+    }
+  }
+  return 'Champ « Rédigé le » affiché pour les admins.';
+}
