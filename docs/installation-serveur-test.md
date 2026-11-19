@@ -156,6 +156,32 @@ drush-intranet cache:rebuild
 
 Un nouveau module `mersch_*` s'active avec `drush-intranet pm:install <module> --yes`.
 
+### Mise à jour de sécurité de Drupal
+
+Quand Drupal affiche « There is a security update available », en root sur le serveur :
+
+```bash
+git -C /var/www/intranet pull
+bash /var/www/intranet/scripts/serveur/mettre-a-jour-drupal.sh
+```
+
+Le script sauvegarde la base, les fichiers déposés et `composer.lock` dans `/var/backups/intranet/`, met le site en maintenance (quelques minutes), lance `composer update "drupal/core-*" --with-all-dependencies`, puis `drush updatedb`, remet les droits et rouvre le site. `composer.lock` n'est pas dans le dépôt : il est mis à jour sur le serveur seulement.
+
+Vérifier ensuite **Administration > Rapports > Mises à jour disponibles** (plus d'alerte de sécurité) et ouvrir quelques pages.
+
+**Retour arrière** si la mise à jour échoue (le site reste en maintenance), avec l'horodatage affiché par le script :
+
+```bash
+cd /var/www/intranet
+cp /var/backups/intranet/composer-AAAAMMJJ-HHMM.lock composer.lock
+COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-interaction --optimize-autoloader
+gunzip -c /var/backups/intranet/base-AAAAMMJJ-HHMM.sql.gz | drush-intranet sql:cli
+chown -R root:www-data . && chmod -R g+rX,g-w,o-rwx . && chown -R www-data:www-data web/sites/default/files
+drush-intranet state:set system.maintenance_mode 0 --input-format=integer && drush-intranet cache:rebuild
+```
+
+Les sauvegardes contiennent des données personnelles (annuaire, photos) : les effacer quand la mise à jour est validée (`rm /var/backups/intranet/*-AAAAMMJJ-HHMM*`).
+
 ## 9. En cas de problème
 
 | Symptôme | Cause probable | Solution |
