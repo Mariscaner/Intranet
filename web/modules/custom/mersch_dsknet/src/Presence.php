@@ -90,7 +90,8 @@ class Presence {
     $base = (int) $this->reglages->get('presence_index_base');
     $etats = [];
     foreach (is_array($lignes) ? $lignes : [] as $ligne) {
-      $noPers = is_array($ligne) ? (int) ($ligne['noPers'] ?? 0) : 0;
+      // Ligne RS_PersPresAbs (noPers) ou RS_PersPresAbsDetail (pers.noPers).
+      $noPers = is_array($ligne) ? (int) ($ligne['noPers'] ?? $ligne['pers']['noPers'] ?? 0) : 0;
       if ($noPers > 0 && ($etat = self::etatDepuis($ligne, $jour, $types, $base))) {
         $etats[$noPers] = $etat;
       }
@@ -170,9 +171,7 @@ class Presence {
       if (!$noPers) {
         // Liste DSK lue une seule fois, au premier besoin.
         $noms ??= $this->nomsDsk();
-        $cle = $this->cleNom((string) $fiche->get('nom')->value, (string) $fiche->get('prenom')->value);
-        $candidats = $noms[$cle] ?? [];
-        $noPers = count($candidats) === 1 ? $candidats[0] : NULL;
+        $noPers = self::trouver($noms, $this->cleNom((string) $fiche->get('nom')->value, ''), $this->cleNom('', (string) $fiche->get('prenom')->value));
       }
       if ($noPers) {
         $liaisons[$this->cleFiche($fiche)] = $noPers;
@@ -204,7 +203,7 @@ class Presence {
   }
 
   /**
-   * N° DSK des agents actifs par clé de nom, [clé => noPers[]].
+   * Noms des agents DSK actifs, nettoyés : liste de [nom, prenom, noPers].
    *
    * @throws \Drupal\mersch_dsknet\DsknetIndisponible
    */
@@ -215,15 +214,15 @@ class Presence {
     catch (AppelAbsent) {
       return [];
     }
-    return self::grouperNoms($fiches, fn (string $nom, string $prenom): string => $this->cleNom($nom, $prenom));
+    return self::listerNoms($fiches, fn (string $nom, string $prenom): string => $this->cleNom($nom, $prenom));
   }
 
   /**
-   * Regroupe des fiches DSK (pers.lastName, firstName, noPers) par clé.
+   * Réduit des fiches DSK (pers.lastName, firstName, noPers) aux noms nettoyés.
    *
-   * @return array<string, int[]>
+   * @return array<int, array{nom: string, prenom: string, noPers: int}>
    */
-  public static function grouperNoms(array $fiches, callable $cle): array {
+  public static function listerNoms(array $fiches, callable $cle): array {
     $noms = [];
     foreach ($fiches as $ligne) {
       $pers = is_array($ligne) ? ($ligne['pers'] ?? $ligne) : NULL;
@@ -232,12 +231,28 @@ class Presence {
       if ($noPers <= 0 || $nom === '') {
         continue;
       }
-      $k = $cle($nom, (string) ($pers['firstName'] ?? ''));
-      if (!in_array($noPers, $noms[$k] ?? [], TRUE)) {
-        $noms[$k][] = $noPers;
-      }
+      $noms[$noPers] = ['nom' => $cle($nom, ''), 'prenom' => $cle('', (string) ($pers['firstName'] ?? '')), 'noPers' => $noPers];
     }
-    return $noms;
+    return array_values($noms);
+  }
+
+  /**
+   * N° DSK de l'agent unique qui porte ce nom et ce prénom, ou NULL.
+   *
+   * D'abord nom et prénom identiques ; sinon nom identique ou prolongé par
+   * d'autres mots (« Martins » / « Martins Franco ») et prénom abrégé dans
+   * l'une des deux listes (« Dan » / « Daniel », « Carlos » / « Carlos
+   * Alexandre »), 3 lettres au moins. Deux candidats : pas de liaison.
+   */
+  public static function trouver(array $noms, string $nom, string $prenom): ?int {
+    $exacts = array_filter($noms, fn (array $n): bool => $n['nom'] === $nom && $n['prenom'] === $prenom);
+    if ($exacts) {
+      return count($exacts) === 1 ? reset($exacts)['noPers'] : NULL;
+    }
+    $mots = fn (string $a, string $b): bool => $a === $b || str_starts_with($b, $a . ' ') || str_starts_with($a, $b . ' ');
+    $debut = fn (string $a, string $b): bool => min(mb_strlen($a), mb_strlen($b)) >= 3 && (str_starts_with($a, $b) || str_starts_with($b, $a));
+    $proches = array_filter($noms, fn (array $n): bool => $nom !== '' && $mots($n['nom'], $nom) && $debut($n['prenom'], $prenom));
+    return count($proches) === 1 ? reset($proches)['noPers'] : NULL;
   }
 
   /**

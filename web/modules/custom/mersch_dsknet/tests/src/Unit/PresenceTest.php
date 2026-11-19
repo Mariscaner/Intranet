@@ -43,19 +43,33 @@ class PresenceTest extends UnitTestCase {
     $this->assertNull(Presence::etatDepuis(['lastBooking' => ['date' => self::JOUR, 'type' => 'B1']], self::JOUR, self::TYPES));
   }
 
-  public function testGrouperNoms(): void {
+  public function testTrouver(): void {
     $fiches = [
       ['pers' => ['noPers' => 147, 'lastName' => 'BETTENDORFF', 'firstName' => 'Marc']],
       ['pers' => ['noPers' => 12, 'lastName' => 'Muller', 'firstName' => 'Eric']],
-      ['pers' => ['noPers' => 13, 'lastName' => 'Muller', 'firstName' => 'Éric']],
-      ['pers' => ['noPers' => 0, 'lastName' => 'Sans', 'firstName' => 'Numéro']],
+      ['pers' => ['noPers' => 13, 'lastName' => 'Muller', 'firstName' => 'Eric']],
+      ['pers' => ['noPers' => 20, 'lastName' => 'Bucari', 'firstName' => 'Daniel']],
+      ['pers' => ['noPers' => 21, 'lastName' => 'Martins Franco', 'firstName' => 'Alexandra']],
+      ['pers' => ['noPers' => 22, 'lastName' => 'Lopes', 'firstName' => 'Carlos Alexandre']],
+      ['pers' => ['noPers' => 23, 'lastName' => 'Lopes Rocha', 'firstName' => 'Steven']],
+      ['pers' => ['noPers' => 24, 'lastName' => 'Kass', 'firstName' => 'Victor']],
+      ['pers' => ['noPers' => 25, 'lastName' => 'Kass', 'firstName' => 'Vicky']],
+      ['pers' => ['noPers' => 0, 'lastName' => 'Sans', 'firstName' => 'Numero']],
     ];
-    $cle = fn (string $nom, string $prenom): string => Presence::nettoyer(str_replace('É', 'E', $nom . ' ' . $prenom));
-    $noms = Presence::grouperNoms($fiches, $cle);
-    $this->assertSame([147], $noms['bettendorff marc']);
-    // Homonymes : deux candidats, la fiche ne sera pas reliée.
-    $this->assertSame([12, 13], $noms['muller eric']);
-    $this->assertCount(2, $noms);
+    $noms = Presence::listerNoms($fiches, fn (string $nom, string $prenom): string => Presence::nettoyer($nom . ' ' . $prenom));
+    $this->assertCount(9, $noms);
+    $this->assertSame(147, Presence::trouver($noms, 'bettendorff', 'marc'));
+    // Homonymes exacts : pas de liaison.
+    $this->assertNull(Presence::trouver($noms, 'muller', 'eric'));
+    // Prénom abrégé, nom composé, deuxième prénom.
+    $this->assertSame(20, Presence::trouver($noms, 'bucari', 'dan'));
+    $this->assertSame(21, Presence::trouver($noms, 'martins', 'alexandra'));
+    $this->assertSame(22, Presence::trouver($noms, 'lopes', 'carlos'));
+    // Deux candidats (Victor, Vicky) : pas de liaison.
+    $this->assertNull(Presence::trouver($noms, 'kass', 'vic'));
+    // Moins de 3 lettres ou nom différent : pas de liaison.
+    $this->assertNull(Presence::trouver($noms, 'bucari', 'da'));
+    $this->assertNull(Presence::trouver($noms, 'buca', 'daniel'));
   }
 
   public function testNettoyer(): void {
