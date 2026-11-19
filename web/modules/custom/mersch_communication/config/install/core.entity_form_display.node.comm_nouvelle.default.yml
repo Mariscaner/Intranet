@@ -74,8 +74,13 @@ content:
     settings:
       display_label: true
     third_party_settings: {}
+  created:
+    type: datetime_timestamp
+    weight: 20
+    region: content
+    settings: {}
+    third_party_settings: {}
 hidden:
-  created: true
   promote: true
   sticky: true
   uid: true
