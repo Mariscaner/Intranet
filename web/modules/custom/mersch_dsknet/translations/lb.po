@@ -109,7 +109,7 @@ msgid "Present"
 msgstr "Present"
 
 msgid "Absent"
-msgstr "Net do"
+msgstr "Absent"
 
 msgid "Presence status unavailable."
 msgstr "Presenzstatus net disponibel."

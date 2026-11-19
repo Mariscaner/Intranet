@@ -34,6 +34,8 @@ class Reglages {
     'types_pointage' => [
       // B1 (pointage normal, vu le 2026-11-17) n'est pas listé : entrée ou
       // sortie selon le nombre de pointages du jour (voir Donnees::etatDepuis).
+      // B3 : sortie de service (confirmé par Marc le 2026-11-19, D-044).
+      'B3' => 'deplacement',
       'D' => 'deplacement', 'M' => 'deplacement', 'DEP' => 'deplacement', 'MISSION' => 'deplacement',
     ],
     // Langue de l'interface → langID DSK des libellés (inconnu tant que le
