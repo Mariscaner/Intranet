@@ -183,8 +183,8 @@ final class DsknetCommands extends DrushCommands {
    *
    * Lancé aussi chaque jour par le cron. Affiche le nombre de fiches
    * reliées, les fiches non reliées, la répartition des états et, sans
-   * aucun n° ni nom, les champs des derniers pointages (type, subType,
-   * index) pour régler types_pointage et presence_index_base.
+   * aucun n° ni nom, les codes des pointages du jour (type, subType) pour
+   * régler types_pointage.
    */
   #[CLI\Command(name: 'mersch:dsknet-presence', aliases: ['mdp'])]
   #[CLI\Usage(name: 'drush mersch:dsknet-presence', description: 'Links the directory to DSKNet and checks the presence status.')]
@@ -195,7 +195,8 @@ final class DsknetCommands extends DrushCommands {
       if ($resultat['non_relies']) {
         $this->logger()->warning(sprintf('%d fiches sans n° DSK (pas d\'état affiché) : %s', count($resultat['non_relies']), implode(', ', $resultat['non_relies'])));
       }
-      $lignes = $this->client->get('/presAbs', ['count' => 1000]);
+      $jour = date('Y-m-d');
+      $lignes = $this->client->get('/bookings', ['dateFrom' => $jour, 'dateTo' => $jour]);
     }
     catch (DsknetIndisponible | AppelAbsent $e) {
       $this->logger()->error($e->getMessage());
@@ -203,22 +204,15 @@ final class DsknetCommands extends DrushCommands {
     }
     $etats = array_count_values($this->presence->etatsDsk());
     $this->output()->writeln('États DSK du moment : ' . json_encode($etats));
-    $jour = date('Y-m-d');
-    $pointages = [];
+    // Codes des pointages du jour avec leur nombre : ni n°, ni nom, ni heure.
+    $codes = [];
     foreach (is_array($lignes) ? $lignes : [] as $ligne) {
-      $p = is_array($ligne['lastBooking'] ?? NULL) ? $ligne['lastBooking'] : [];
-      if (substr((string) ($p['dateTime'] ?? $p['date'] ?? ''), 0, 10) === $jour) {
-        $pointages[] = array_intersect_key($p, array_flip(['time', 'type', 'subType', 'index', 'source']));
+      foreach (Presence::pointagesDuJour(is_array($ligne) ? $ligne : [], $jour) as $p) {
+        $code = trim(($p['type'] ?? '') . ' / ' . ($p['subType'] ?? ''));
+        $codes[$code] = ($codes[$code] ?? 0) + 1;
       }
     }
-    $this->output()->writeln('Derniers pointages du jour (10 au plus, sans n° ni nom) : ' . json_encode(array_slice($pointages, 0, 10)));
-    try {
-      $tache = $this->client->get('/tools/last/presabs');
-      $this->output()->writeln('Dernière mise à jour PresAbs dans DSK : ' . (is_array($tache) ? ($tache['taskLastRun'] ?? '?') : '?'));
-    }
-    catch (DsknetIndisponible | AppelAbsent) {
-      $this->output()->writeln('Dernière mise à jour PresAbs dans DSK : non disponible.');
-    }
+    $this->output()->writeln('Codes des pointages du jour (type / subType : nombre) : ' . json_encode($codes, JSON_UNESCAPED_UNICODE));
     return self::EXIT_SUCCESS;
   }
 

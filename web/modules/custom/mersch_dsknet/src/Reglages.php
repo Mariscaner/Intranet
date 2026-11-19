@@ -36,10 +36,6 @@ class Reglages {
       // sortie selon le nombre de pointages du jour (voir Donnees::etatDepuis).
       'D' => 'deplacement', 'M' => 'deplacement', 'DEP' => 'deplacement', 'MISSION' => 'deplacement',
     ],
-    // Annuaire (D-044) : n° (index) du premier pointage du jour chez DSK, pour
-    // l'alternance entrée / sortie des pointages génériques (B1). À confirmer
-    // avec drush mersch:dsknet-presence (colonne index).
-    'presence_index_base' => 1,
     // Langue de l'interface → langID DSK des libellés (inconnu tant que le
     // diagnostic n'a pas tourné ; sinon le premier libellé est pris).
     'langues' => [],

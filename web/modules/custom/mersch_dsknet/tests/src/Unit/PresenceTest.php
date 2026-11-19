@@ -18,29 +18,37 @@ class PresenceTest extends UnitTestCase {
   private const TYPES = ['D' => 'deplacement', 'MISSION' => 'deplacement', 'E' => 'entree', 'S' => 'sortie'];
   private const JOUR = '2026-11-18';
 
-  public function testSansPointageDuJour(): void {
-    $this->assertSame('absent', Presence::etatDepuis(['noPers' => 1], self::JOUR, self::TYPES));
-    $hier = ['lastBooking' => ['dateTime' => '2026-11-17T16:30:00', 'type' => 'B1', 'index' => 1]];
-    $this->assertSame('absent', Presence::etatDepuis($hier, self::JOUR, self::TYPES));
+  public function testSansPointage(): void {
+    $this->assertSame('absent', Presence::etatDepuis([], self::TYPES));
   }
 
   public function testCodesConnus(): void {
-    $ligne = fn (array $p): array => ['lastBooking' => $p + ['date' => self::JOUR]];
-    $this->assertSame('deplacement', Presence::etatDepuis($ligne(['type' => 'X', 'subType' => 'mission', 'index' => 3]), self::JOUR, self::TYPES));
-    $this->assertSame('present', Presence::etatDepuis($ligne(['type' => 'E', 'index' => 2]), self::JOUR, self::TYPES));
-    $this->assertSame('absent', Presence::etatDepuis($ligne(['type' => 's', 'index' => 1]), self::JOUR, self::TYPES));
+    $this->assertSame('deplacement', Presence::etatDepuis([['index' => 1, 'type' => 'B1'], ['index' => 2, 'type' => 'X', 'subType' => 'mission']], self::TYPES));
+    $this->assertSame('present', Presence::etatDepuis([['index' => 1, 'type' => 'B1'], ['index' => 2, 'type' => 'E']], self::TYPES));
+    $this->assertSame('absent', Presence::etatDepuis([['index' => 1, 'type' => 's']], self::TYPES));
   }
 
   public function testAlternance(): void {
-    $ligne = fn (int $index): array => ['lastBooking' => ['dateTime' => self::JOUR . 'T08:00:00', 'type' => 'B1', 'index' => $index]];
-    $this->assertSame('present', Presence::etatDepuis($ligne(1), self::JOUR, self::TYPES));
-    $this->assertSame('absent', Presence::etatDepuis($ligne(2), self::JOUR, self::TYPES));
-    $this->assertSame('present', Presence::etatDepuis($ligne(3), self::JOUR, self::TYPES));
-    // DSK qui compte à partir de 0.
-    $this->assertSame('present', Presence::etatDepuis($ligne(0), self::JOUR, self::TYPES, 0));
-    $this->assertSame('absent', Presence::etatDepuis($ligne(1), self::JOUR, self::TYPES, 0));
-    // Sans n° de pointage : pas d'état plutôt qu'un état faux.
-    $this->assertNull(Presence::etatDepuis(['lastBooking' => ['date' => self::JOUR, 'type' => 'B1']], self::JOUR, self::TYPES));
+    $b1 = fn (int $i): array => ['index' => $i, 'type' => 'B1', 'bk' => 400 + $i];
+    $this->assertSame('present', Presence::etatDepuis([$b1(1)], self::TYPES));
+    $this->assertSame('absent', Presence::etatDepuis([$b1(2), $b1(1)], self::TYPES));
+    $this->assertSame('present', Presence::etatDepuis([$b1(0), $b1(1), $b1(2)], self::TYPES));
+  }
+
+  public function testPointagesDuJour(): void {
+    // DSK-API 1.6 : liste de pointages sous bk.
+    $ligne = ['pers' => ['noPers' => 7], 'bk' => [
+      ['dateTime' => self::JOUR . ' 07:45:00', 'type' => 'B1', 'index' => 1],
+      ['dateTime' => '2026-11-17 16:00:00', 'type' => 'B1', 'index' => 2],
+    ], 'bkReq' => [['type' => 'B1']]];
+    $this->assertCount(1, Presence::pointagesDuJour($ligne, self::JOUR));
+    // Doc 1.8 : days[] avec theDate et bookings.
+    $ligne = ['noPers' => 7, 'days' => [['theDate' => self::JOUR, 'bookings' => [['type' => 'B1', 'index' => 1], ['type' => 'B1', 'index' => 2]]]]];
+    $this->assertCount(2, Presence::pointagesDuJour($ligne, self::JOUR));
+    // Jours indexés par date.
+    $ligne = ['bk' => ['2026-11-18' => [['type' => 'B1']], '2026-11-17' => [['type' => 'B1']]]];
+    $this->assertCount(1, Presence::pointagesDuJour($ligne, self::JOUR));
+    $this->assertSame([], Presence::pointagesDuJour(['pers' => [], 'bk' => []], self::JOUR));
   }
 
   public function testTrouver(): void {
