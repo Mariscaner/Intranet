@@ -1,0 +1,42 @@
+mersch_presse.archive:
+  path: '/presse'
+  defaults:
+    _controller: '\Drupal\mersch_presse\Controller\PresseController::archive'
+    _title: 'Mersch in the press'
+  requirements:
+    # Lisible sans connexion, comme les autres pages (D-046).
+    _permission: 'access content'
+
+mersch_presse.masquer:
+  path: '/presse/{mersch_presse_article}/masquer'
+  defaults:
+    _controller: '\Drupal\mersch_presse\Controller\PresseController::masquer'
+    masque: true
+  requirements:
+    _permission: 'hide mersch presse articles'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      mersch_presse_article:
+        type: entity:mersch_presse_article
+
+mersch_presse.afficher:
+  path: '/presse/{mersch_presse_article}/afficher'
+  defaults:
+    _controller: '\Drupal\mersch_presse\Controller\PresseController::masquer'
+    masque: false
+  requirements:
+    _permission: 'hide mersch presse articles'
+    _csrf_token: 'TRUE'
+  options:
+    parameters:
+      mersch_presse_article:
+        type: entity:mersch_presse_article
+
+mersch_presse.reglages:
+  path: '/admin/config/mersch/presse'
+  defaults:
+    _form: '\Drupal\mersch_presse\Form\ReglagesForm'
+    _title: 'Press review'
+  requirements:
+    _permission: 'administer mersch presse'

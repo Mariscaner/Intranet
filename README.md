@@ -24,7 +24,7 @@ config/sync/              Configuration Drupal exportée (drush cex)
 docs/                     Feuille de route technique, guide d'installation sur le serveur de test
 scripts/serveur/          Scripts d'installation du serveur Linux et de création des comptes
 web/themes/custom/mersch/ Thème de l'intranet
-web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication, mersch_guides, mersch_services)
+web/modules/custom/       Modules propres au projet (mersch_accueil, mersch_annuaire, mersch_rh, mersch_communication, mersch_guides, mersch_services, mersch_presse)
 ```
 
 ## Installer sur le serveur de test
@@ -192,6 +192,20 @@ Tests : `ddev exec SIMPLETEST_DB=sqlite://localhost/:memory: vendor/bin/phpunit 
 - Diagnostic : `drush-intranet mersch:dsknet-verifier <identifiant>`. Guide : [docs/dsknet.md](docs/dsknet.md).
 
 Tests : `ddev exec vendor/bin/phpunit -c web/core web/modules/custom/mersch_dsknet` (avec `drupal/core-dev` installé).
+
+### Revue de presse (`mersch_presse`)
+
+Articles de presse sur la commune (US-39 à US-43, D-045, D-046) :
+
+- Le cron horaire du serveur (`/etc/cron.d/intranet-mersch`) déclenche la collecte toutes les 2 h de 6 h à 20 h : flux RSS de RTL, Wort, L'essentiel, Reporter et recherche Google Actualités « Mersch OR Miersch ». Aucune nouvelle tâche planifiée à créer.
+- Seuls le titre, le média, la date, un extrait de 300 caractères au plus et le lien sont gardés, 3 ans.
+- Bloc « Mersch dans la presse » sur l'accueil (dernières 24 h), archive cherchable sur `/presse`, lisibles sans connexion.
+- Les admins et les rédacteurs Communication masquent un article hors sujet depuis l'archive.
+- Flux et mots-clés : `/admin/config/mersch/presse` (bouton « Enregistrer et collecter maintenant » pour tester).
+
+Mise en service : `git pull`, `drush-intranet pm:install mersch_presse`, `drush-intranet locale:check && drush-intranet locale:update`, puis le bouton de collecte. La VM doit joindre les sites des médias en HTTPS (déjà le cas pour drupal.org).
+
+Tests : `vendor/bin/phpunit -c web/core web/modules/custom/mersch_presse` (avec `drupal/core-dev` installé).
 
 ## Règles du dépôt
 

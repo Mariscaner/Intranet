@@ -1,0 +1,83 @@
+/* Revue de presse : bloc de l'accueil et archive (US-40, US-41). */
+.mersch-presse__liste {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+}
+.mersch-presse__article {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--mersch-ligne, #d9dce8);
+}
+.mersch-presse__article:last-child {
+  border-bottom: 0;
+}
+.mersch-presse__meta {
+  display: block;
+  font-size: 13px;
+  color: var(--mersch-texte-2, #4a5480);
+}
+.mersch-presse__titre {
+  font: bold 16px/1.35 var(--mersch-police-texte, Arial, sans-serif);
+  color: var(--mersch-bleu, #26336a);
+  text-decoration: none;
+}
+.mersch-presse__titre:hover,
+.mersch-presse__titre:focus {
+  text-decoration: underline;
+}
+.mersch-presse__extrait {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+.mersch-presse__action {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+.mersch-presse__article--masque {
+  opacity: .6;
+}
+.mersch-presse-archive__filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin: 16px 0 20px;
+  padding: 16px;
+  background: var(--mersch-fond-2, #f3f4f8);
+}
+.mersch-presse-archive__filtres label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+}
+.mersch-presse-archive__filtres input[type="search"] {
+  min-width: 240px;
+}
+.mersch-presse-archive__filtres input,
+.mersch-presse-archive__filtres select,
+.mersch-presse-archive__filtres button {
+  font: 15px var(--mersch-police-texte, Arial, sans-serif);
+  padding: 6px 8px;
+  max-width: 100%;
+}
+.mersch-presse-archive__case {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.mersch-presse-archive__case label {
+  font-weight: normal;
+}
+.mersch-presse-archive__boutons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .mersch-presse-archive__filtres > div,
+  .mersch-presse-archive__filtres input[type="search"] {
+    width: 100%;
+    min-width: 0;
+  }
+}

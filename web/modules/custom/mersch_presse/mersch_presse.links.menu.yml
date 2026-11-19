@@ -1,0 +1,5 @@
+mersch_presse.reglages:
+  title: 'Press review'
+  description: 'News feeds and keywords of the press review.'
+  route_name: mersch_presse.reglages
+  parent: system.admin_config_content

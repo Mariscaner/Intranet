@@ -1,0 +1,44 @@
+# Flux lus toutes les 2 h (D-045). Pour un flux Google Actualités
+# (news.google.com), la recherche filtre déjà : tous ses articles sont gardés
+# et le média est celui que Google indique.
+sources:
+  - nom: RTL
+    url: 'https://www.rtl.lu/news/national.rss'
+    actif: true
+  - nom: Wort
+    url: 'https://www.wort.lu/rss'
+    actif: true
+  - nom: "L'essentiel"
+    url: 'https://partner-feeds.lessentiel.lu/rss/lessentiel-de'
+    actif: true
+  - nom: "L'essentiel"
+    url: 'https://partner-feeds.lessentiel.lu/rss/lessentiel-fr'
+    actif: true
+  - nom: Reporter
+    url: 'https://www.reporter.lu/feed/'
+    actif: true
+  - nom: 'Google Actualités (FR)'
+    url: 'https://news.google.com/rss/search?q=Mersch+OR+Miersch&hl=fr&gl=LU&ceid=LU:fr'
+    actif: true
+  - nom: 'Google Actualités (DE)'
+    url: 'https://news.google.com/rss/search?q=Mersch+OR+Miersch&hl=de&gl=LU&ceid=LU:de'
+    actif: true
+# Un article est gardé si son titre ou son extrait contient un mot commençant
+# par l'un de ces mots-clés (sans tenir compte des majuscules).
+mots_cles:
+  - Mersch
+  - Miersch
+  - Beringen
+  - Biereng
+  - Berschbach
+  - Bierschbech
+  - Essingen
+  - Moesdorf
+  - Miesdref
+  - Pettingen
+  - Pëtteng
+  - Reckange
+  - Rollingen
+  - Rollengen
+  - Schoenfels
+  - Schëndels

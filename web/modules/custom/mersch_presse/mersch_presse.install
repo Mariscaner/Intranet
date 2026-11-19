@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Installation de la revue de presse.
+ */
+
+declare(strict_types=1);
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ *
+ * Les rédacteurs Communication peuvent masquer un article (US-42, D-046).
+ */
+function mersch_presse_install(): void {
+  if ($role = Role::load('redacteur_communication')) {
+    $role->grantPermission('hide mersch presse articles')->save();
+  }
+}

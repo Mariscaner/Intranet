@@ -71,6 +71,8 @@ class AccueilController extends ControllerBase implements TrustedCallbackInterfa
       '#annuaire' => $annuaire,
       '#rubriques' => $rubriques,
       '#nouvelles' => $this->nouvelles($rubriques, $cache),
+      // Revue de presse (module mersch_presse, US-40), si le module est actif.
+      '#presse' => $this->moduleHandler()->invokeAll('mersch_accueil_presse'),
       '#idees' => [
         // Construit à part : le formulaire ne rend pas l'accueil incachable.
         '#lazy_builder' => [static::class . '::boiteIdees', []],
