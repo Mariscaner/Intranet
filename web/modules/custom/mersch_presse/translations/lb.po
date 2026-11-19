@@ -83,9 +83,6 @@ msgstr "Lescht Sammlung: @date. D'Feeds ginn all zwou Stonnen tëscht 6 an 20 Au
 msgid "No collection yet. Feeds are read every two hours from 6:00 to 20:00."
 msgstr "Nach keng Sammlung. D'Feeds ginn all zwou Stonnen tëscht 6 an 20 Auer gelies."
 
-msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), every article is kept and the media is the one given by Google."
-msgstr "Ee Feed pro Linn: <code>Medium | RSS-Adress</code>. Eng Linn mat # ufänken, fir se auszeschalten. Bei enger Sich op Google News (news.google.com) gëtt all Artikel gehalen, mam Medium, dat Google uginn."
-
 msgid "One per line. An article is kept if its title or excerpt contains a word that begins with one of these keywords, regardless of case."
 msgstr "Ee pro Linn. En Artikel gëtt gehalen, wann säin Titel oder Auszuch e Wuert huet, dat mat engem vun dëse Schlësselwierder ufänkt, egal ob grouss oder kleng geschriwwen."
 
@@ -102,3 +99,81 @@ msgid "1 new article."
 msgid_plural "@count new articles."
 msgstr[0] "1 neien Artikel."
 msgstr[1] "@count nei Artikelen."
+
+msgid "Printed press"
+msgstr "Gedréckte Press"
+
+msgid "Add an article of the printed press"
+msgstr "En Artikel aus der gedréckter Press derbäisetzen"
+
+msgid "Edit"
+msgstr "Änneren"
+
+msgid "Delete"
+msgstr "Läschen"
+
+msgid "Save"
+msgstr "Späicheren"
+
+msgid "Add a press article"
+msgstr "Pressartikel derbäisetzen"
+
+msgid "Edit the press article"
+msgstr "Pressartikel änneren"
+
+msgid "Delete the press article"
+msgstr "Pressartikel läschen"
+
+msgid "For an article of the printed press that is not online. Do not copy the article: only its title, the media, the date and a short excerpt."
+msgstr "Fir en Artikel aus der gedréckter Press, deen net online ass. Den Artikel net kopéieren: nëmmen den Titel, d'Medium, den Datum an e kuerzen Auszuch."
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "For example: Luxemburger Wort, Tageblatt, Lëtzebuerger Journal."
+msgstr "Zum Beispill: Luxemburger Wort, Tageblatt, Lëtzebuerger Journal."
+
+msgid "Date of publication"
+msgstr "Publikatiounsdatum"
+
+msgid "Excerpt"
+msgstr "Auszuch"
+
+msgid "Optional, @max characters at most."
+msgstr "Fakultativ, héchstens @max Zeechen."
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Optional: address of the article if it is also online."
+msgstr "Fakultativ: Adress vum Artikel, wann en och online ass."
+
+msgid "The date cannot be in the future."
+msgstr "Den Datum kann net an der Zukunft leien."
+
+msgid "The link must start with https://."
+msgstr "De Link muss mat https:// ufänken."
+
+msgid "The article “@titre” is saved."
+msgstr "Den Artikel „@titre“ ass gespäichert."
+
+msgid "Delete the article “@titre”?"
+msgstr "Den Artikel „@titre“ läschen?"
+
+msgid "The article is deleted."
+msgstr "Den Artikel ass geläscht."
+
+msgid "Google News: sites kept"
+msgstr "Google News: Säite behalen"
+
+msgid "One per line, end of the site address. <code>.lu</code> keeps all Luxembourg media and leaves out foreign articles about other people called Mersch."
+msgstr "Ee pro Linn, Enn vun der Adress vum Site. <code>.lu</code> behält all Lëtzebuerger Medien a léisst auslännesch Artikelen iwwer aner Leit mam Numm Mersch ewech."
+
+msgid "Excluded sections"
+msgstr "Ausgeschloss Rubriken"
+
+msgid "One per line. An article of a media feed whose address contains one of these parts (for example <code>/international</code>) is left out."
+msgstr "Ee pro Linn. En Artikel aus engem Medien-Feed, deem seng Adress ee vun dësen Deeler huet (zum Beispill <code>/international</code>), gëtt ewechgelooss."
+
+msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), only the articles of the sites below are kept, with the media given by Google."
+msgstr "Ee Feed pro Linn: <code>Medium | RSS-Adress</code>. Eng Linn mat # ufänken, fir se auszeschalten. Bei enger Sich op Google News (news.google.com) ginn nëmmen d'Artikele vun de Säiten hei ënnendrënner gehalen, mam Medium, dat Google uginn."

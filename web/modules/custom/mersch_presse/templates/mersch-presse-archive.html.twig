@@ -4,17 +4,23 @@
  * Archive de la revue de presse (US-41), plus récents d'abord.
  *
  * Variables :
- * - articles : liste de { titre, lien, media, date, extrait, masque,
- *   action: { titre, url } ou NULL }.
+ * - articles : liste de { titre, lien (peut être vide), media, date, extrait,
+ *   masque, manuel, action: { titre, url } ou NULL, modifier: adresse ou NULL }.
  * - filtres : { q, media, du, au, masques }.
  * - medias : noms des médias présents.
  * - moderateur : l'utilisateur peut masquer un article (US-42).
+ * - ajouter : adresse du formulaire d'ajout d'un article de la presse écrite
+ *   (US-44), ou NULL.
  * - action : adresse du formulaire de recherche.
  * - pager : pagination.
  */
 #}
 <div class="mersch-presse-archive">
   <p>{{ 'Press articles that mention the Commune of Mersch, collected every two hours. Only the title, an excerpt and the link are kept: the full article is on the media website.'|t }}</p>
+
+  {% if ajouter %}
+    <p><a class="button" href="{{ ajouter }}">{{ 'Add an article of the printed press'|t }}</a></p>
+  {% endif %}
 
   <form class="mersch-presse-archive__filtres" action="{{ action }}" method="get" role="search">
     <div>
@@ -54,10 +60,11 @@
     <ul class="mersch-presse__liste mersch-presse__liste--archive">
       {% for article in articles %}
         <li class="mersch-presse__article{% if article.masque %} mersch-presse__article--masque{% endif %}">
-          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b>{% if article.masque %} · {{ 'Hidden'|t }}{% endif %}</span>
-          <a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>
+          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b>{% if article.manuel %} · {{ 'Printed press'|t }}{% endif %}{% if article.masque %} · {{ 'Hidden'|t }}{% endif %}</span>
+          {% if article.lien %}<a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>{% else %}<b class="mersch-presse__titre">{{ article.titre }}</b>{% endif %}
           {% if article.extrait %}<p class="mersch-presse__extrait">{{ article.extrait }}</p>{% endif %}
           {% if article.action %}<a class="mersch-presse__action" href="{{ article.action.url }}">{{ article.action.titre }}</a>{% endif %}
+          {% if article.modifier %}<a class="mersch-presse__action" href="{{ article.modifier }}">{{ 'Edit'|t }}</a>{% endif %}
         </li>
       {% endfor %}
     </ul>

@@ -52,6 +52,8 @@ final class Analyseur {
           'extrait' => $source !== '' ? '' : self::extrait((string) $item->description, $longueur),
           'date' => self::date((string) $item->pubDate, $maintenant),
           'media' => $source !== '' ? $source : $media,
+          // Site du média d'origine (Google Actualités), sinon vide.
+          'site' => $source !== '' ? trim((string) $item->source['url']) : '',
         ];
       }
     }
@@ -72,6 +74,7 @@ final class Analyseur {
           'extrait' => self::extrait((string) $entree->summary !== '' ? (string) $entree->summary : (string) $entree->content, $longueur),
           'date' => self::date((string) $entree->published !== '' ? (string) $entree->published : (string) $entree->updated, $maintenant),
           'media' => $media,
+          'site' => '',
         ];
       }
     }
@@ -96,6 +99,40 @@ final class Analyseur {
     }
     $motif = '/(?<![\p{L}\p{N}])(?:' . implode('|', array_map(fn ($m) => preg_quote($m, '/'), $motsCles)) . ')/iu';
     return (bool) preg_match($motif, $article['titre'] . ' ' . $article['extrait']);
+  }
+
+  /**
+   * Le site d'un article Google Actualités est-il accepté ?
+   *
+   * Vrai si le nom d'hôte du site se termine par l'une des terminaisons
+   * (« .lu » garde tous les médias luxembourgeois).
+   */
+  public static function siteAccepte(string $site, array $terminaisons): bool {
+    $hote = strtolower((string) parse_url($site, PHP_URL_HOST));
+    if ($hote === '') {
+      return FALSE;
+    }
+    foreach ($terminaisons as $terminaison) {
+      $terminaison = strtolower(trim($terminaison));
+      if ($terminaison !== '' && ($hote === ltrim($terminaison, '.') || str_ends_with($hote, '.' . ltrim($terminaison, '.')))) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * Le lien de l'article est-il exclu (rubrique internationale, etc.) ?
+   */
+  public static function lienExclu(string $lien, array $exclusions): bool {
+    $chemin = strtolower((string) parse_url($lien, PHP_URL_PATH));
+    foreach ($exclusions as $exclusion) {
+      $exclusion = strtolower(trim($exclusion));
+      if ($exclusion !== '' && str_contains($chemin, $exclusion)) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
   /**

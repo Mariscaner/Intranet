@@ -1,6 +1,9 @@
 hide mersch presse articles:
   title: 'Hide press articles'
   description: 'Hide an off-topic article from the press review, or show it again (US-42). Administrators and Communication editors.'
+add mersch presse articles:
+  title: 'Add press articles manually'
+  description: 'Add, edit and delete articles of the printed press in the press review (US-44). Administrators and Communication editors.'
 administer mersch presse:
   title: 'Administer the press review'
   description: 'Edit the news feeds and the keywords, start a collection (US-43). Administrators only.'

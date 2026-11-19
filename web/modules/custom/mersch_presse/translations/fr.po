@@ -83,9 +83,6 @@ msgstr "Dernière collecte : @date. Les flux sont lus toutes les deux heures de 
 msgid "No collection yet. Feeds are read every two hours from 6:00 to 20:00."
 msgstr "Aucune collecte pour l'instant. Les flux sont lus toutes les deux heures de 6 h à 20 h."
 
-msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), every article is kept and the media is the one given by Google."
-msgstr "Un flux par ligne : <code>Média | adresse RSS</code>. Commencez une ligne par # pour la désactiver. Pour une recherche Google Actualités (news.google.com), tous les articles sont gardés, avec le média indiqué par Google."
-
 msgid "One per line. An article is kept if its title or excerpt contains a word that begins with one of these keywords, regardless of case."
 msgstr "Un par ligne. Un article est gardé si son titre ou son extrait contient un mot qui commence par l'un de ces mots-clés, sans tenir compte des majuscules."
 
@@ -102,3 +99,81 @@ msgid "1 new article."
 msgid_plural "@count new articles."
 msgstr[0] "1 nouvel article."
 msgstr[1] "@count nouveaux articles."
+
+msgid "Printed press"
+msgstr "Presse écrite"
+
+msgid "Add an article of the printed press"
+msgstr "Ajouter un article de la presse écrite"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Add a press article"
+msgstr "Ajouter un article de presse"
+
+msgid "Edit the press article"
+msgstr "Modifier l'article de presse"
+
+msgid "Delete the press article"
+msgstr "Supprimer l'article de presse"
+
+msgid "For an article of the printed press that is not online. Do not copy the article: only its title, the media, the date and a short excerpt."
+msgstr "Pour un article de la presse écrite qui n'est pas en ligne. Ne recopiez pas l'article : seulement son titre, le média, la date et un court extrait."
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "For example: Luxemburger Wort, Tageblatt, Lëtzebuerger Journal."
+msgstr "Par exemple : Luxemburger Wort, Tageblatt, Lëtzebuerger Journal."
+
+msgid "Date of publication"
+msgstr "Date de parution"
+
+msgid "Excerpt"
+msgstr "Extrait"
+
+msgid "Optional, @max characters at most."
+msgstr "Facultatif, @max caractères au plus."
+
+msgid "Link"
+msgstr "Lien"
+
+msgid "Optional: address of the article if it is also online."
+msgstr "Facultatif : adresse de l'article s'il est aussi en ligne."
+
+msgid "The date cannot be in the future."
+msgstr "La date ne peut pas être dans le futur."
+
+msgid "The link must start with https://."
+msgstr "Le lien doit commencer par https://."
+
+msgid "The article “@titre” is saved."
+msgstr "L'article « @titre » est enregistré."
+
+msgid "Delete the article “@titre”?"
+msgstr "Supprimer l'article « @titre » ?"
+
+msgid "The article is deleted."
+msgstr "L'article est supprimé."
+
+msgid "Google News: sites kept"
+msgstr "Google Actualités : sites gardés"
+
+msgid "One per line, end of the site address. <code>.lu</code> keeps all Luxembourg media and leaves out foreign articles about other people called Mersch."
+msgstr "Une par ligne, fin de l'adresse du site. <code>.lu</code> garde tous les médias luxembourgeois et écarte les articles étrangers sur d'autres personnes nommées Mersch."
+
+msgid "Excluded sections"
+msgstr "Rubriques exclues"
+
+msgid "One per line. An article of a media feed whose address contains one of these parts (for example <code>/international</code>) is left out."
+msgstr "Une par ligne. Un article d'un flux dont l'adresse contient l'un de ces morceaux (par exemple <code>/international</code>) est écarté."
+
+msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), only the articles of the sites below are kept, with the media given by Google."
+msgstr "Un flux par ligne : <code>Média | adresse RSS</code>. Commencez une ligne par # pour la désactiver. Pour une recherche Google Actualités (news.google.com), seuls les articles des sites ci-dessous sont gardés, avec le média indiqué par Google."

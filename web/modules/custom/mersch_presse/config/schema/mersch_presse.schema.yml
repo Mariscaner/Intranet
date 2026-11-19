@@ -23,3 +23,15 @@ mersch_presse.settings:
       sequence:
         type: string
         label: 'Keyword'
+    sites_google:
+      type: sequence
+      label: 'Google News: sites kept'
+      sequence:
+        type: string
+        label: 'Site ending'
+    exclusions:
+      type: sequence
+      label: 'Excluded link parts'
+      sequence:
+        type: string
+        label: 'Link part'

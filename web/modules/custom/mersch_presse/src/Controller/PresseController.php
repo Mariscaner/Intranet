@@ -64,6 +64,7 @@ class PresseController extends ControllerBase {
    */
   public function archive(Request $request): array {
     $moderateur = $this->currentUser()->hasPermission('hide mersch presse articles');
+    $redacteur = $this->currentUser()->hasPermission('add mersch presse articles');
     $filtres = [
       'q' => trim((string) $request->query->get('q', '')),
       'media' => (string) $request->query->get('media', ''),
@@ -92,10 +93,11 @@ class PresseController extends ControllerBase {
 
     return [
       '#theme' => 'mersch_presse_archive',
-      '#articles' => $this->lignes($requete->execute(), $moderateur),
+      '#articles' => $this->lignes($requete->execute(), $moderateur, $redacteur),
       '#filtres' => $filtres,
       '#medias' => $this->medias(),
       '#moderateur' => $moderateur,
+      '#ajouter' => $this->currentUser()->hasPermission('add mersch presse articles') ? Url::fromRoute('mersch_presse.ajouter')->toString() : NULL,
       '#action' => Url::fromRoute('mersch_presse.archive')->toString(),
       '#pager' => ['#type' => 'pager'],
       '#attached' => ['library' => ['mersch_presse/presse']],
@@ -130,9 +132,10 @@ class PresseController extends ControllerBase {
   }
 
   /**
-   * Lignes à afficher : { titre, lien, media, date, extrait, masque, action }.
+   * Lignes à afficher : { titre, lien, media, date, extrait, masque, manuel,
+   * action, modifier }.
    */
-  private function lignes(array $ids, bool $moderateur): array {
+  private function lignes(array $ids, bool $moderateur, bool $redacteur = FALSE): array {
     $lignes = [];
     $articles = $this->entityTypeManager()->getStorage('mersch_presse_article')->loadMultiple($ids);
     $destination = Url::fromRoute('<current>', [], ['query' => \Drupal::request()->query->all()])->toString();
@@ -149,7 +152,11 @@ class PresseController extends ControllerBase {
         'date' => $this->dateFormatter->format((int) $article->get('date')->value, 'custom', 'd.m.Y'),
         'extrait' => $article->get('extrait')->value,
         'masque' => $article->estMasque(),
+        'manuel' => $article->estManuel(),
         'action' => NULL,
+        'modifier' => ($redacteur && $article->estManuel())
+          ? Url::fromRoute('mersch_presse.modifier', ['mersch_presse_article' => $id])->toString()
+          : NULL,
       ];
       if ($moderateur) {
         $route = $article->estMasque() ? 'mersch_presse.afficher' : 'mersch_presse.masquer';

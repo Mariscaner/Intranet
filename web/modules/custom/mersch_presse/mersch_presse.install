@@ -2,20 +2,76 @@
 
 /**
  * @file
- * Installation de la revue de presse.
+ * Installation et mises à jour de la revue de presse.
  */
 
 declare(strict_types=1);
 
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_install().
  *
- * Les rédacteurs Communication peuvent masquer un article (US-42, D-046).
+ * Les rédacteurs Communication masquent un article (US-42, D-046) et ajoutent
+ * les articles de la presse écrite (US-44, D-048).
  */
 function mersch_presse_install(): void {
   if ($role = Role::load('redacteur_communication')) {
-    $role->grantPermission('hide mersch presse articles')->save();
+    $role->grantPermission('hide mersch presse articles')
+      ->grantPermission('add mersch presse articles')
+      ->save();
   }
+}
+
+/**
+ * Articles sur Mersch au Luxembourg seulement, ajout manuel (D-047, D-048).
+ *
+ * Google Actualités limité aux médias luxembourgeois, rubriques étrangères
+ * exclues, champ « ajouté à la main », droit d'ajout pour la Communication,
+ * et suppression des articles collectés jusqu'ici (en grande partie hors
+ * sujet) : la collecte suivante reprend avec les nouvelles règles.
+ */
+function mersch_presse_update_11001(): string {
+  $gestionnaire = \Drupal::entityDefinitionUpdateManager();
+  if (!$gestionnaire->getFieldStorageDefinition('manuel', 'mersch_presse_article')) {
+    $gestionnaire->installFieldStorageDefinition('manuel', 'mersch_presse_article', 'mersch_presse',
+      BaseFieldDefinition::create('boolean')
+        ->setLabel(new TranslatableMarkup('Added manually'))
+        ->setDefaultValue(FALSE)
+        ->setInitialValue(FALSE));
+  }
+  // Le lien devient facultatif (presse écrite).
+  $lien = $gestionnaire->getFieldStorageDefinition('lien', 'mersch_presse_article');
+  $gestionnaire->updateFieldStorageDefinition($lien);
+
+  $config = \Drupal::configFactory()->getEditable('mersch_presse.settings');
+  $sources = $config->get('sources') ?? [];
+  foreach ($sources as &$source) {
+    if (str_starts_with($source['url'], 'https://news.google.com/rss/search?q=Mersch+OR+Miersch&hl=fr')) {
+      $source['url'] = 'https://news.google.com/rss/search?q=%28Mersch+OR+Miersch%29+%28site%3Artl.lu+OR+site%3Awort.lu+OR+site%3Alessentiel.lu+OR+site%3Atageblatt.lu+OR+site%3Avirgule.lu+OR+site%3A100komma7.lu+OR+site%3Areporter.lu+OR+site%3Aluxtimes.lu+OR+site%3Alequotidien.lu+OR+site%3Ajournal.lu+OR+site%3Atelecran.lu+OR+site%3Acontacto.lu+OR+site%3Apaperjam.lu+OR+site%3Adelano.lu+OR+site%3Achronicle.lu+OR+site%3Atoday.rtl.lu%29&hl=fr&gl=LU&ceid=LU:fr';
+    }
+    elseif (str_starts_with($source['url'], 'https://news.google.com/rss/search?q=Mersch+OR+Miersch&hl=de')) {
+      $source['url'] = 'https://news.google.com/rss/search?q=%28Mersch+OR+Miersch%29+%28site%3Artl.lu+OR+site%3Awort.lu+OR+site%3Alessentiel.lu+OR+site%3Atageblatt.lu+OR+site%3Avirgule.lu+OR+site%3A100komma7.lu+OR+site%3Areporter.lu+OR+site%3Aluxtimes.lu+OR+site%3Alequotidien.lu+OR+site%3Ajournal.lu+OR+site%3Atelecran.lu+OR+site%3Acontacto.lu+OR+site%3Apaperjam.lu+OR+site%3Adelano.lu+OR+site%3Achronicle.lu+OR+site%3Atoday.rtl.lu%29&hl=de&gl=LU&ceid=LU:de';
+    }
+  }
+  unset($source);
+  $config->set('sources', $sources)
+    ->set('sites_google', ['.lu'])
+    ->set('exclusions', ['/international', '/welt', '/monde', '/world', '/ausland', '/etranger', '/grande-region', '/grenzregion'])
+    ->save();
+
+  if ($role = Role::load('redacteur_communication')) {
+    $role->grantPermission('add mersch presse articles')->save();
+  }
+
+  $stockage = \Drupal::entityTypeManager()->getStorage('mersch_presse_article');
+  $ids = $stockage->getQuery()->accessCheck(FALSE)->execute();
+  foreach (array_chunk($ids, 100) as $lot) {
+    $stockage->delete($stockage->loadMultiple($lot));
+  }
+  \Drupal::state()->delete('mersch_presse.derniere_collecte');
+
+  return (string) new TranslatableMarkup('Press review: Luxembourg media only, @count articles collected so far deleted, manual articles enabled.', ['@count' => count($ids)]);
 }

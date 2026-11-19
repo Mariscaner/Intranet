@@ -23,6 +23,7 @@ function mersch_presse_theme(): array {
         'filtres' => [],
         'medias' => [],
         'moderateur' => FALSE,
+        'ajouter' => NULL,
         'action' => NULL,
         'pager' => NULL,
       ],
