@@ -14,7 +14,8 @@ use Drupal\mersch_annuaire\ListeParser;
 /**
  * État de présence des agents de l'annuaire (US-36 à US-38, D-044).
  *
- * Un seul appel /presAbs pour tous les agents, gardé une minute en cache.
+ * Un seul appel /bookings (pointages du jour de tous les agents), gardé une
+ * minute en cache.
  * Seul l'état du moment (present, absent, deplacement) en sort : ni motif,
  * ni type d'absence, ni date de retour, ni heure. La seule donnée
  * conservée est le n° DSK de chaque fiche de l'annuaire.
@@ -78,20 +79,23 @@ class Presence {
   }
 
   /**
-   * États DSK du moment, [noPers => état] (le reste de /presAbs est jeté).
+   * États DSK du moment, [noPers => état] (le reste de /bookings est jeté).
+   *
+   * /presAbs existe mais DSK n'y remplit pas le dernier pointage (2000-01-01
+   * pour tous, vu le 2026-11-19) : on lit donc les pointages du jour de tous
+   * les agents visibles, en un seul appel /bookings.
    *
    * @throws \Drupal\mersch_dsknet\DsknetIndisponible
    * @throws \Drupal\mersch_dsknet\AppelAbsent
    */
   public function etatsDsk(): array {
-    $lignes = $this->client->get('/presAbs', ['count' => 1000]);
     $jour = date('Y-m-d', $this->time->getRequestTime());
+    $lignes = $this->client->get('/bookings', ['dateFrom' => $jour, 'dateTo' => $jour]);
     $types = (array) $this->reglages->get('types_pointage');
-    $base = (int) $this->reglages->get('presence_index_base');
     $etats = [];
     foreach (is_array($lignes) ? $lignes : [] as $ligne) {
-      $noPers = is_array($ligne) ? (int) ($ligne['noPers'] ?? 0) : 0;
-      if ($noPers > 0 && ($etat = self::etatDepuis($ligne, $jour, $types, $base))) {
+      $noPers = is_array($ligne) ? (int) ($ligne['noPers'] ?? $ligne['pers']['noPers'] ?? 0) : 0;
+      if ($noPers > 0 && ($etat = self::etatDepuis(self::pointagesDuJour($ligne, $jour), $types))) {
         $etats[$noPers] = $etat;
       }
     }
@@ -99,31 +103,55 @@ class Presence {
   }
 
   /**
-   * État d'une ligne /presAbs, ou NULL s'il ne peut être déduit.
+   * Pointages du jour d'une ligne /bookings, quelle que soit sa forme.
    *
-   * Dernier pointage du jour : code « déplacement » (réglage types_pointage)
-   * → deplacement ; code d'entrée ou de sortie connu → present / absent ;
-   * code générique (B1) → alternance, un n° de pointage impair = entré.
-   * Aucun pointage aujourd'hui → absent.
-   *
-   * @param array $ligne
-   *   Ligne de /presAbs (RS_PersPresAbs).
-   * @param string $jour
-   *   Date du jour, AAAA-MM-JJ.
-   * @param array $types
-   *   Réglage types_pointage (code DSK → entree, sortie, deplacement).
-   * @param int $base
-   *   N° (index) du premier pointage du jour chez DSK : 1 ou 0.
+   * DSK-API 1.6 : pointages sous « bk » ; doc 1.8 : « days » (theDate,
+   * bookings). Les demandes de pointage non validées (bkReq) sont ignorées.
    */
-  public static function etatDepuis(array $ligne, string $jour, array $types, int $base = 1): ?string {
-    $pointage = is_array($ligne['lastBooking'] ?? NULL) ? $ligne['lastBooking'] : NULL;
-    $date = $pointage ? substr((string) ($pointage['dateTime'] ?? $pointage['date'] ?? ''), 0, 10) : '';
-    if (!$pointage || $date !== $jour) {
+  public static function pointagesDuJour(array $ligne, string $jour): array {
+    $pointages = [];
+    $parcourir = function (mixed $noeud, ?string $date) use (&$parcourir, &$pointages, $jour): void {
+      if (!is_array($noeud)) {
+        return;
+      }
+      if (isset($noeud['theDate'])) {
+        $date = substr((string) $noeud['theDate'], 0, 10);
+      }
+      $estPointage = array_key_exists('type', $noeud) || array_key_exists('index', $noeud) || array_key_exists('time', $noeud);
+      if ($estPointage && !is_array($noeud['bookings'] ?? NULL)) {
+        $propre = substr((string) ($noeud['dateTime'] ?? $noeud['date'] ?? ''), 0, 10);
+        if (($propre !== '' ? $propre : $date ?? $jour) === $jour) {
+          $pointages[] = $noeud;
+        }
+        return;
+      }
+      foreach ($noeud as $cle => $enfant) {
+        // Clé date (« 2026-11-19 » => [...]) acceptée aussi.
+        $parcourir($enfant, is_string($cle) && preg_match('/^\d{4}-\d{2}-\d{2}/', $cle) ? substr($cle, 0, 10) : $date);
+      }
+    };
+    $parcourir($ligne['bk'] ?? $ligne['days'] ?? $ligne['bookings'] ?? [], NULL);
+    return $pointages;
+  }
+
+  /**
+   * État à partir des pointages du jour d'un agent, ou NULL si inconnu.
+   *
+   * Dernier pointage : code « déplacement » (réglage types_pointage) →
+   * deplacement ; code d'entrée ou de sortie connu → present / absent ;
+   * code générique (B1) → alternance, nombre impair de pointages = entré.
+   * Aucun pointage aujourd'hui → absent.
+   */
+  public static function etatDepuis(array $pointages, array $types): ?string {
+    $pointages = array_values(array_filter($pointages, 'is_array'));
+    if (!$pointages) {
       return self::ABSENT;
     }
+    usort($pointages, fn (array $a, array $b): int => [(int) ($a['index'] ?? 0), (int) ($a['bk'] ?? 0), (string) ($a['time'] ?? '')] <=> [(int) ($b['index'] ?? 0), (int) ($b['bk'] ?? 0), (string) ($b['time'] ?? '')]);
+    $dernier = end($pointages);
     $types = array_change_key_case($types, CASE_UPPER);
     foreach (['type', 'subType'] as $champ) {
-      $valeur = strtoupper(trim((string) ($pointage[$champ] ?? '')));
+      $valeur = strtoupper(trim((string) ($dernier[$champ] ?? '')));
       $code = $valeur !== '' ? ($types[$valeur] ?? NULL) : NULL;
       if ($code !== NULL) {
         return match ($code) {
@@ -134,11 +162,7 @@ class Presence {
         };
       }
     }
-    if (!isset($pointage['index']) || !is_numeric($pointage['index'])) {
-      return NULL;
-    }
-    $rang = (int) $pointage['index'] - $base + 1;
-    return $rang % 2 === 1 ? self::PRESENT : self::ABSENT;
+    return count($pointages) % 2 === 1 ? self::PRESENT : self::ABSENT;
   }
 
   /**
@@ -170,9 +194,7 @@ class Presence {
       if (!$noPers) {
         // Liste DSK lue une seule fois, au premier besoin.
         $noms ??= $this->nomsDsk();
-        $cle = $this->cleNom((string) $fiche->get('nom')->value, (string) $fiche->get('prenom')->value);
-        $candidats = $noms[$cle] ?? [];
-        $noPers = count($candidats) === 1 ? $candidats[0] : NULL;
+        $noPers = self::trouver($noms, $this->cleNom((string) $fiche->get('nom')->value, ''), $this->cleNom('', (string) $fiche->get('prenom')->value));
       }
       if ($noPers) {
         $liaisons[$this->cleFiche($fiche)] = $noPers;
@@ -204,7 +226,7 @@ class Presence {
   }
 
   /**
-   * N° DSK des agents actifs par clé de nom, [clé => noPers[]].
+   * Noms des agents DSK actifs, nettoyés : liste de [nom, prenom, noPers].
    *
    * @throws \Drupal\mersch_dsknet\DsknetIndisponible
    */
@@ -215,15 +237,15 @@ class Presence {
     catch (AppelAbsent) {
       return [];
     }
-    return self::grouperNoms($fiches, fn (string $nom, string $prenom): string => $this->cleNom($nom, $prenom));
+    return self::listerNoms($fiches, fn (string $nom, string $prenom): string => $this->cleNom($nom, $prenom));
   }
 
   /**
-   * Regroupe des fiches DSK (pers.lastName, firstName, noPers) par clé.
+   * Réduit des fiches DSK (pers.lastName, firstName, noPers) aux noms nettoyés.
    *
-   * @return array<string, int[]>
+   * @return array<int, array{nom: string, prenom: string, noPers: int}>
    */
-  public static function grouperNoms(array $fiches, callable $cle): array {
+  public static function listerNoms(array $fiches, callable $cle): array {
     $noms = [];
     foreach ($fiches as $ligne) {
       $pers = is_array($ligne) ? ($ligne['pers'] ?? $ligne) : NULL;
@@ -232,12 +254,28 @@ class Presence {
       if ($noPers <= 0 || $nom === '') {
         continue;
       }
-      $k = $cle($nom, (string) ($pers['firstName'] ?? ''));
-      if (!in_array($noPers, $noms[$k] ?? [], TRUE)) {
-        $noms[$k][] = $noPers;
-      }
+      $noms[$noPers] = ['nom' => $cle($nom, ''), 'prenom' => $cle('', (string) ($pers['firstName'] ?? '')), 'noPers' => $noPers];
     }
-    return $noms;
+    return array_values($noms);
+  }
+
+  /**
+   * N° DSK de l'agent unique qui porte ce nom et ce prénom, ou NULL.
+   *
+   * D'abord nom et prénom identiques ; sinon nom identique ou prolongé par
+   * d'autres mots (« Martins » / « Martins Franco ») et prénom abrégé dans
+   * l'une des deux listes (« Dan » / « Daniel », « Carlos » / « Carlos
+   * Alexandre »), 3 lettres au moins. Deux candidats : pas de liaison.
+   */
+  public static function trouver(array $noms, string $nom, string $prenom): ?int {
+    $exacts = array_filter($noms, fn (array $n): bool => $n['nom'] === $nom && $n['prenom'] === $prenom);
+    if ($exacts) {
+      return count($exacts) === 1 ? reset($exacts)['noPers'] : NULL;
+    }
+    $mots = fn (string $a, string $b): bool => $a === $b || str_starts_with($b, $a . ' ') || str_starts_with($a, $b . ' ');
+    $debut = fn (string $a, string $b): bool => min(mb_strlen($a), mb_strlen($b)) >= 3 && (str_starts_with($a, $b) || str_starts_with($b, $a));
+    $proches = array_filter($noms, fn (array $n): bool => $nom !== '' && $mots($n['nom'], $nom) && $debut($n['prenom'], $prenom));
+    return count($proches) === 1 ? reset($proches)['noPers'] : NULL;
   }
 
   /**
