@@ -40,3 +40,42 @@ mersch_presse.reglages:
     _title: 'Press review'
   requirements:
     _permission: 'administer mersch presse'
+
+mersch_presse.ajouter:
+  path: '/presse/ajouter'
+  defaults:
+    _form: '\Drupal\mersch_presse\Form\ArticleForm'
+    _title: 'Add a press article'
+  requirements:
+    _permission: 'add mersch presse articles'
+  options:
+    # Formulaire dans le thème d'administration, comme les nouvelles.
+    _admin_route: TRUE
+
+mersch_presse.modifier:
+  path: '/presse/{mersch_presse_article}/modifier'
+  defaults:
+    _form: '\Drupal\mersch_presse\Form\ArticleForm'
+    _title: 'Edit the press article'
+  requirements:
+    _permission: 'add mersch presse articles'
+    _custom_access: '\Drupal\mersch_presse\Form\ArticleForm::accesManuel'
+  options:
+    _admin_route: TRUE
+    parameters:
+      mersch_presse_article:
+        type: entity:mersch_presse_article
+
+mersch_presse.supprimer:
+  path: '/presse/{mersch_presse_article}/supprimer'
+  defaults:
+    _form: '\Drupal\mersch_presse\Form\ArticleSupprimerForm'
+    _title: 'Delete the press article'
+  requirements:
+    _permission: 'add mersch presse articles'
+    _custom_access: '\Drupal\mersch_presse\Form\ArticleForm::accesManuel'
+  options:
+    _admin_route: TRUE
+    parameters:
+      mersch_presse_article:
+        type: entity:mersch_presse_article

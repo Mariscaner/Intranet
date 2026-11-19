@@ -83,9 +83,6 @@ msgstr "Letzte Sammlung: @date. Die Feeds werden alle zwei Stunden zwischen 6 un
 msgid "No collection yet. Feeds are read every two hours from 6:00 to 20:00."
 msgstr "Noch keine Sammlung. Die Feeds werden alle zwei Stunden zwischen 6 und 20 Uhr gelesen."
 
-msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), every article is kept and the media is the one given by Google."
-msgstr "Ein Feed pro Zeile: <code>Medium | RSS-Adresse</code>. Eine Zeile mit # beginnen, um sie zu deaktivieren. Bei einer Google-News-Suche (news.google.com) wird jeder Artikel behalten, mit dem von Google angegebenen Medium."
-
 msgid "One per line. An article is kept if its title or excerpt contains a word that begins with one of these keywords, regardless of case."
 msgstr "Eines pro Zeile. Ein Artikel wird behalten, wenn sein Titel oder Auszug ein Wort enthält, das mit einem dieser Schlüsselwörter beginnt, unabhängig von Groß- und Kleinschreibung."
 
@@ -102,3 +99,81 @@ msgid "1 new article."
 msgid_plural "@count new articles."
 msgstr[0] "1 neuer Artikel."
 msgstr[1] "@count neue Artikel."
+
+msgid "Printed press"
+msgstr "Printpresse"
+
+msgid "Add an article of the printed press"
+msgstr "Einen Artikel aus der Printpresse hinzufügen"
+
+msgid "Edit"
+msgstr "Bearbeiten"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Add a press article"
+msgstr "Presseartikel hinzufügen"
+
+msgid "Edit the press article"
+msgstr "Presseartikel bearbeiten"
+
+msgid "Delete the press article"
+msgstr "Presseartikel löschen"
+
+msgid "For an article of the printed press that is not online. Do not copy the article: only its title, the media, the date and a short excerpt."
+msgstr "Für einen Artikel aus der Printpresse, der nicht online ist. Den Artikel nicht abschreiben: nur Titel, Medium, Datum und einen kurzen Auszug."
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "For example: Luxemburger Wort, Tageblatt, Lëtzebuerger Journal."
+msgstr "Zum Beispiel: Luxemburger Wort, Tageblatt, Lëtzebuerger Journal."
+
+msgid "Date of publication"
+msgstr "Erscheinungsdatum"
+
+msgid "Excerpt"
+msgstr "Auszug"
+
+msgid "Optional, @max characters at most."
+msgstr "Optional, höchstens @max Zeichen."
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Optional: address of the article if it is also online."
+msgstr "Optional: Adresse des Artikels, wenn er auch online ist."
+
+msgid "The date cannot be in the future."
+msgstr "Das Datum darf nicht in der Zukunft liegen."
+
+msgid "The link must start with https://."
+msgstr "Der Link muss mit https:// beginnen."
+
+msgid "The article “@titre” is saved."
+msgstr "Der Artikel „@titre“ ist gespeichert."
+
+msgid "Delete the article “@titre”?"
+msgstr "Den Artikel „@titre“ löschen?"
+
+msgid "The article is deleted."
+msgstr "Der Artikel ist gelöscht."
+
+msgid "Google News: sites kept"
+msgstr "Google News: behaltene Seiten"
+
+msgid "One per line, end of the site address. <code>.lu</code> keeps all Luxembourg media and leaves out foreign articles about other people called Mersch."
+msgstr "Eine pro Zeile, Ende der Website-Adresse. <code>.lu</code> behält alle luxemburgischen Medien und lässt ausländische Artikel über andere Personen namens Mersch weg."
+
+msgid "Excluded sections"
+msgstr "Ausgeschlossene Rubriken"
+
+msgid "One per line. An article of a media feed whose address contains one of these parts (for example <code>/international</code>) is left out."
+msgstr "Eine pro Zeile. Ein Artikel eines Medien-Feeds, dessen Adresse einen dieser Teile enthält (zum Beispiel <code>/international</code>), wird weggelassen."
+
+msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), only the articles of the sites below are kept, with the media given by Google."
+msgstr "Ein Feed pro Zeile: <code>Medium | RSS-Adresse</code>. Eine Zeile mit # beginnen, um sie zu deaktivieren. Bei einer Google-News-Suche (news.google.com) werden nur die Artikel der unten genannten Seiten behalten, mit dem von Google angegebenen Medium."

@@ -47,6 +47,24 @@ XML;
     $this->assertSame('Six blessés à Mersch', $article['titre']);
     $this->assertSame('Virgule.lu', $article['media']);
     $this->assertSame('', $article['extrait']);
+    $this->assertSame('https://www.virgule.lu', $article['site']);
+  }
+
+  public function testSiteAccepte(): void {
+    $this->assertTrue(Analyseur::siteAccepte('https://www.virgule.lu', ['.lu']));
+    $this->assertTrue(Analyseur::siteAccepte('https://today.rtl.lu/', ['.lu']));
+    $this->assertFalse(Analyseur::siteAccepte('https://www.sueddeutsche.de', ['.lu']));
+    $this->assertFalse(Analyseur::siteAccepte('https://www.mersch-lu.de', ['.lu']));
+    $this->assertFalse(Analyseur::siteAccepte('', ['.lu']));
+    $this->assertTrue(Analyseur::siteAccepte('https://www.wort.lu', ['wort.lu']));
+  }
+
+  public function testLienExclu(): void {
+    $exclusions = ['/international', '/welt'];
+    $this->assertTrue(Analyseur::lienExclu('https://www.rtl.lu/news/international/a/1', $exclusions));
+    $this->assertTrue(Analyseur::lienExclu('https://www.wort.lu/welt/mersch/123.html', $exclusions));
+    $this->assertFalse(Analyseur::lienExclu('https://www.rtl.lu/news/national/a/2', $exclusions));
+    $this->assertFalse(Analyseur::lienExclu('https://www.rtl.lu/news/national/a/2', []));
   }
 
   public function testAtom(): void {

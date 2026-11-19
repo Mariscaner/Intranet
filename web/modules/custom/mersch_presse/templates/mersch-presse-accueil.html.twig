@@ -5,7 +5,8 @@
  * dernières 24 h.
  *
  * Variables :
- * - articles : liste de { titre, lien, media, date, extrait }.
+ * - articles : liste de { titre, lien (vide pour la presse écrite), media,
+ *   date, extrait, manuel }.
  * - archive : adresse de l'archive.
  */
 #}
@@ -15,8 +16,8 @@
     <ul class="mersch-presse__liste">
       {% for article in articles %}
         <li class="mersch-presse__article">
-          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b></span>
-          <a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>
+          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b>{% if article.manuel %} · {{ 'Printed press'|t }}{% endif %}</span>
+          {% if article.lien %}<a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>{% else %}<b class="mersch-presse__titre">{{ article.titre }}</b>{% endif %}
         </li>
       {% endfor %}
     </ul>

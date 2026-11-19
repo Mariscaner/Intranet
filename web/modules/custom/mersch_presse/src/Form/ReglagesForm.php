@@ -47,7 +47,7 @@ class ReglagesForm extends ConfigFormBase {
     $form['sources'] = [
       '#type' => 'textarea',
       '#title' => $this->t('News feeds'),
-      '#description' => $this->t('One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), every article is kept and the media is the one given by Google.'),
+      '#description' => $this->t('One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), only the articles of the sites below are kept, with the media given by Google.'),
       '#default_value' => implode("\n", $lignes),
       '#rows' => 10,
       '#required' => TRUE,
@@ -59,6 +59,21 @@ class ReglagesForm extends ConfigFormBase {
       '#default_value' => implode("\n", $config->get('mots_cles') ?? []),
       '#rows' => 10,
       '#required' => TRUE,
+    ];
+    $form['sites_google'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Google News: sites kept'),
+      '#description' => $this->t('One per line, end of the site address. <code>.lu</code> keeps all Luxembourg media and leaves out foreign articles about other people called Mersch.'),
+      '#default_value' => implode("\n", $config->get('sites_google') ?? ['.lu']),
+      '#rows' => 3,
+      '#required' => TRUE,
+    ];
+    $form['exclusions'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Excluded sections'),
+      '#description' => $this->t('One per line. An article of a media feed whose address contains one of these parts (for example <code>/international</code>) is left out.'),
+      '#default_value' => implode("\n", $config->get('exclusions') ?? []),
+      '#rows' => 6,
     ];
     $form = parent::buildForm($form, $form_state);
     $form['actions']['collecter'] = [
@@ -96,6 +111,9 @@ class ReglagesForm extends ConfigFormBase {
       }
     }
     $form_state->setValue('mots_cles_lus', $motsCles);
+    $liste = fn (string $champ) => array_values(array_unique(array_filter(array_map('trim', preg_split('/\R/u', (string) $form_state->getValue($champ))), 'strlen')));
+    $form_state->setValue('sites_google_lus', $liste('sites_google'));
+    $form_state->setValue('exclusions_lues', $liste('exclusions'));
   }
 
   /**
@@ -105,6 +123,8 @@ class ReglagesForm extends ConfigFormBase {
     $this->config('mersch_presse.settings')
       ->set('sources', $form_state->getValue('sources_lues'))
       ->set('mots_cles', $form_state->getValue('mots_cles_lus'))
+      ->set('sites_google', $form_state->getValue('sites_google_lus'))
+      ->set('exclusions', $form_state->getValue('exclusions_lues'))
       ->save();
     parent::submitForm($form, $form_state);
   }

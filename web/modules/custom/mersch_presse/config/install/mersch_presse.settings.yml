@@ -1,6 +1,7 @@
 # Flux lus toutes les 2 h (D-045). Pour un flux Google Actualités
-# (news.google.com), la recherche filtre déjà : tous ses articles sont gardés
-# et le média est celui que Google indique.
+# (news.google.com), la recherche porte déjà sur Mersch, limitée aux médias
+# luxembourgeois ; seuls les articles des sites listés sous sites_google sont
+# gardés, avec le média que Google indique (D-047).
 sources:
   - nom: RTL
     url: 'https://www.rtl.lu/news/national.rss'
@@ -18,10 +19,10 @@ sources:
     url: 'https://www.reporter.lu/feed/'
     actif: true
   - nom: 'Google Actualités (FR)'
-    url: 'https://news.google.com/rss/search?q=Mersch+OR+Miersch&hl=fr&gl=LU&ceid=LU:fr'
+    url: 'https://news.google.com/rss/search?q=%28Mersch+OR+Miersch%29+%28site%3Artl.lu+OR+site%3Awort.lu+OR+site%3Alessentiel.lu+OR+site%3Atageblatt.lu+OR+site%3Avirgule.lu+OR+site%3A100komma7.lu+OR+site%3Areporter.lu+OR+site%3Aluxtimes.lu+OR+site%3Alequotidien.lu+OR+site%3Ajournal.lu+OR+site%3Atelecran.lu+OR+site%3Acontacto.lu+OR+site%3Apaperjam.lu+OR+site%3Adelano.lu+OR+site%3Achronicle.lu+OR+site%3Atoday.rtl.lu%29&hl=fr&gl=LU&ceid=LU:fr'
     actif: true
   - nom: 'Google Actualités (DE)'
-    url: 'https://news.google.com/rss/search?q=Mersch+OR+Miersch&hl=de&gl=LU&ceid=LU:de'
+    url: 'https://news.google.com/rss/search?q=%28Mersch+OR+Miersch%29+%28site%3Artl.lu+OR+site%3Awort.lu+OR+site%3Alessentiel.lu+OR+site%3Atageblatt.lu+OR+site%3Avirgule.lu+OR+site%3A100komma7.lu+OR+site%3Areporter.lu+OR+site%3Aluxtimes.lu+OR+site%3Alequotidien.lu+OR+site%3Ajournal.lu+OR+site%3Atelecran.lu+OR+site%3Acontacto.lu+OR+site%3Apaperjam.lu+OR+site%3Adelano.lu+OR+site%3Achronicle.lu+OR+site%3Atoday.rtl.lu%29&hl=de&gl=LU&ceid=LU:de'
     actif: true
 # Un article est gardé si son titre ou son extrait contient un mot commençant
 # par l'un de ces mots-clés (sans tenir compte des majuscules).
@@ -42,3 +43,17 @@ mots_cles:
   - Rollengen
   - Schoenfels
   - Schëndels
+# Google Actualités : terminaisons des sites gardés (D-047).
+sites_google:
+  - .lu
+# Flux des médias : un article dont le lien contient l'un de ces morceaux
+# d'adresse est ignoré (rubriques étrangères, D-047).
+exclusions:
+  - /international
+  - /welt
+  - /monde
+  - /world
+  - /ausland
+  - /etranger
+  - /grande-region
+  - /grenzregion

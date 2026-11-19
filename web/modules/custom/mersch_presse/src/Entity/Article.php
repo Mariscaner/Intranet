@@ -16,7 +16,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * Droits d'auteur et RGPD : seuls le titre, le média, la date, un extrait de
  * 300 caractères au plus et le lien sont gardés ; ni texte intégral, ni image.
  * Un article masqué (US-42) reste enregistré pour ne pas revenir au passage
- * suivant. Tout article est supprimé 3 ans après sa date (D-045).
+ * suivant. Tout article est supprimé 3 ans après sa date (D-045). La
+ * Communication peut ajouter un article de la presse écrite à la main (D-048).
  */
 #[ContentEntityType(
   id: 'mersch_presse_article',
@@ -58,9 +59,9 @@ class Article extends ContentEntityBase {
     $fields['extrait'] = BaseFieldDefinition::create('string')
       ->setLabel(new TranslatableMarkup('Excerpt'))
       ->setSetting('max_length', self::EXTRAIT + 10);
+    // Facultatif pour un article de la presse écrite ajouté à la main.
     $fields['lien'] = BaseFieldDefinition::create('uri')
-      ->setLabel(new TranslatableMarkup('Link'))
-      ->setRequired(TRUE);
+      ->setLabel(new TranslatableMarkup('Link'));
     $fields['date'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(new TranslatableMarkup('Date'))
       ->setRequired(TRUE);
@@ -75,9 +76,20 @@ class Article extends ContentEntityBase {
     $fields['masque'] = BaseFieldDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Hidden'))
       ->setDefaultValue(FALSE);
+    // Article ajouté à la main par la Communication (D-048).
+    $fields['manuel'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(new TranslatableMarkup('Added manually'))
+      ->setDefaultValue(FALSE);
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(new TranslatableMarkup('Collected on'));
     return $fields;
+  }
+
+  /**
+   * L'article a-t-il été ajouté à la main (D-048) ?
+   */
+  public function estManuel(): bool {
+    return (bool) $this->get('manuel')->value;
   }
 
   /**

@@ -76,6 +76,8 @@ class Collecteur {
     $this->state->set(self::ETAT, $maintenant);
     $config = $this->configFactory->get('mersch_presse.settings');
     $motsCles = $config->get('mots_cles') ?? [];
+    $exclusions = $config->get('exclusions') ?? [];
+    $sitesGoogle = $config->get('sites_google') ?? ['.lu'];
     $bilan = ['nouveaux' => 0, 'erreurs' => []];
 
     foreach ($config->get('sources') ?? [] as $source) {
@@ -102,10 +104,9 @@ class Collecteur {
         ]);
         continue;
       }
-      // La recherche Google Actualités filtre déjà sur Mersch.
       $google = parse_url($source['url'], PHP_URL_HOST) === 'news.google.com';
       foreach ($articles as $article) {
-        if (($google || Analyseur::concerne($article, $motsCles)) && $this->enregistrer($article)) {
+        if ($this->retenu($article, $google, $motsCles, $exclusions, $sitesGoogle) && $this->enregistrer($article)) {
           $bilan['nouveaux']++;
         }
       }
@@ -115,6 +116,22 @@ class Collecteur {
       $this->logger->info('@nombre nouveaux articles de presse.', ['@nombre' => $bilan['nouveaux']]);
     }
     return $bilan;
+  }
+
+  /**
+   * L'article parle-t-il de Mersch au Luxembourg (D-047) ?
+   *
+   * Google Actualités : la recherche porte déjà sur Mersch, mais seuls les
+   * médias luxembourgeois sont gardés (site en .lu) ; le nom seul ne suffit
+   * pas, beaucoup de personnes s'appellent Mersch en Allemagne. Flux des
+   * médias : mot-clé dans le titre ou l'extrait, hors rubriques exclues
+   * (international…).
+   */
+  private function retenu(array $article, bool $google, array $motsCles, array $exclusions, array $sitesGoogle): bool {
+    if ($google) {
+      return Analyseur::siteAccepte($article['site'], $sitesGoogle);
+    }
+    return !Analyseur::lienExclu($article['lien'], $exclusions) && Analyseur::concerne($article, $motsCles);
   }
 
   /**
