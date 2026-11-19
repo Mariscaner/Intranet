@@ -89,6 +89,21 @@ class LienRapideForm extends EntityForm {
       '#required' => TRUE,
     ];
 
+    $form['couleur'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Colour of the box'),
+      '#description' => $this->t('Soft tints taken from the colours of the graphic charter. Automatic gives each link the next tint in the list.'),
+      '#options' => [
+        'auto' => $this->t('Automatic'),
+        'vert' => $this->t('Green'),
+        'bleu' => $this->t('Blue'),
+        'jaune' => $this->t('Gold'),
+        'orange' => $this->t('Orange'),
+        'violet' => $this->t('Purple'),
+      ],
+      '#default_value' => $lien->couleur() ?: 'auto',
+    ];
+
     $form['status'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show on the home page'),

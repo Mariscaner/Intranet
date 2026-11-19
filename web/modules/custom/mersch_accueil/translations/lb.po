@@ -194,3 +194,27 @@ msgid "See the idea received (1)"
 msgid_plural "See the ideas received (@count)"
 msgstr[0] "Déi Iddi gesinn (1)"
 msgstr[1] "D'Iddiën gesinn (@count)"
+
+msgid "Colour of the box"
+msgstr "Faarf vun der Këscht"
+
+msgid "Soft tints taken from the colours of the graphic charter. Automatic gives each link the next tint in the list."
+msgstr "Mëll Téin aus de Faarwe vun der grafescher Charta. Mat « Automatesch » kritt all Link déi nächst Téin aus der Lëscht."
+
+msgid "Automatic"
+msgstr "Automatesch"
+
+msgid "Green"
+msgstr "Gréng"
+
+msgid "Blue"
+msgstr "Blo"
+
+msgid "Gold"
+msgstr "Gold"
+
+msgid "Orange"
+msgstr "Orange"
+
+msgid "Purple"
+msgstr "Mof"

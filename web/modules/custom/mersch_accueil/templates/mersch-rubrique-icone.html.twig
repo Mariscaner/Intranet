@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Icône d'une rubrique : personnes (RH), bulle de texte (Communication),
+ * globe Internet (IT). Sert aussi d'illustration aux actualités sans photo.
+ *
+ * Variables :
+ * - cle : rh, communication ou guides-it.
+ * - classe : classe CSS de l'icône.
+ */
+#}
+<svg class="{{ classe|default('mersch-rubriques__icone') }}" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {% if cle == 'rh' %}
+    <circle cx="18" cy="17" r="6.5"/><path d="M5 40c0-7.5 5.8-13 13-13s13 5.5 13 13"/><circle cx="33" cy="14" r="5"/><path d="M31.5 23.5c6.3-.6 11.5 4 11.5 10.5"/>
+  {% elseif cle == 'communication' %}
+    <path d="M9 8h30a5 5 0 0 1 5 5v15a5 5 0 0 1-5 5H21l-9 8v-8H9a5 5 0 0 1-5-5V13a5 5 0 0 1 5-5z"/><path d="M13 17h22M13 24h15"/>
+  {% else %}
+    <circle cx="24" cy="24" r="18"/><path d="M6 24h36M24 6c6 5 6 31 0 36M24 6c-6 5-6 31 0 36M9 14h30M9 34h30"/>
+  {% endif %}
+</svg>

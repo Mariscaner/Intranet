@@ -8,6 +8,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\node\NodeInterface;
@@ -101,6 +102,7 @@ class CommunicationController extends ControllerBase {
         'titre' => $this->entityRepository->getTranslationFromContext($node)->label(),
         'created' => (int) $node->getCreatedTime(),
         'rubrique' => 'communication',
+        'photo' => self::photoAccueil($node->get('field_comm_photo')),
       ];
     }
     return $dernieres;
@@ -157,6 +159,16 @@ class CommunicationController extends ControllerBase {
       ->sort('nid', 'DESC')
       ->range(0, $limite)
       ->execute();
+  }
+
+  /**
+   * Photo d'une nouvelle pour sa carte sur l'accueil, ou NULL.
+   */
+  private static function photoAccueil(FieldItemListInterface $photo): ?array {
+    if ($photo->isEmpty() || !$photo->entity) {
+      return NULL;
+    }
+    return ['uri' => $photo->entity->getFileUri(), 'alt' => (string) ($photo->alt ?? '')];
   }
 
   /**

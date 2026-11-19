@@ -28,6 +28,11 @@ class AccueilController extends ControllerBase implements TrustedCallbackInterfa
    */
   public const NOUVELLES = 3;
 
+  /**
+   * Style d'image des cartes d'actualité (config/install).
+   */
+  private const STYLE_CARTE = 'mersch_accueil_carte';
+
   public function __construct(
     private readonly RouteProviderInterface $routeProvider,
     private readonly DateFormatterInterface $dateFormatter,
@@ -43,18 +48,20 @@ class AccueilController extends ControllerBase implements TrustedCallbackInterfa
     $liens = [];
     $entites = $this->entityTypeManager()->getStorage('mersch_lien_rapide')->loadByProperties(['status' => TRUE]);
     uasort($entites, [LienRapide::class, 'sort']);
-    foreach ($entites as $lien) {
+    foreach (array_values($entites) as $position => $lien) {
       $liens[] = [
         'libelle' => $lien->libelle($langcode),
         'description' => $lien->description($langcode),
         'url' => $lien->getUrl(),
         'icone' => $lien->icone(),
+        // Une case sans teinte choisie prend la suivante dans la liste.
+        'couleur' => $lien->couleur() ?: LienRapide::COULEURS[$position % count(LienRapide::COULEURS)],
       ];
     }
 
     $annuaire = $this->annuaireDisponible() ? Url::fromRoute(self::ROUTE_ANNUAIRE)->toString() : NULL;
     $cache = (new CacheableMetadata())
-      ->addCacheTags(['config:mersch_lien_rapide_list'])
+      ->addCacheTags(['config:mersch_lien_rapide_list', 'config:image.style.' . self::STYLE_CARTE])
       ->addCacheContexts(['languages:language_interface', 'languages:language_content', 'user.permissions']);
     $rubriques = $this->rubriques();
 
@@ -125,6 +132,14 @@ class AccueilController extends ControllerBase implements TrustedCallbackInterfa
       'titre' => $nouvelle['titre'],
       'date' => $this->dateFormatter->format($nouvelle['created'], 'custom', 'd.m.Y'),
       'rubrique' => $rubriques[$nouvelle['rubrique']] ?? NULL,
+      // Sans photo, le gabarit affiche l'illustration de la rubrique.
+      'photo' => empty($nouvelle['photo']['uri']) ? NULL : [
+        '#theme' => 'image_style',
+        '#style_name' => self::STYLE_CARTE,
+        '#uri' => $nouvelle['photo']['uri'],
+        '#alt' => $nouvelle['photo']['alt'] ?? '',
+        '#attributes' => ['loading' => 'lazy', 'class' => ['mersch-carte__photo']],
+      ],
     ], array_slice($nouvelles, 0, self::NOUVELLES));
   }
 

@@ -79,3 +79,33 @@ function mersch_accueil_update_11001(): string {
   _mersch_accueil_droits_idees();
   return 'Boîte à idées installée.';
 }
+
+/**
+ * Accueil illustré : style d'image des cartes d'actualité et teinte des
+ * shortcuts existants (DSKNet vert, GESCOM bleu, Helpdesk jaune, mersch.lu
+ * orange, les suivants dans l'ordre des teintes restantes).
+ */
+function mersch_accueil_update_11002(): string {
+  $modules = \Drupal::service('module_installer');
+  if (!\Drupal::moduleHandler()->moduleExists('image')) {
+    $modules->install(['image']);
+  }
+  if (!\Drupal\image\Entity\ImageStyle::load('mersch_accueil_carte')) {
+    $source = new \Drupal\Core\Config\FileStorage(\Drupal::service('extension.list.module')->getPath('mersch_accueil') . '/config/install');
+    \Drupal\image\Entity\ImageStyle::create($source->read('image.style.mersch_accueil_carte'))->save();
+  }
+
+  $teintes = ['dsknet' => 'vert', 'gescom' => 'bleu', 'helpdesk' => 'jaune', 'mersch_lu' => 'orange'];
+  $liens = \Drupal\mersch_accueil\Entity\LienRapide::loadMultiple();
+  uasort($liens, [\Drupal\mersch_accueil\Entity\LienRapide::class, 'sort']);
+  $restantes = array_values(array_diff(\Drupal\mersch_accueil\Entity\LienRapide::COULEURS, $teintes));
+  $i = 0;
+  foreach ($liens as $id => $lien) {
+    if ($lien->couleur() !== '') {
+      continue;
+    }
+    $couleur = $teintes[$id] ?? ($restantes[$i++ % count($restantes)] ?? 'violet');
+    $lien->set('couleur', $couleur)->save();
+  }
+  return 'Accueil illustré : style d\'image et teintes des shortcuts.';
+}

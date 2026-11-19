@@ -18,11 +18,16 @@
   max-width: 65ch;
 }
 
-/* Liens rapides (US-10) */
+/* Shortcuts (US-10) : une case de teinte douce par lien. Les teintes sont
+ * les couleurs de domaine de la charte, éclaircies (fond) ou pleines
+ * (filet, pastille) ; le texte reste en bleu Mersch pour le contraste. */
 .mersch-liens {
+  --teinte: var(--mersch-ligne, #d9dce8);
+  --teinte-fond: var(--mersch-fond-2, #f3f4f8);
+  --teinte-pastille: #ffffff;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -30,24 +35,51 @@
 
 .mersch-liens__lien {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   height: 100%;
   box-sizing: border-box;
-  padding: 14px;
-  border: 1px solid var(--mersch-ligne, #d9dce8);
-  border-radius: 6px;
+  padding: 16px 14px 14px;
+  border: 0;
+  border-top: 4px solid var(--teinte);
+  border-radius: 8px;
+  background: var(--teinte-fond);
   text-decoration: none;
   color: var(--mersch-bleu, #26336a);
+  box-shadow: 0 1px 2px rgba(38, 51, 106, .08);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.mersch-liens__lien:hover {
-  border-color: var(--mersch-bleu, #26336a);
-  background: var(--mersch-fond-2, #f3f4f8);
+.mersch-liens__lien:hover,
+.mersch-liens__lien:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(38, 51, 106, .16);
+}
+
+.mersch-liens__lien:focus-visible {
+  outline: 3px solid var(--mersch-bleu, #26336a);
+  outline-offset: 2px;
+}
+
+.mersch-liens__lien[data-couleur="vert"] { --teinte: #00aba0; --teinte-fond: #e0f5f4; --teinte-pastille: #a6e2de; }
+.mersch-liens__lien[data-couleur="bleu"] { --teinte: #5fbfed; --teinte-fond: #ecf7fd; --teinte-pastille: #c7e9f9; }
+.mersch-liens__lien[data-couleur="jaune"] { --teinte: #c1ad76; --teinte-fond: #f8f5ef; --teinte-pastille: #e9e2cf; }
+.mersch-liens__lien[data-couleur="orange"] { --teinte: #f08372; --teinte-fond: #fdf0ee; --teinte-pastille: #fad4ce; }
+.mersch-liens__lien[data-couleur="violet"] { --teinte: #9c91c5; --teinte-fond: #f3f2f8; --teinte-pastille: #dcd8eb; }
+
+.mersch-liens__pastille {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--teinte-pastille);
 }
 
 .mersch-liens__icone {
-  flex: none;
+  width: 26px;
+  height: 26px;
 }
 
 .mersch-liens__texte {
@@ -56,13 +88,20 @@
 
 .mersch-liens__lien b {
   display: block;
+  font-size: 16px;
 }
 
-.mersch-liens__description {
+.mersch-liens__description,
+.mersch-liens__adresse {
   display: block;
   font-size: 13px;
   color: var(--mersch-texte-2, #4a5480);
   overflow-wrap: anywhere;
+}
+
+.mersch-liens__adresse {
+  margin-top: 2px;
+  font-size: 12px;
 }
 
 /* Nouvelles, shortcuts et rubriques à gauche ; annuaire et idées à droite */
@@ -109,40 +148,76 @@
   cursor: pointer;
 }
 
+/* Rubriques (US-03) : cartes avec l'icône du service. Couleur de domaine en
+ * filet et en pastille, jamais en texte sur blanc (contraste < 3:1). */
 .mersch-rubriques {
+  --teinte: var(--mersch-ligne, #d9dce8);
+  --teinte-fond: var(--mersch-fond-2, #f3f4f8);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Couleur de domaine en filet, jamais en texte sur blanc (contraste < 3:1). */
 .mersch-rubriques__rubrique {
-  border-left: 6px solid var(--mersch-ligne, #d9dce8);
-  padding: 8px 0 8px 12px;
-  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px 18px 18px;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-top: 5px solid var(--teinte);
+  border-radius: 8px;
+  background: var(--mersch-blanc, #fff);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.mersch-rubriques__rubrique a {
-  display: block;
+.mersch-rubriques__rubrique:hover,
+.mersch-rubriques__rubrique:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(38, 51, 106, .14);
+}
+
+.mersch-rubriques__pastille {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  background: var(--teinte-fond);
+  color: var(--mersch-bleu, #26336a);
+}
+
+.mersch-rubriques__icone {
+  width: 36px;
+  height: 36px;
+}
+
+.mersch-rubriques__titre {
+  font-size: 17px;
   font-weight: bold;
 }
 
-.mersch-rubriques__rubrique span {
+/* Toute la carte est cliquable. */
+.mersch-rubriques__titre::after,
+.mersch-carte__titre::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.mersch-rubriques__texte {
   font-size: 14px;
   color: var(--mersch-texte-2, #4a5480);
 }
 
-[data-rubrique="rh"].mersch-rubriques__rubrique {
-  border-color: var(--mersch-rh, #c1ad76);
-}
-
-[data-rubrique="communication"].mersch-rubriques__rubrique {
-  border-color: var(--mersch-communication, #f08372);
-}
-
-[data-rubrique="guides-it"].mersch-rubriques__rubrique {
-  border-color: var(--mersch-guides-it, #00aba0);
-}
+[data-rubrique="rh"] { --teinte: var(--mersch-rh, #c1ad76); --teinte-fond: #f1ede1; }
+[data-rubrique="communication"] { --teinte: var(--mersch-communication, #f08372); --teinte-fond: #fce4e0; }
+[data-rubrique="guides-it"] { --teinte: var(--mersch-guides-it, #00aba0); --teinte-fond: #c7edea; }
 
 /* Pages d'attente */
 .mersch-rubrique__attente {
@@ -158,30 +233,88 @@
   min-width: 0;
 }
 
-.mersch-accueil__liste-nouvelles {
+/* Dernières nouvelles : trois cartes avec photo, ou l'illustration de la
+ * rubrique quand la nouvelle n'en a pas. */
+.mersch-cartes {
+  --teinte: var(--mersch-ligne, #d9dce8);
+  --teinte-fond: var(--mersch-fond-2, #f3f4f8);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Couleur de la rubrique en filet, comme la liste des rubriques. */
-.mersch-accueil__liste-nouvelles li {
-  border-left: 6px solid var(--mersch-ligne, #d9dce8);
-  padding: 6px 0 6px 12px;
-  margin-bottom: 10px;
+.mersch-carte {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--mersch-ligne, #d9dce8);
+  border-radius: 8px;
+  background: var(--mersch-blanc, #fff);
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.mersch-accueil__liste-nouvelles li[data-rubrique="rh"] {
-  border-color: var(--mersch-rh, #c1ad76);
+.mersch-carte:hover,
+.mersch-carte:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(38, 51, 106, .14);
 }
 
-.mersch-accueil__liste-nouvelles li[data-rubrique="communication"] {
-  border-color: var(--mersch-communication, #f08372);
+.mersch-carte__image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-bottom: 4px solid var(--teinte);
+  background: var(--teinte-fond);
 }
 
-.mersch-accueil__liste-nouvelles a {
+.mersch-carte__image img {
+  position: absolute;
+  inset: 0;
+}
+
+.mersch-carte__image img,
+.mersch-carte__defaut {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Photos RH : souvent des portraits, on garde le visage. */
+.mersch-carte[data-rubrique="rh"] .mersch-carte__image img {
+  object-position: 50% 25%;
+}
+
+.mersch-carte__defaut {
+  display: grid;
+  place-items: center;
+  color: var(--mersch-bleu, #26336a);
+  background:
+    radial-gradient(circle at 85% 15%, rgba(255, 255, 255, .55) 0 18%, transparent 19%),
+    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, .4) 0 22%, transparent 23%),
+    var(--teinte-fond);
+}
+
+.mersch-carte__picto {
+  width: 30%;
+  height: auto;
+  max-width: 88px;
+  opacity: .85;
+}
+
+.mersch-carte__corps {
+  padding: 12px 14px 16px;
+}
+
+.mersch-carte__titre {
+  display: block;
+  margin-top: 4px;
   font-weight: bold;
+  line-height: 1.35;
 }
 
 .mersch-accueil__meta {
@@ -225,21 +358,72 @@
   cursor: pointer;
 }
 
-/* Shortcuts : 2 colonnes à côté de la colonne latérale */
-@media (max-width: 1180px) {
-  .mersch-liens {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 860px) {
   .mersch-accueil__grille {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 480px) {
-  .mersch-liens {
+/* Téléphone : cartes l'une sous l'autre, shortcuts sur deux colonnes. */
+@media (max-width: 640px) {
+  .mersch-cartes,
+  .mersch-rubriques {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mersch-carte {
+    flex-direction: row;
+  }
+
+  .mersch-carte__image {
+    flex: none;
+    width: 38%;
+    aspect-ratio: auto;
+    min-height: 96px;
+    border-bottom: 0;
+    border-right: 4px solid var(--teinte);
+  }
+
+  .mersch-liens {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mersch-liens__lien {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mersch-liens__adresse {
+    display: none;
+  }
+
+  .mersch-rubriques__rubrique {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+    row-gap: 2px;
+    align-items: center;
+    padding: 14px;
+  }
+
+  .mersch-rubriques__pastille {
+    grid-row: span 2;
+    width: 52px;
+    height: 52px;
+    margin: 0;
+  }
+
+  .mersch-rubriques__icone {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mersch-liens__lien,
+  .mersch-rubriques__rubrique,
+  .mersch-carte {
+    transition: none;
   }
 }

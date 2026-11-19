@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: mersch_accueil_carte
+label: 'News card (home page)'
+effects:
+  5d2c7a90-3e41-4b8f-a6d1-8f0e2c4b9a17:
+    uuid: 5d2c7a90-3e41-4b8f-a6d1-8f0e2c4b9a17
+    id: image_scale
+    weight: 1
+    data:
+      width: 640
+      height: null
+      upscale: false
