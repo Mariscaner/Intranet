@@ -22,6 +22,9 @@ function mersch_accueil_theme(): array {
     'mersch_lien_rapide_icone' => [
       'variables' => ['icone' => 'lien'],
     ],
+    'mersch_rubrique_icone' => [
+      'variables' => ['cle' => '', 'classe' => NULL],
+    ],
   ];
 }
 

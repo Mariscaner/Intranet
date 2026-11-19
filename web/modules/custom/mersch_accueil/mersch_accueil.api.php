@@ -23,10 +23,12 @@ use Drupal\Core\Cache\CacheableMetadata;
  *
  * @return array
  *   Liste de [ titre, created (horodatage), rubrique (rh, communication ou
- *   guides_it) ], nouvelles publiées et visibles par l'utilisateur seulement.
+ *   guides_it), photo ([ uri, alt ] ou NULL) ], nouvelles publiées et
+ *   visibles par l'utilisateur seulement. Sans photo, la carte de l'accueil
+ *   affiche l'illustration par défaut de la rubrique.
  */
 function hook_mersch_accueil_nouvelles(int $limite, CacheableMetadata $cache): array {
   return [
-    ['titre' => 'Neien Nik ass eraus', 'created' => 1793170000, 'rubrique' => 'communication'],
+    ['titre' => 'Neien Nik ass eraus', 'created' => 1793170000, 'rubrique' => 'communication', 'photo' => NULL],
   ];
 }

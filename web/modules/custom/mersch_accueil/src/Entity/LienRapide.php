@@ -52,6 +52,7 @@ use Drupal\mersch_accueil\LienRapideListBuilder;
     'description',
     'url',
     'icone',
+    'couleur',
     'weight',
   ],
 )]
@@ -66,6 +67,15 @@ class LienRapide extends ConfigEntityBase {
    * Icônes proposées (tracés SVG dans mersch-lien-rapide-icone.html.twig).
    */
   public const ICONES = ['calendrier', 'document', 'aide', 'web', 'lien'];
+
+  /**
+   * Teintes de case proposées, dans l'ordre d'attribution automatique.
+   *
+   * Couleurs de domaine de la charte graphique, en fond pâle (accueil.css) :
+   * vert = Mobilité & Environnement, bleu = Enseignement, jaune = Citoyen,
+   * orange = Urbanisme, violet = Sport & Tourisme.
+   */
+  public const COULEURS = ['vert', 'bleu', 'jaune', 'orange', 'violet'];
 
   protected $id;
 
@@ -82,6 +92,11 @@ class LienRapide extends ConfigEntityBase {
   protected string $url = '';
 
   protected string $icone = 'lien';
+
+  /**
+   * Teinte de la case (self::COULEURS), vide = attribuée selon la position.
+   */
+  protected string $couleur = '';
 
   protected int $weight = 0;
 
@@ -119,6 +134,13 @@ class LienRapide extends ConfigEntityBase {
 
   public function icone(): string {
     return in_array($this->icone, self::ICONES, TRUE) ? $this->icone : 'lien';
+  }
+
+  /**
+   * Teinte choisie, ou chaîne vide pour une teinte automatique.
+   */
+  public function couleur(): string {
+    return in_array($this->couleur, self::COULEURS, TRUE) ? $this->couleur : '';
   }
 
   public function getWeight(): int {

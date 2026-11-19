@@ -31,6 +31,9 @@ mersch_accueil.lien_rapide.*:
     icone:
       type: string
       label: 'Icon'
+    couleur:
+      type: string
+      label: 'Colour'
     weight:
       type: weight
       label: 'Weight'

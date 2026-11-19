@@ -6,11 +6,13 @@
  * dans la colonne latérale.
  *
  * Variables :
- * - liens : liste de { libelle, description, url, icone }, déjà triée.
+ * - liens : liste de { libelle, description, url, icone, couleur }, déjà
+ *   triée ; couleur = vert, bleu, jaune, orange ou violet.
  * - annuaire : adresse de l'annuaire, ou NULL si le module est absent.
  * - rubriques : liste de { cle, titre, texte, url }.
  * - nouvelles : les dernières nouvelles des rubriques, liste de
- *   { titre, date, rubrique: { cle, titre, url } }.
+ *   { titre, date, rubrique: { cle, titre, url }, photo } ; photo = image
+ *   rendue, ou NULL (illustration de la rubrique à la place).
  * - idees : boîte à idées (agents connectés) et lien vers les idées reçues
  *   (admins), vide pour un lecteur non connecté.
  */
@@ -24,15 +26,26 @@
       <section class="mersch-bloc mersch-accueil__nouvelles" aria-labelledby="mersch-accueil-nouvelles">
         <h2 id="mersch-accueil-nouvelles">{{ 'Latest news'|t }}</h2>
         {% if nouvelles %}
-          <ul class="mersch-accueil__liste-nouvelles">
+          <ul class="mersch-cartes">
             {% for nouvelle in nouvelles %}
-              <li data-rubrique="{{ nouvelle.rubrique.cle }}">
-                <span class="mersch-accueil__meta">{{ nouvelle.date }}{% if nouvelle.rubrique %} · {{ nouvelle.rubrique.titre }}{% endif %}</span>
-                {% if nouvelle.rubrique %}
-                  <a href="{{ nouvelle.rubrique.url }}">{{ nouvelle.titre }}</a>
-                {% else %}
-                  <b>{{ nouvelle.titre }}</b>
-                {% endif %}
+              <li class="mersch-carte" data-rubrique="{{ nouvelle.rubrique.cle }}">
+                <div class="mersch-carte__image">
+                  {% if nouvelle.photo %}
+                    {{ nouvelle.photo }}
+                  {% else %}
+                    <div class="mersch-carte__defaut">
+                      {% include '@mersch_accueil/mersch-rubrique-icone.html.twig' with { cle: nouvelle.rubrique.cle, classe: 'mersch-carte__picto' } only %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="mersch-carte__corps">
+                  <span class="mersch-accueil__meta">{{ nouvelle.date }}{% if nouvelle.rubrique %} · {{ nouvelle.rubrique.titre }}{% endif %}</span>
+                  {% if nouvelle.rubrique %}
+                    <a class="mersch-carte__titre" href="{{ nouvelle.rubrique.url }}">{{ nouvelle.titre }}</a>
+                  {% else %}
+                    <b class="mersch-carte__titre">{{ nouvelle.titre }}</b>
+                  {% endif %}
+                </div>
               </li>
             {% endfor %}
           </ul>
@@ -47,12 +60,14 @@
           <ul class="mersch-liens">
             {% for lien in liens %}
               <li>
-                <a class="mersch-liens__lien" href="{{ lien.url }}" target="_blank" rel="noopener noreferrer">
-                  {% include '@mersch_accueil/mersch-lien-rapide-icone.html.twig' with { icone: lien.icone } only %}
+                <a class="mersch-liens__lien" data-couleur="{{ lien.couleur }}" href="{{ lien.url }}" target="_blank" rel="noopener noreferrer">
+                  <span class="mersch-liens__pastille">
+                    {% include '@mersch_accueil/mersch-lien-rapide-icone.html.twig' with { icone: lien.icone } only %}
+                  </span>
                   <span class="mersch-liens__texte">
                     <b>{{ lien.libelle }} <span aria-hidden="true">↗</span></b>
                     {% if lien.description %}<span class="mersch-liens__description">{{ lien.description }}</span>{% endif %}
-                    <span class="mersch-liens__description">{{ lien.url|replace({'https://': '', 'http://': ''}) }}</span>
+                    <span class="mersch-liens__adresse">{{ lien.url|replace({'https://': '', 'http://': ''}) }}</span>
                   </span>
                   <span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span>
                 </a>
@@ -67,8 +82,11 @@
         <ul class="mersch-rubriques">
           {% for rubrique in rubriques %}
             <li class="mersch-rubriques__rubrique" data-rubrique="{{ rubrique.cle }}">
-              <a href="{{ rubrique.url }}">{{ rubrique.titre }}</a>
-              <span>{{ rubrique.texte }}</span>
+              <span class="mersch-rubriques__pastille">
+                {% include '@mersch_accueil/mersch-rubrique-icone.html.twig' with { cle: rubrique.cle } only %}
+              </span>
+              <a class="mersch-rubriques__titre" href="{{ rubrique.url }}">{{ rubrique.titre }}</a>
+              <span class="mersch-rubriques__texte">{{ rubrique.texte }}</span>
             </li>
           {% endfor %}
         </ul>

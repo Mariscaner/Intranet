@@ -8,6 +8,7 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\StringTranslation\ByteSizeMarkup;
@@ -100,6 +101,7 @@ class RhController extends ControllerBase {
         'titre' => $this->entityRepository->getTranslationFromContext($node)->label(),
         'created' => (int) $node->getCreatedTime(),
         'rubrique' => 'rh',
+        'photo' => self::photoAccueil($node->get('field_rh_photo')),
       ];
     }
     return $dernieres;
@@ -214,6 +216,16 @@ class RhController extends ControllerBase {
       'non_traduit' => !$node->hasTranslation($langue),
       'modifier' => $node->access('update') ? $node->toUrl('edit-form')->toString() : NULL,
     ];
+  }
+
+  /**
+   * Photo d'une nouvelle pour sa carte sur l'accueil, ou NULL.
+   */
+  private static function photoAccueil(FieldItemListInterface $photo): ?array {
+    if ($photo->isEmpty() || !$photo->entity) {
+      return NULL;
+    }
+    return ['uri' => $photo->entity->getFileUri(), 'alt' => (string) ($photo->alt ?? '')];
   }
 
   /**

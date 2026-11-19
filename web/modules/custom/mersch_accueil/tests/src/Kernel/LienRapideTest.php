@@ -41,6 +41,19 @@ class LienRapideTest extends KernelTestBase {
   }
 
   /**
+   * Chaque shortcut installé a sa teinte ; une teinte inconnue ou absente
+   * devient automatique.
+   */
+  public function testTeintes(): void {
+    $teintes = array_map(fn (LienRapide $lien) => $lien->couleur(), LienRapide::loadMultiple());
+    $this->assertSame(['dsknet' => 'vert', 'gescom' => 'bleu', 'helpdesk' => 'jaune', 'mersch_lu' => 'orange'], array_intersect_key($teintes, array_flip(['dsknet', 'gescom', 'helpdesk', 'mersch_lu'])));
+    $lien = LienRapide::create(['id' => 'sigcom', 'libelle' => ['lb' => 'SIGCOM'], 'url' => 'https://sigcom.lu', 'couleur' => 'auto']);
+    $this->assertSame('', $lien->couleur());
+    $lien->set('couleur', 'violet');
+    $this->assertSame('violet', $lien->couleur());
+  }
+
+  /**
    * Une langue non saisie reprend le texte luxembourgeois.
    */
   public function testRepliSurLeLuxembourgeois(): void {

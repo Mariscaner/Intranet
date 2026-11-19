@@ -194,3 +194,27 @@ msgid "See the idea received (1)"
 msgid_plural "See the ideas received (@count)"
 msgstr[0] "Voir l'idée reçue (1)"
 msgstr[1] "Voir les idées reçues (@count)"
+
+msgid "Colour of the box"
+msgstr "Couleur de la case"
+
+msgid "Soft tints taken from the colours of the graphic charter. Automatic gives each link the next tint in the list."
+msgstr "Teintes douces tirées des couleurs de la charte graphique. « Automatique » donne à chaque lien la teinte suivante de la liste."
+
+msgid "Automatic"
+msgstr "Automatique"
+
+msgid "Green"
+msgstr "Vert"
+
+msgid "Blue"
+msgstr "Bleu"
+
+msgid "Gold"
+msgstr "Or"
+
+msgid "Orange"
+msgstr "Orange"
+
+msgid "Purple"
+msgstr "Violet"

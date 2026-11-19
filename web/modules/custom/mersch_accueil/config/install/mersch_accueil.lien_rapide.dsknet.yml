@@ -12,4 +12,5 @@ description:
   fr: 'Présences et congés'
 url: 'https://apps'
 icone: calendrier
+couleur: vert
 weight: 0
