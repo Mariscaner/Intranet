@@ -32,3 +32,16 @@ function hook_mersch_accueil_nouvelles(int $limite, CacheableMetadata $cache): a
     ['titre' => 'Neien Nik ass eraus', 'created' => 1793170000, 'rubrique' => 'communication', 'photo' => NULL],
   ];
 }
+
+/**
+ * Fournit le bloc de revue de presse de l'accueil (module mersch_presse).
+ *
+ * Le bloc s'affiche sous les dernières nouvelles. Il porte ses propres
+ * métadonnées de cache.
+ *
+ * @return array
+ *   Tableaux de rendu, indexés par le nom du module.
+ */
+function hook_mersch_accueil_presse(): array {
+  return ['mon_module' => ['#markup' => '<section>…</section>']];
+}

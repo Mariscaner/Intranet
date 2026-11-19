@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * Archive de la revue de presse (US-41), plus récents d'abord.
+ *
+ * Variables :
+ * - articles : liste de { titre, lien, media, date, extrait, masque,
+ *   action: { titre, url } ou NULL }.
+ * - filtres : { q, media, du, au, masques }.
+ * - medias : noms des médias présents.
+ * - moderateur : l'utilisateur peut masquer un article (US-42).
+ * - action : adresse du formulaire de recherche.
+ * - pager : pagination.
+ */
+#}
+<div class="mersch-presse-archive">
+  <p>{{ 'Press articles that mention the Commune of Mersch, collected every two hours. Only the title, an excerpt and the link are kept: the full article is on the media website.'|t }}</p>
+
+  <form class="mersch-presse-archive__filtres" action="{{ action }}" method="get" role="search">
+    <div>
+      <label for="mersch-presse-q">{{ 'Text'|t }}</label>
+      <input type="search" id="mersch-presse-q" name="q" value="{{ filtres.q }}" placeholder="{{ 'Words in the title or excerpt…'|t }}">
+    </div>
+    <div>
+      <label for="mersch-presse-media">{{ 'Media'|t }}</label>
+      <select id="mersch-presse-media" name="media">
+        <option value="">{{ 'All media'|t }}</option>
+        {% for media in medias %}
+          <option value="{{ media }}"{% if media == filtres.media %} selected{% endif %}>{{ media }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="mersch-presse-du">{{ 'From'|t }}</label>
+      <input type="date" id="mersch-presse-du" name="du" value="{{ filtres.du }}">
+    </div>
+    <div>
+      <label for="mersch-presse-au">{{ 'To'|t }}</label>
+      <input type="date" id="mersch-presse-au" name="au" value="{{ filtres.au }}">
+    </div>
+    {% if moderateur %}
+      <div class="mersch-presse-archive__case">
+        <input type="checkbox" id="mersch-presse-masques" name="masques" value="1"{% if filtres.masques %} checked{% endif %}>
+        <label for="mersch-presse-masques">{{ 'Include hidden articles'|t }}</label>
+      </div>
+    {% endif %}
+    <div class="mersch-presse-archive__boutons">
+      <button type="submit">{{ 'Search'|t }}</button>
+      <a href="{{ action }}">{{ 'Reset'|t }}</a>
+    </div>
+  </form>
+
+  {% if articles %}
+    <ul class="mersch-presse__liste mersch-presse__liste--archive">
+      {% for article in articles %}
+        <li class="mersch-presse__article{% if article.masque %} mersch-presse__article--masque{% endif %}">
+          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b>{% if article.masque %} · {{ 'Hidden'|t }}{% endif %}</span>
+          <a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>
+          {% if article.extrait %}<p class="mersch-presse__extrait">{{ article.extrait }}</p>{% endif %}
+          {% if article.action %}<a class="mersch-presse__action" href="{{ article.action.url }}">{{ article.action.titre }}</a>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    {{ pager }}
+  {% else %}
+    <p class="mersch-presse__meta">{{ 'No article found.'|t }}</p>
+  {% endif %}
+</div>

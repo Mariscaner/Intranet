@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Bloc « Mersch dans la presse » de l'accueil (US-40) : articles des
+ * dernières 24 h.
+ *
+ * Variables :
+ * - articles : liste de { titre, lien, media, date, extrait }.
+ * - archive : adresse de l'archive.
+ */
+#}
+<section class="mersch-bloc mersch-presse" aria-labelledby="mersch-accueil-presse">
+  <h2 id="mersch-accueil-presse">{{ 'Mersch in the press'|t }}</h2>
+  {% if articles %}
+    <ul class="mersch-presse__liste">
+      {% for article in articles %}
+        <li class="mersch-presse__article">
+          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b></span>
+          <a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="mersch-presse__meta">{{ 'No new article.'|t }}</p>
+  {% endif %}
+  <p><a href="{{ archive }}">{{ 'All the press articles'|t }}</a></p>
+</section>

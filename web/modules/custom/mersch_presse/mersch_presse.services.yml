@@ -1,0 +1,7 @@
+services:
+  logger.channel.mersch_presse:
+    parent: logger.channel_base
+    arguments: ['mersch_presse']
+  mersch_presse.collecteur:
+    class: Drupal\mersch_presse\Collecteur
+    arguments: ['@http_client', '@entity_type.manager', '@config.factory', '@state', '@datetime.time', '@cache_tags.invalidator', '@logger.channel.mersch_presse']

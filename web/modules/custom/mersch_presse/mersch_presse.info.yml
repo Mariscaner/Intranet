@@ -1,0 +1,11 @@
+name: 'Revue de presse Mersch'
+type: module
+description: 'Articles de presse sur la commune de Mersch : collecte des flux RSS toutes les 2 h, bloc sur l''accueil, archive cherchable, masquage par la Communication (US-39 à US-43, D-045, D-046).'
+package: Mersch
+core_version_requirement: ^11
+dependencies:
+  - drupal:language
+  - drupal:locale
+  - mersch_accueil:mersch_accueil
+'interface translation project': mersch_presse
+'interface translation server pattern': modules/custom/mersch_presse/translations/%language.po

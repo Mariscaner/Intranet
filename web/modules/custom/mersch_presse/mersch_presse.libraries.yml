@@ -1,0 +1,5 @@
+presse:
+  version: VERSION
+  css:
+    component:
+      css/presse.css: {}

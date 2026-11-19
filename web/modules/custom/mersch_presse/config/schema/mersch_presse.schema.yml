@@ -1,0 +1,25 @@
+mersch_presse.settings:
+  type: config_object
+  label: 'Press review'
+  mapping:
+    sources:
+      type: sequence
+      label: 'News feeds'
+      sequence:
+        type: mapping
+        mapping:
+          nom:
+            type: string
+            label: 'Media'
+          url:
+            type: uri
+            label: 'Feed address'
+          actif:
+            type: boolean
+            label: 'Active'
+    mots_cles:
+      type: sequence
+      label: 'Keywords'
+      sequence:
+        type: string
+        label: 'Keyword'

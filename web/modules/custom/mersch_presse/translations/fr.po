@@ -1,0 +1,104 @@
+# Traductions de l'interface : revue de presse (module mersch_presse).
+# Traductions proposées, à relire.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Mersch in the press"
+msgstr "Mersch dans la presse"
+
+msgid "Press review"
+msgstr "Revue de presse"
+
+msgid "(opens in a new tab)"
+msgstr "(s'ouvre dans un nouvel onglet)"
+
+msgid "No new article."
+msgstr "Aucun nouvel article."
+
+msgid "All the press articles"
+msgstr "Tous les articles de presse"
+
+msgid "Press articles that mention the Commune of Mersch, collected every two hours. Only the title, an excerpt and the link are kept: the full article is on the media website."
+msgstr "Articles de presse qui mentionnent la Commune de Mersch, collectés toutes les deux heures. Seuls le titre, un extrait et le lien sont gardés : l'article complet est sur le site du média."
+
+msgid "Text"
+msgstr "Texte"
+
+msgid "Words in the title or excerpt…"
+msgstr "Mots du titre ou de l'extrait…"
+
+msgid "Media"
+msgstr "Média"
+
+msgid "All media"
+msgstr "Tous les médias"
+
+msgid "From"
+msgstr "Du"
+
+msgid "To"
+msgstr "Au"
+
+msgid "Include hidden articles"
+msgstr "Afficher les articles masqués"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "Hidden"
+msgstr "Masqué"
+
+msgid "No article found."
+msgstr "Aucun article trouvé."
+
+msgid "Hide"
+msgstr "Masquer"
+
+msgid "Show again"
+msgstr "Afficher de nouveau"
+
+msgid "The article “@titre” is hidden."
+msgstr "L'article « @titre » est masqué."
+
+msgid "The article “@titre” is shown again."
+msgstr "L'article « @titre » est de nouveau affiché."
+
+msgid "News feeds"
+msgstr "Flux d'actualités"
+
+msgid "Keywords"
+msgstr "Mots-clés"
+
+msgid "Save and collect now"
+msgstr "Enregistrer et collecter maintenant"
+
+msgid "Last collection: @date. Feeds are read every two hours from 6:00 to 20:00."
+msgstr "Dernière collecte : @date. Les flux sont lus toutes les deux heures de 6 h à 20 h."
+
+msgid "No collection yet. Feeds are read every two hours from 6:00 to 20:00."
+msgstr "Aucune collecte pour l'instant. Les flux sont lus toutes les deux heures de 6 h à 20 h."
+
+msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), every article is kept and the media is the one given by Google."
+msgstr "Un flux par ligne : <code>Média | adresse RSS</code>. Commencez une ligne par # pour la désactiver. Pour une recherche Google Actualités (news.google.com), tous les articles sont gardés, avec le média indiqué par Google."
+
+msgid "One per line. An article is kept if its title or excerpt contains a word that begins with one of these keywords, regardless of case."
+msgstr "Un par ligne. Un article est gardé si son titre ou son extrait contient un mot qui commence par l'un de ces mots-clés, sans tenir compte des majuscules."
+
+msgid "Line @numero: write <code>Media | address starting with https://</code>."
+msgstr "Ligne @numero : écrivez <code>Média | adresse commençant par https://</code>."
+
+msgid "The keyword “@mot” is too short (3 characters at least)."
+msgstr "Le mot-clé « @mot » est trop court (3 caractères au moins)."
+
+msgid "Feed @nom could not be read: @message"
+msgstr "Le flux @nom n'a pas pu être lu : @message"
+
+msgid "1 new article."
+msgid_plural "@count new articles."
+msgstr[0] "1 nouvel article."
+msgstr[1] "@count nouveaux articles."

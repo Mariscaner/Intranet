@@ -13,6 +13,7 @@
  * - nouvelles : les dernières nouvelles des rubriques, liste de
  *   { titre, date, rubrique: { cle, titre, url }, photo } ; photo = image
  *   rendue, ou NULL (illustration de la rubrique à la place).
+ * - presse : bloc « Mersch dans la presse » (module mersch_presse), ou vide.
  * - idees : boîte à idées (agents connectés) et lien vers les idées reçues
  *   (admins), vide pour un lecteur non connecté.
  */
@@ -53,6 +54,8 @@
           <p class="mersch-accueil__meta">{{ 'No news at the moment.'|t }}</p>
         {% endif %}
       </section>
+
+      {{ presse }}
 
       {% if liens %}
         <section class="mersch-bloc" aria-labelledby="mersch-accueil-liens">

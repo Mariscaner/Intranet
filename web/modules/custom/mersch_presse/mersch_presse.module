@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Revue de presse : articles sur la commune de Mersch (D-045, D-046).
+ */
+
+declare(strict_types=1);
+
+use Drupal\mersch_presse\Controller\PresseController;
+
+/**
+ * Implements hook_theme().
+ */
+function mersch_presse_theme(): array {
+  return [
+    'mersch_presse_accueil' => [
+      'variables' => ['articles' => [], 'archive' => NULL],
+    ],
+    'mersch_presse_archive' => [
+      'variables' => [
+        'articles' => [],
+        'filtres' => [],
+        'medias' => [],
+        'moderateur' => FALSE,
+        'action' => NULL,
+        'pager' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Le cron du serveur tourne toutes les heures ; la collecte se fait toutes
+ * les 2 h de 6 h à 20 h (D-045), la purge à 3 ans à chaque passage.
+ */
+function mersch_presse_cron(): void {
+  \Drupal::service('mersch_presse.collecteur')->cron();
+}
+
+/**
+ * Implements hook_mersch_accueil_presse().
+ *
+ * Bloc « Mersch dans la presse » de l'accueil (US-40).
+ */
+function mersch_presse_mersch_accueil_presse(): array {
+  return ['mersch_presse' => \Drupal::classResolver(PresseController::class)->blocAccueil()];
+}

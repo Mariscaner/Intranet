@@ -14,7 +14,7 @@ declare(strict_types=1);
 function mersch_accueil_theme(): array {
   return [
     'mersch_accueil' => [
-      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => [], 'nouvelles' => [], 'idees' => NULL],
+      'variables' => ['liens' => [], 'annuaire' => NULL, 'rubriques' => [], 'nouvelles' => [], 'presse' => NULL, 'idees' => NULL],
     ],
     'mersch_rubrique' => [
       'variables' => ['rubrique' => []],
