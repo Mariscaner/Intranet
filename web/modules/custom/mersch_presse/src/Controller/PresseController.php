@@ -133,7 +133,7 @@ class PresseController extends ControllerBase {
 
   /**
    * Lignes à afficher : { titre, lien, media, date, extrait, masque, manuel,
-   * action, modifier }.
+   * document, action, modifier }.
    */
   private function lignes(array $ids, bool $moderateur, bool $redacteur = FALSE): array {
     $lignes = [];
@@ -153,6 +153,7 @@ class PresseController extends ControllerBase {
         'extrait' => $article->get('extrait')->value,
         'masque' => $article->estMasque(),
         'manuel' => $article->estManuel(),
+        'document' => $this->document($article),
         'action' => NULL,
         'modifier' => ($redacteur && $article->estManuel())
           ? Url::fromRoute('mersch_presse.modifier', ['mersch_presse_article' => $id])->toString()
@@ -168,6 +169,20 @@ class PresseController extends ControllerBase {
       $lignes[] = $ligne;
     }
     return $lignes;
+  }
+
+  /**
+   * Scan ou photo de l'article : { url, type (PDF ou photo) }, ou NULL.
+   */
+  private function document(Article $article): ?array {
+    $fichier = $article->get('fichier')->entity;
+    if (!$fichier) {
+      return NULL;
+    }
+    return [
+      'url' => \Drupal::service('file_url_generator')->generateString($fichier->getFileUri()),
+      'pdf' => $fichier->getMimeType() === 'application/pdf',
+    ];
   }
 
   /**

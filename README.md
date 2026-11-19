@@ -199,13 +199,13 @@ Articles de presse sur la commune (US-39 à US-43, D-045, D-046) :
 
 - Le cron horaire du serveur (`/etc/cron.d/intranet-mersch`) déclenche la collecte toutes les 2 h de 6 h à 20 h : flux RSS de RTL, Wort, L'essentiel, Reporter et recherche Google Actualités « Mersch OR Miersch » limitée aux médias luxembourgeois. Aucune nouvelle tâche planifiée à créer.
 - Seuls les articles sur Mersch au Luxembourg sont gardés (D-047) : pour Google, site en `.lu` seulement ; pour les flux des médias, rubriques étrangères écartées (`/international`, `/welt`…).
-- Les rédacteurs Communication ajoutent à la main les articles de la presse écrite (`/presse/ajouter`, D-048).
+- Les rédacteurs Communication ajoutent à la main les articles de la presse écrite (`/presse/ajouter`, D-048), avec leur scan PDF ou leur photo (D-049, fichiers dans `sites/default/files/presse/`, supprimés avec l'article).
 - Seuls le titre, le média, la date, un extrait de 300 caractères au plus et le lien sont gardés, 3 ans.
 - Bloc « Mersch dans la presse » sur l'accueil (dernières 24 h), archive cherchable sur `/presse`, lisibles sans connexion.
 - Les admins et les rédacteurs Communication masquent un article hors sujet depuis l'archive.
 - Flux et mots-clés : `/admin/config/mersch/presse` (bouton « Enregistrer et collecter maintenant » pour tester).
 
-Mise en service : `git pull`, `drush-intranet pm:install mersch_presse`, `drush-intranet locale:check && drush-intranet locale:update`, puis le bouton de collecte. Module déjà installé : `drush-intranet updatedb` (supprime les articles collectés avant D-047, met à jour la recherche Google et donne le droit d'ajout à la Communication), `locale:check && locale:update`, puis le bouton de collecte. La VM doit joindre les sites des médias en HTTPS (déjà le cas pour drupal.org).
+Mise en service : `git pull`, `drush-intranet pm:install mersch_presse`, `drush-intranet locale:check && drush-intranet locale:update`, puis le bouton de collecte. Module déjà installé : `drush-intranet updatedb` (ajoute le champ du scan ; depuis une version antérieure à D-047, supprime aussi les articles collectés avant D-047, met à jour la recherche Google et donne le droit d'ajout à la Communication), `locale:check && locale:update`, puis le bouton de collecte. La VM doit joindre les sites des médias en HTTPS (déjà le cas pour drupal.org).
 
 Tests : `vendor/bin/phpunit -c web/core web/modules/custom/mersch_presse` (avec `drupal/core-dev` installé).
 

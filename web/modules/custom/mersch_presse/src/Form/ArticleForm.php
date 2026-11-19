@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\mersch_presse\Form;
 
+use Drupal\Component\Utility\Bytes;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultInterface;
 use Drupal\Core\Form\FormBase;
@@ -15,9 +16,8 @@ use Drupal\mersch_presse\Entity\Article;
 /**
  * Ajout ou modification d'un article de la presse écrite (US-44, D-048).
  *
- * Droits d'auteur : comme pour les articles collectés, seuls le titre, le
- * média, la date, un extrait de 300 caractères au plus et un lien éventuel
- * sont saisis ; pas de texte intégral ni de scan.
+ * Titre, média, date, extrait de 300 caractères au plus, lien facultatif et,
+ * depuis D-049, scan PDF ou photo facultatif de l'article.
  */
 class ArticleForm extends FormBase {
 
@@ -44,7 +44,7 @@ class ArticleForm extends FormBase {
     $date = $a ? date('Y-m-d', (int) $a->get('date')->value) : date('Y-m-d', \Drupal::time()->getRequestTime());
 
     $form['intro'] = [
-      '#markup' => '<p>' . $this->t('For an article of the printed press that is not online. Do not copy the article: only its title, the media, the date and a short excerpt.') . '</p>',
+      '#markup' => '<p>' . $this->t('For an article of the printed press that is not online. Give its title, the media, the date and, if you wish, a short excerpt and the scan or photo of the article.') . '</p>',
     ];
     $form['titre'] = [
       '#type' => 'textfield',
@@ -84,6 +84,17 @@ class ArticleForm extends FormBase {
       '#maxlength' => 2048,
       '#default_value' => $a?->get('lien')->value,
     ];
+    $form['fichier'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Scan or photo'),
+      '#description' => $this->t('Optional: PDF, JPG or PNG, @taille at most. Only for an article about the commune; the file is deleted with the article.', ['@taille' => Article::TAILLE]),
+      '#upload_location' => 'public://presse/' . date('Y-m'),
+      '#upload_validators' => [
+        'FileExtension' => ['extensions' => Article::EXTENSIONS],
+        'FileSizeLimit' => ['fileLimit' => Bytes::toNumber(Article::TAILLE)],
+      ],
+      '#default_value' => ($a && !$a->get('fichier')->isEmpty()) ? [(int) $a->get('fichier')->target_id] : NULL,
+    ];
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['submit'] = ['#type' => 'submit', '#value' => $this->t('Save')];
     if ($a) {
@@ -121,6 +132,7 @@ class ArticleForm extends FormBase {
     $stockage = \Drupal::entityTypeManager()->getStorage('mersch_presse_article');
     /** @var \Drupal\mersch_presse\Entity\Article|null $article */
     $article = $form_state->get('article') ?? $stockage->create(['manuel' => TRUE]);
+    $ancien = $article->isNew() ? NULL : $article->get('fichier')->entity;
     $titre = trim((string) $form_state->getValue('titre'));
     $lien = trim((string) $form_state->getValue('lien'));
     // Midi : la date reste la même quel que soit le fuseau.
@@ -133,7 +145,13 @@ class ArticleForm extends FormBase {
       // même lien n'est pas ajouté une deuxième fois.
       ->set('cle_lien', $lien === '' ? NULL : sha1($lien))
       ->set('cle_titre', Analyseur::cleTitre($titre))
+      // Le champ fichier enregistre l'usage du fichier et le rend permanent.
+      ->set('fichier', $form_state->getValue('fichier')[0] ?? NULL)
       ->save();
+    // Fichier remplacé ou retiré : l'ancien est supprimé.
+    if ($ancien && (int) $ancien->id() !== (int) $article->get('fichier')->target_id) {
+      Article::supprimerSiInutilise($ancien);
+    }
     $this->messenger()->addStatus($this->t('The article “@titre” is saved.', ['@titre' => $titre]));
     $form_state->setRedirect('mersch_presse.archive');
   }

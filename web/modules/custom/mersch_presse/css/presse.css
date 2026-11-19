@@ -84,3 +84,8 @@
 .mersch-presse__action + .mersch-presse__action {
   margin-left: 12px;
 }
+.mersch-presse__document {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 13px;
+}

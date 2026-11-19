@@ -124,9 +124,6 @@ msgstr "Pressartikel änneren"
 msgid "Delete the press article"
 msgstr "Pressartikel läschen"
 
-msgid "For an article of the printed press that is not online. Do not copy the article: only its title, the media, the date and a short excerpt."
-msgstr "Fir en Artikel aus der gedréckter Press, deen net online ass. Den Artikel net kopéieren: nëmmen den Titel, d'Medium, den Datum an e kuerzen Auszuch."
-
 msgid "Title"
 msgstr "Titel"
 
@@ -177,3 +174,24 @@ msgstr "Ee pro Linn. En Artikel aus engem Medien-Feed, deem seng Adress ee vun d
 
 msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), only the articles of the sites below are kept, with the media given by Google."
 msgstr "Ee Feed pro Linn: <code>Medium | RSS-Adress</code>. Eng Linn mat # ufänken, fir se auszeschalten. Bei enger Sich op Google News (news.google.com) ginn nëmmen d'Artikele vun de Säiten hei ënnendrënner gehalen, mam Medium, dat Google uginn."
+
+msgid "For an article of the printed press that is not online. Give its title, the media, the date and, if you wish, a short excerpt and the scan or photo of the article."
+msgstr "Fir en Artikel aus der gedréckter Press, deen net online ass. Gitt den Titel, d'Medium, den Datum an, wann Dir wëllt, e kuerzen Auszuch an de Scan oder d'Foto vum Artikel un."
+
+msgid "Scan or photo"
+msgstr "Scan oder Foto"
+
+msgid "Optional: PDF, JPG or PNG, @taille at most. Only for an article about the commune; the file is deleted with the article."
+msgstr "Fakultativ: PDF, JPG oder PNG, héchstens @taille. Nëmme fir en Artikel iwwer d'Gemeng; de Fichier gëtt mam Artikel geläscht."
+
+msgid "See the PDF"
+msgstr "PDF kucken"
+
+msgid "See the photo"
+msgstr "Foto kucken"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Photo"
+msgstr "Foto"

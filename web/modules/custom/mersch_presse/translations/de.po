@@ -124,9 +124,6 @@ msgstr "Presseartikel bearbeiten"
 msgid "Delete the press article"
 msgstr "Presseartikel löschen"
 
-msgid "For an article of the printed press that is not online. Do not copy the article: only its title, the media, the date and a short excerpt."
-msgstr "Für einen Artikel aus der Printpresse, der nicht online ist. Den Artikel nicht abschreiben: nur Titel, Medium, Datum und einen kurzen Auszug."
-
 msgid "Title"
 msgstr "Titel"
 
@@ -177,3 +174,24 @@ msgstr "Eine pro Zeile. Ein Artikel eines Medien-Feeds, dessen Adresse einen die
 
 msgid "One feed per line: <code>Media | RSS address</code>. Start a line with # to deactivate it. For a Google News search (news.google.com), only the articles of the sites below are kept, with the media given by Google."
 msgstr "Ein Feed pro Zeile: <code>Medium | RSS-Adresse</code>. Eine Zeile mit # beginnen, um sie zu deaktivieren. Bei einer Google-News-Suche (news.google.com) werden nur die Artikel der unten genannten Seiten behalten, mit dem von Google angegebenen Medium."
+
+msgid "For an article of the printed press that is not online. Give its title, the media, the date and, if you wish, a short excerpt and the scan or photo of the article."
+msgstr "Für einen Artikel aus der Printpresse, der nicht online ist. Geben Sie Titel, Medium, Datum und, wenn Sie möchten, einen kurzen Auszug und den Scan oder das Foto des Artikels an."
+
+msgid "Scan or photo"
+msgstr "Scan oder Foto"
+
+msgid "Optional: PDF, JPG or PNG, @taille at most. Only for an article about the commune; the file is deleted with the article."
+msgstr "Optional: PDF, JPG oder PNG, höchstens @taille. Nur für einen Artikel über die Gemeinde; die Datei wird mit dem Artikel gelöscht."
+
+msgid "See the PDF"
+msgstr "PDF ansehen"
+
+msgid "See the photo"
+msgstr "Foto ansehen"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "Photo"
+msgstr "Foto"

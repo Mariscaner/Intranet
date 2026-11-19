@@ -4,6 +4,7 @@ description: 'Articles de presse sur la commune de Mersch : collecte des flux RS
 package: Mersch
 core_version_requirement: ^11
 dependencies:
+  - drupal:file
   - drupal:language
   - drupal:locale
   - mersch_accueil:mersch_accueil
