@@ -6,7 +6,7 @@
  *
  * Variables :
  * - articles : liste de { titre, lien (vide pour la presse écrite), media,
- *   date, extrait, manuel }.
+ *   date, extrait, manuel, document: { url, pdf } ou NULL }.
  * - archive : adresse de l'archive.
  */
 #}
@@ -16,8 +16,10 @@
     <ul class="mersch-presse__liste">
       {% for article in articles %}
         <li class="mersch-presse__article">
-          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b>{% if article.manuel %} · {{ 'Printed press'|t }}{% endif %}</span>
-          {% if article.lien %}<a class="mersch-presse__titre" href="{{ article.lien }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>{% else %}<b class="mersch-presse__titre">{{ article.titre }}</b>{% endif %}
+          <span class="mersch-presse__meta">{{ article.date }} · <b>{{ article.media }}</b>{% if article.manuel %} · {{ 'Printed press'|t }}{% endif %}{% if article.document and not article.lien %} · {{ article.document.pdf ? 'PDF'|t : 'Photo'|t }}{% endif %}</span>
+          {% set cible = article.lien ?: article.document.url %}
+          {% if cible %}<a class="mersch-presse__titre" href="{{ cible }}" target="_blank" rel="noopener noreferrer">{{ article.titre }} <span aria-hidden="true">↗</span><span class="visually-hidden">{{ '(opens in a new tab)'|t }}</span></a>{% else %}<b class="mersch-presse__titre">{{ article.titre }}</b>{% endif %}
+          {% if article.document and article.lien %}<a class="mersch-presse__document" href="{{ article.document.url }}" target="_blank" rel="noopener noreferrer">{{ article.document.pdf ? 'See the PDF'|t : 'See the photo'|t }}</a>{% endif %}
         </li>
       {% endfor %}
     </ul>

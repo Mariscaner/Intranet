@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\mersch_presse\Entity\Article;
 use Drupal\user\Entity\Role;
 
 /**
@@ -74,4 +75,14 @@ function mersch_presse_update_11001(): string {
   \Drupal::state()->delete('mersch_presse.derniere_collecte');
 
   return (string) new TranslatableMarkup('Press review: Luxembourg media only, @count articles collected so far deleted, manual articles enabled.', ['@count' => count($ids)]);
+}
+
+/**
+ * Scan PDF ou photo pour les articles de la presse écrite (D-049).
+ */
+function mersch_presse_update_11002(): void {
+  $gestionnaire = \Drupal::entityDefinitionUpdateManager();
+  if (!$gestionnaire->getFieldStorageDefinition('fichier', 'mersch_presse_article')) {
+    $gestionnaire->installFieldStorageDefinition('fichier', 'mersch_presse_article', 'mersch_presse', Article::champFichier());
+  }
 }

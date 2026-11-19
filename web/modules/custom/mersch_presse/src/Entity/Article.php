@@ -6,9 +6,11 @@ namespace Drupal\mersch_presse\Entity;
 
 use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\file\FileInterface;
 
 /**
  * Article de presse sur la commune de Mersch (US-39, D-045).
@@ -17,7 +19,9 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * 300 caractères au plus et le lien sont gardés ; ni texte intégral, ni image.
  * Un article masqué (US-42) reste enregistré pour ne pas revenir au passage
  * suivant. Tout article est supprimé 3 ans après sa date (D-045). La
- * Communication peut ajouter un article de la presse écrite à la main (D-048).
+ * Communication peut ajouter un article de la presse écrite à la main (D-048),
+ * avec son scan PDF ou sa photo (D-049) ; le fichier est supprimé avec
+ * l'article.
  */
 #[ContentEntityType(
   id: 'mersch_presse_article',
@@ -76,6 +80,8 @@ class Article extends ContentEntityBase {
     $fields['masque'] = BaseFieldDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Hidden'))
       ->setDefaultValue(FALSE);
+    // Scan PDF ou photo d'un article de la presse écrite (D-049).
+    $fields['fichier'] = self::champFichier();
     // Article ajouté à la main par la Communication (D-048).
     $fields['manuel'] = BaseFieldDefinition::create('boolean')
       ->setLabel(new TranslatableMarkup('Added manually'))
@@ -83,6 +89,52 @@ class Article extends ContentEntityBase {
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(new TranslatableMarkup('Collected on'));
     return $fields;
+  }
+
+  /**
+   * Extensions acceptées pour le scan ou la photo (D-049).
+   */
+  public const EXTENSIONS = 'pdf jpg jpeg png';
+
+  /**
+   * Taille maximale du fichier.
+   */
+  public const TAILLE = '10 MB';
+
+  /**
+   * Définition du champ « fichier », partagée avec la mise à jour 11002.
+   */
+  public static function champFichier(): BaseFieldDefinition {
+    return BaseFieldDefinition::create('file')
+      ->setLabel(new TranslatableMarkup('Scan or photo'))
+      ->setSetting('uri_scheme', 'public')
+      ->setSetting('file_directory', 'presse/[date:custom:Y]-[date:custom:m]')
+      ->setSetting('file_extensions', self::EXTENSIONS)
+      ->setSetting('max_filesize', self::TAILLE);
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Le scan ou la photo est supprimé avec l'article (D-049) : Drupal garde
+   * sinon les fichiers qui ne servent plus.
+   */
+  public static function postDelete(EntityStorageInterface $storage, array $entities): void {
+    parent::postDelete($storage, $entities);
+    foreach ($entities as $article) {
+      if ($fichier = $article->get('fichier')->entity) {
+        self::supprimerSiInutilise($fichier);
+      }
+    }
+  }
+
+  /**
+   * Supprime un fichier qui n'est plus utilisé nulle part.
+   */
+  public static function supprimerSiInutilise(FileInterface $fichier): void {
+    if (!\Drupal::service('file.usage')->listUsage($fichier)) {
+      $fichier->delete();
+    }
   }
 
   /**
