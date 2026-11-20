@@ -137,6 +137,62 @@
   background: var(--mersch-fond-2, #f3f4f8);
 }
 
+/*
+ * Grand service éclaté (D-050) : sa direction occupe la rangée à droite des
+ * petits services voisins (Recette communale), ses sous-services passent
+ * dessous sur toute la largeur, reliés par un trait.
+ */
+.mersch-org__grille--eclatee {
+  grid-auto-flow: row dense;
+}
+
+.mersch-org__service--eclate {
+  display: contents;
+}
+
+.mersch-org__service--eclate > .mersch-org__tete {
+  grid-column: 2 / -1;
+  grid-row: 1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.mersch-org__tete > .mersch-org__titre-service {
+  border-radius: 6px 6px 0 0;
+}
+
+.mersch-org__tete > .mersch-org__direction {
+  padding-top: 14px;
+}
+
+/* Trait de la direction jusqu'à ses sous-services */
+.mersch-org__tete::after {
+  content: "";
+  flex: 1 0 18px;
+  align-self: center;
+  margin-bottom: -16px;
+  border-left: 2px solid var(--mersch-bleu, #26336a);
+}
+
+.mersch-org__service--eclate > .mersch-org__grille--interne {
+  grid-column: 1 / -1;
+  padding: 18px 0 0;
+  border-top: 2px solid var(--mersch-bleu, #26336a);
+}
+
+@media (max-width: 600px) {
+  .mersch-org__service--eclate > .mersch-org__tete {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  /* Petits services voisins d'abord, puis la direction et ses sous-services */
+  .mersch-org__service--eclate > * {
+    order: 1;
+  }
+}
+
 .mersch-org__titre-service {
   margin: 0;
   padding: 8px 12px;
