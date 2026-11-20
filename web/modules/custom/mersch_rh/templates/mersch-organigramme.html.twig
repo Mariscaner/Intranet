@@ -5,7 +5,7 @@
  * en cartes, sous-services imbriqués ; recherche et impression.
  *
  * Variables :
- * - sections : arbre de { id, nom, postes, enfants, large } ; chaque poste a nom,
+ * - sections : arbre de { id, nom, postes, enfants, large, eclate } ; chaque poste a nom,
  *   fonction, vacant, photo (ou NULL), initiales, annuaire, modifier.
  * - personnes : nombre de personnes (postes vacants exclus).
  * - date : date de la dernière modification, ou NULL.
@@ -38,9 +38,19 @@
 
 {% macro service(service) %}
   {% import _self as org %}
-  <article class="mersch-org__service{{ service.large ? ' mersch-org__service--large' }}" id="{{ service.id }}" data-service="{{ service.nom }}">
+  <article class="mersch-org__service{{ service.large ? ' mersch-org__service--large' }}{{ service.eclate ? ' mersch-org__service--eclate' }}" id="{{ service.id }}" data-service="{{ service.nom }}">
+    {% if service.eclate %}
+      {# Direction sur la rangée de ses voisins, sous-services en dessous. #}
+      <div class="mersch-org__tete">
+        <h3 class="mersch-org__titre-service">{{ service.nom }}</h3>
+        <ul class="mersch-org__direction">
+          {% for poste in service.postes %}{{ org.poste(poste) }}{% endfor %}
+        </ul>
+      </div>
+    {% else %}
     <h3 class="mersch-org__titre-service">{{ service.nom }}</h3>
-    {% if service.postes %}
+    {% endif %}
+    {% if service.postes and not service.eclate %}
       <ul class="mersch-org__postes">
         {% for poste in service.postes %}{{ org.poste(poste) }}{% endfor %}
       </ul>
@@ -66,7 +76,10 @@
         <input type="search" id="mersch-org-recherche" placeholder="{{ 'Search for a name, a job title or a department…'|t }}" autocomplete="off">
       </div>
       <nav class="mersch-org__sommaire" aria-label="{{ 'Sections of the organisation chart'|t }}">
-        {% for section in sections %}<a href="#{{ section.id }}">{{ section.nom }}</a>{% endfor %}
+        {% for section in sections %}
+          <a href="#{{ section.id }}">{{ section.nom }}</a>
+          {% for service in section.enfants|filter(s => s.eclate) %}<a href="#{{ service.id }}">{{ service.nom }}</a>{% endfor %}
+        {% endfor %}
       </nav>
       <button type="button" class="mersch-org__imprimer" onclick="window.print()">{{ 'Print'|t }}</button>
     </div>
@@ -81,7 +94,7 @@
           </ul>
         {% endif %}
         {% if section.enfants %}
-          <div class="mersch-org__grille{{ section.postes ? ' mersch-org__grille--liee' }}">
+          <div class="mersch-org__grille{{ section.postes ? ' mersch-org__grille--liee' }}{{ section.enfants|filter(s => s.eclate) ? ' mersch-org__grille--eclatee' }}">
             {% for service in section.enfants %}{{ org.service(service) }}{% endfor %}
           </div>
         {% endif %}

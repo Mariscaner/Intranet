@@ -46,3 +46,25 @@ function mersch_rh_update_11002(): string {
   $recette->set('parent', $college->id())->save();
   return 'La Recette communale dépend maintenant du Collège des bourgmestre et échevins.';
 }
+
+/**
+ * Le Service administration (secrétaire communal) dépend du Collège des
+ * bourgmestre et échevins, au même niveau que la Recette communale : D-050.
+ */
+function mersch_rh_update_11003(): string {
+  $termes = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $trouver = static function (string $nom) use ($termes) {
+    $resultat = $termes->loadByProperties(['vid' => 'rh_service', 'name' => $nom]);
+    return $resultat ? reset($resultat) : NULL;
+  };
+  $administration = $trouver('Service administration');
+  $college = $trouver('Collège des bourgmestre et échevins');
+  if (!$administration || !$college) {
+    return 'Service « Service administration » ou « Collège des bourgmestre et échevins » introuvable : choisir le parent à la main dans l\'administration.';
+  }
+  if ((int) $administration->get('parent')->target_id === (int) $college->id()) {
+    return 'Le Service administration dépend déjà du Collège.';
+  }
+  $administration->set('parent', $college->id())->save();
+  return 'Le Service administration dépend maintenant du Collège, à côté de la Recette communale.';
+}

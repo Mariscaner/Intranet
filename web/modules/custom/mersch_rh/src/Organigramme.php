@@ -83,6 +83,7 @@ class Organigramme {
         'postes' => $postes[$id] ?? [],
         'enfants' => [],
         'large' => FALSE,
+        'eclate' => FALSE,
       ];
       $parent = (int) ($terme->parents[0] ?? 0);
       if ($parent && isset($services[$parent])) {
@@ -93,8 +94,21 @@ class Organigramme {
       }
     }
 
+    $sections = array_values(array_filter(array_map([self::class, 'elaguer'], $racines)));
+    foreach ($sections as &$section) {
+      $section['enfants'] = array_map(static function (array $service) use ($section): array {
+        // Grand service dirigé par une personne, à côté d'autres services
+        // (ex. Service administration et Recette communale sous le Collège,
+        // D-050) : sa direction se place sur la même rangée que ses voisins,
+        // ses sous-services en dessous, sur toute la largeur.
+        $service['eclate'] = $service['large'] && $service['postes'] && count($section['enfants']) > 1;
+        return $service;
+      }, $section['enfants']);
+    }
+    unset($section);
+
     return [
-      'sections' => array_values(array_filter(array_map([self::class, 'elaguer'], $racines))),
+      'sections' => $sections,
       'personnes' => $personnes,
       'date' => $date ?: NULL,
     ];
