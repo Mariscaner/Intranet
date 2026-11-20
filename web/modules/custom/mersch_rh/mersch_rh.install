@@ -24,3 +24,25 @@ function mersch_rh_update_11001(): string {
   }
   return 'Champ « Rédigé le » affiché pour les admins.';
 }
+
+/**
+ * La Recette communale dépend directement du Collège des bourgmestre et
+ * échevins, et non du Service administration (secrétaire communal) : D-050.
+ */
+function mersch_rh_update_11002(): string {
+  $termes = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $trouver = static function (string $nom) use ($termes) {
+    $resultat = $termes->loadByProperties(['vid' => 'rh_service', 'name' => $nom]);
+    return $resultat ? reset($resultat) : NULL;
+  };
+  $recette = $trouver('Recette communale');
+  $college = $trouver('Collège des bourgmestre et échevins');
+  if (!$recette || !$college) {
+    return 'Service « Recette communale » ou « Collège des bourgmestre et échevins » introuvable : choisir le parent à la main dans l\'administration.';
+  }
+  if ((int) $recette->get('parent')->target_id === (int) $college->id()) {
+    return 'La Recette communale dépend déjà du Collège.';
+  }
+  $recette->set('parent', $college->id())->save();
+  return 'La Recette communale dépend maintenant du Collège des bourgmestre et échevins.';
+}
